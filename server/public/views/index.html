@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mobility 4 All</title>
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="styles/style.css">
+        <link href="vendors/angular-material/angular-material.min.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="vendors/angular/angular.min.js"></script>
+        <script type="text/javascript" src="vendors/angular-route/angular-route.min.js"></script>
+        <script type="text/javascript" src="vendors/angular-material/angular-material.min.js"></script>
+        <script type="text/javascript" src="vendors/angular-material/angular-aria.min.js"></script>
+        <script type="text/javascript" src="vendors/angular-material/angular-animate.min.js"></script>
+        <script type="text/javascript" src="vendors/angular-material/angular-messages.min.js"></script>
+        <script src="vendors/ng-map.min.js"></script>
+        <script src="http://maps.google.com/maps/api/js"></script>
+        <script type="text/javascript" src="scripts/client.js"></script>
+        <script type="text/javascript" src="scripts/controllers/info.controller.js"></script>
+        <script type="text/javascript" src="scripts/controllers/login.controller.js"></script>
+        <script type="text/javascript" src="scripts/controllers/user.controller.js"></script>
+        <script type="text/javascript" src="scripts/services/user.service.js"></script>
+    </head>
+
+    <body ng-app="myApp">
+      <header ng-include="'/views/partials/header.html'"></header>
+
+      <main ng-view></main>
+
+    </body>
+</html>
