@@ -1,5 +1,5 @@
-myApp.controller('LoginController', function($http, $location, UserService, NgMap) {
-    console.log('LoginController created');
+myApp.controller('RiderLoginController', function($http, $location, UserService, NgMap) {
+    console.log('RiderLoginController created');
     var vm = this;
     vm.user = {
       username: '',

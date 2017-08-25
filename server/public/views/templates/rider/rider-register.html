@@ -1,0 +1,17 @@
+<div class="container">
+  <h1 class="lead">Register User</h1>
+  <h1 class="lead alert alert-danger" role="alert" ng-if="lc.message != ''">{{lc.message}}</h2>
+  <form ng-submit="lc.registerUser()">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" ng-model="lc.user.username" />
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" ng-model="lc.user.password" />
+    </div>
+    <input class="btn btn-default" type="submit" name="submit" value="Register" />
+    <a href="#home">Cancel</a>
+  </form>
+
+</div>
