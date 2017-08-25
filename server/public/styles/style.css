@@ -1,3 +1,8 @@
+/* Mobility 4 All Logo colors
+  light green: rgb(137, 197, 87);
+  gray: rgb(98, 89, 80);
+*/
+
 body, html {
   margin: 0;
   padding: 0;
@@ -5,13 +10,13 @@ body, html {
   font-size: 14px;
 }
 
-.instructions .container h1 {
+.header .container h1 {
   font-size: 32px;
   font-weight: 600;
 }
 
-.instructions {
-  background-color: #333333;
+.header {
+  background-color: rgb(98, 89, 80);
   color: #DDDDDD;
   padding: 15px;
 }
@@ -77,4 +82,14 @@ li a {
 li a:hover {
   text-decoration: underline;
   color: #eee;
+}
+
+/* Header styles */
+
+.lead {
+  font-family: 'Lato', sans-serif;
+}
+
+.o {
+  color: rgb(137, 197, 87);
 }
