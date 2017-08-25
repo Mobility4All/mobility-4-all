@@ -8,7 +8,7 @@ var sessionConfig = require('./modules/session.config');
 // Route includes
 var indexRouter = require('./routes/index.router');
 var userRouter = require('./routes/user.router');
-var registerRouter = require('./routes/register.router');
+var registerRouter = require('./routes/rider-register.router');
 
 var port = process.env.PORT || 5000;
 
