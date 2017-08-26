@@ -68,13 +68,8 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
       }
     })
     .when('/driver-login', {
-      templateUrl: '/views/templates/rider/driver-login.html',
+      templateUrl: '/views/templates/driver/driver-login.html',
       controller: 'DriverLoginController as dc',
-      resolve: {
-        getuser : function(UserService){
-          return UserService.getuser();
-        }
-      }
     })
     .when('/default-view', {
       templateUrl: '/views/templates/rider/default-view.html',

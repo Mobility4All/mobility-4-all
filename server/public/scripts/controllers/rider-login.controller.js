@@ -35,7 +35,7 @@ myApp.controller('RiderLoginController', function($http, $location, UserService,
       if(vm.user.username === '' || vm.user.password === '') {
         vm.message = "Choose a username and password!";
       } else {
-        if (lc.user.selection == 'rider') {
+        if (vm.user.selection == 'rider') {
         console.log('LoginController -- registerUser -- sending to server...', vm.user);
         $http.post('/register/rider', vm.user).then(function(response) {
           console.log('LoginController -- registerRider -- success');
@@ -44,7 +44,7 @@ myApp.controller('RiderLoginController', function($http, $location, UserService,
           console.log('LoginController -- registerRider -- error');
           vm.message = "Please try again.";
         });
-      } if (lc.user.selection == 'driver') {
+      } if (vm.user.selection == 'driver') {
         console.log('LoginController -- registerUser -- sending to server...', vm.user);
         $http.post('/register/driver', vm.user).then(function(response) {
           console.log('LoginController -- registerDriver -- success');
