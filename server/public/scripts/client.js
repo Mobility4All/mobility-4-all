@@ -27,14 +27,9 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
       }
     }
     })
-    .when('/rider-register', {
-      templateUrl: '/views/templates/rider/rider-login.html',
+    .when('/register', {
+      templateUrl: '/views/templates/register.html',
       controller: 'RiderLoginController as rc',
-      resolve: {
-        getuser : function(UserService){
-          return UserService.getuser();
-        }
-      }
     })
     .when('/ride-purpose', {
       templateUrl: '/views/templates/rider/ride-purpose.html',
@@ -160,6 +155,6 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
   });
 
   $mdThemingProvider.theme('default')
-    .primaryPalette('mobilityPalette')
+    .primaryPalette('mobilityPalette');
 
 });

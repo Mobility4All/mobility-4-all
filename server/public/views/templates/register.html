@@ -1,7 +1,13 @@
 <div class="container">
-  <h1 class="lead">Register User</h1>
-  <h1 class="lead alert alert-danger" role="alert" ng-if="lc.message != ''">{{lc.message}}</h2>
-  <form ng-submit="lc.registerUser()">
+  <h1 class="lead">Sign Up</h1>
+  <md-radio-group ng-model="rc.user.selection">
+
+      <md-radio-button value="rider" class="md-primary">Rider/CareGiver</md-radio-button>
+      <md-radio-button value="driver" class="md-primary"> Driver</md-radio-button>
+
+    </md-radio-group>
+  <h1 class="lead alert alert-danger" role="alert" ng-if="rc.message != ''">{{rc.message}}</h2>
+  <form ng-submit="rc.registerUser()">
     <div>
         <label for="username">Username:</label>
         <input type="text" ng-model="lc.user.username" />
