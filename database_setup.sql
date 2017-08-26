@@ -1,7 +1,3 @@
-CREATE DATABASE mobility_4_all;
-
--- Navigate into database
-
 CREATE TABLE "drivers" (
   "id" serial PRIMARY KEY,
   "first_name" VARCHAR(30),
@@ -10,15 +6,19 @@ CREATE TABLE "drivers" (
   "phone" INT,
   "username" VARCHAR(80) NOT NULL UNIQUE,
   "password" VARCHAR(240) NOT NULL,
-  "city" VARCHAR(25) NOT NULL,
+  "city" VARCHAR(25),
   "state" VARCHAR(2),
   "make" VARCHAR(20),
   "model" VARCHAR(30),
   "license_num" VARCHAR(10),
   "driver_photo_url" VARCHAR(100),
   "vehicle_photo_url" VARCHAR(100),
-  "live" BOOLEAN,
-  "location" VARCHAR(100)
+  "live" BOOLEAN DEFAULT FALSE,
+  "location" VARCHAR(100),
+  "wheelchair" BOOLEAN DEFAULT FALSE,
+  "service_animal" BOOLEAN DEFAULT FALSE,
+  "oxygen" BOOLEAN DEFAULT FALSE,
+  "cpr" BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE "riders" (
@@ -43,7 +43,10 @@ CREATE TABLE "riders" (
   "credit_cvc" INT,
   "credit_expdate" VARCHAR(10),
   "med_id" INT,
-  "metmo_id" INT
+  "metmo_id" INT,
+  "wheelchair" BOOLEAN DEFAULT FALSE,
+  "service_animal" BOOLEAN DEFAULT FALSE,
+  "oxygen" BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE "trips" (
@@ -58,20 +61,3 @@ CREATE TABLE "trips" (
   "complete" BOOLEAN default false,
   "fare_amt" VARCHAR(10)
 );
-
-CREATE TABLE "needs" (
-  "id" serial PRIMARY KEY,
-  "need" VARCHAR(30) NOT NULL
-)
-
-CREATE TABLE "rider_needs" (
-  "id" serial PRIMARY KEY,
-  "rider_id" INT,
-  "need_id" INT
-)
-
-CREATE TABLE "driver_needs" (
-  "id" serial PRIMARY KEY,
-  "driver_id" INT,
-  "need_id" INT
-)
