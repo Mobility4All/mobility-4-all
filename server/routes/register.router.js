@@ -43,14 +43,14 @@ router.post('/driver', function(req, res, next) {
     username: req.body.username,
     password: encryptLib.encryptPassword(req.body.password)
   };
-  console.log('new user:', saveUser);
+  console.log('new driver:', saveUser);
 
   pool.connect(function(err, client, done) {
     if(err) {
       console.log("Error connecting: ", err);
       next(err);
     }
-    client.query("INSERT INTO drivers (username, password) VALUES ($1, $2) RETURNING id",
+    client.query("INSERT INTO riders (username, password) VALUES ($1, $2) RETURNING id",
       [saveUser.username, saveUser.password],
         function (err, result) {
           client.end();

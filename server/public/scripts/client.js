@@ -27,9 +27,11 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
       }
     }
     })
+
     .when('/register', {
       templateUrl: '/views/templates/register.html',
       controller: 'RiderLoginController as rc',
+
     })
     .when('/ride-purpose', {
       templateUrl: '/views/templates/rider/ride-purpose.html',
@@ -69,7 +71,11 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
     })
     .when('/driver-login', {
       templateUrl: '/views/templates/driver/driver-login.html',
-      controller: 'DriverLoginController as dc',
+      controller: 'DriverLoginController as dc'
+    })
+    .when('/rider-login', {
+      templateUrl: '/views/templates/rider/rider-login.html',
+      controller: 'RiderLoginController as rc'
     })
     .when('/default-view', {
       templateUrl: '/views/templates/rider/default-view.html',

@@ -3,8 +3,10 @@ myApp.controller('RiderLoginController', function($http, $location, UserService,
     var vm = this;
     vm.user = {
       username: '',
-      password: ''
+      password: '',
+      selection:'rider'
     };
+
     vm.message = '';
 
     vm.login = function() {
@@ -36,7 +38,7 @@ myApp.controller('RiderLoginController', function($http, $location, UserService,
         vm.message = "Choose a username and password!";
       } else {
         if (vm.user.selection == 'rider') {
-        console.log('LoginController -- registerUser -- sending to server...', vm.user);
+        console.log('LoginController -- registerRider -- sending to server...', vm.user);
         $http.post('/register/rider', vm.user).then(function(response) {
           console.log('LoginController -- registerRider -- success');
           $location.path('/rider-login');
@@ -45,15 +47,15 @@ myApp.controller('RiderLoginController', function($http, $location, UserService,
           vm.message = "Please try again.";
         });
       } if (vm.user.selection == 'driver') {
-        console.log('LoginController -- registerUser -- sending to server...', vm.user);
-        $http.post('/register/driver', vm.user).then(function(response) {
-          console.log('LoginController -- registerDriver -- success');
-          $location.path('/driver-login');
-        }).catch(function(response) {
-          console.log('LoginController -- registerDrier -- error');
-          vm.message = "Please try again.";
-        });
-      }
+      console.log('LoginController -- registerDriver -- sending to server...', vm.user);
+      $http.post('/register/driver', vm.user).then(function(response) {
+        console.log('LoginController -- registerDriver -- success');
+        $location.path('/driver-login');
+      }).catch(function(response) {
+        console.log('LoginController -- registerDriver -- error');
+        vm.message = "Please try again.";
+      });
+    }
       }
 
     };

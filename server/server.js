@@ -34,6 +34,9 @@ app.use('/user', userRouter);
 app.use('/', indexRouter);
 
 // Listen //
+// var server = 
 app.listen(port, function(){
    console.log('Listening on port:', port);
 });
+
+// var io = require('socket.io')(server);
