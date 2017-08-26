@@ -3,8 +3,10 @@ myApp.controller('RiderLoginController', function($http, $location, UserService,
     var vm = this;
     vm.user = {
       username: '',
-      password: ''
+      password: '',
+      selection:'rider'
     };
+
     vm.message = '';
 
     vm.login = function() {
@@ -31,19 +33,32 @@ myApp.controller('RiderLoginController', function($http, $location, UserService,
 
     vm.registerUser = function() {
       console.log('LoginController -- registerUser');
+
       if(vm.user.username === '' || vm.user.password === '') {
         vm.message = "Choose a username and password!";
       } else {
-        console.log('LoginController -- registerUser -- sending to server...', vm.user);
-        $http.post('/register', vm.user).then(function(response) {
-          console.log('LoginController -- registerUser -- success');
-          $location.path('/home');
+        if (vm.user.selection == 'rider') {
+        console.log('LoginController -- registerRider -- sending to server...', vm.user);
+        $http.post('/register/rider', vm.user).then(function(response) {
+          console.log('LoginController -- registerRider -- success');
+          $location.path('/rider-login');
         }).catch(function(response) {
-          console.log('LoginController -- registerUser -- error');
-          vm.message = "Please try again."
+          console.log('LoginController -- registerRider -- error');
+          vm.message = "Please try again.";
         });
-      }
+      } if (vm.user.selection == 'driver') {
+      console.log('LoginController -- registerDriver -- sending to server...', vm.user);
+      $http.post('/register/driver', vm.user).then(function(response) {
+        console.log('LoginController -- registerDriver -- success');
+        $location.path('/driver-login');
+      }).catch(function(response) {
+        console.log('LoginController -- registerDriver -- error');
+        vm.message = "Please try again.";
+      });
     }
+      }
+
+    };
 
     // Testing out ng-map
 

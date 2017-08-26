@@ -11,9 +11,7 @@ router.get('/', function(req, res, next) {
 });
 
 // Handles POST request with new user data
-// Handles POST request with new user data
-router.post('/', function(req, res, next) {
-
+router.post('/rider', function(req, res, next) {
   var saveUser = {
     username: req.body.username,
     password: encryptLib.encryptPassword(req.body.password)
@@ -38,7 +36,33 @@ router.post('/', function(req, res, next) {
           }
         });
   });
+});
+// Handles POST request with new user data
+router.post('/driver', function(req, res, next) {
+  var saveUser = {
+    username: req.body.username,
+    password: encryptLib.encryptPassword(req.body.password)
+  };
+  console.log('new driver:', saveUser);
 
+  pool.connect(function(err, client, done) {
+    if(err) {
+      console.log("Error connecting: ", err);
+      next(err);
+    }
+    client.query("INSERT INTO riders (username, password) VALUES ($1, $2) RETURNING id",
+      [saveUser.username, saveUser.password],
+        function (err, result) {
+          client.end();
+
+          if(err) {
+            console.log("Error inserting data: ", err);
+            next(err);
+          } else {
+            res.redirect('/');
+          }
+        });
+  });
 });
 
 

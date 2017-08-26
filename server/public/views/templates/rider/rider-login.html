@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="lead">Rider/Caregiver Login</h1>
     <h1 class="lead alert alert-danger" role="alert" ng-if="rc.message != ''">{{rc.message}}</h2>
-    <form ng-submit="rc.login()">
+    <form >
       <div>
         <md-input-container>
           <label for="username">Username:</label>
@@ -16,9 +16,9 @@
         </md-input-container>
       </div>
       <div>
-        <md-button class="md-raised md-primary" type="submit" name="submit">Log In</md-button>
+        <md-button class="md-raised md-primary" ng-click="rc.login()">Log In</md-button>
           <!-- <input class="btn btn-default" type="submit" name="submit" value="Log In" /> -->
-          <a href="#register">Register</a>
+          <a href="#home">Cancel</a>
       </div>
     </form>
 </div>

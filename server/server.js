@@ -8,7 +8,7 @@ var sessionConfig = require('./modules/session.config');
 // Route includes
 var indexRouter = require('./routes/index.router');
 var userRouter = require('./routes/user.router');
-var registerRouter = require('./routes/rider-register.router');
+var registerRouter = require('./routes/register.router');
 
 var port = process.env.PORT || 5000;
 
@@ -34,8 +34,9 @@ app.use('/user', userRouter);
 app.use('/', indexRouter);
 
 // Listen //
-var server = app.listen(port, function(){
+// var server = 
+app.listen(port, function(){
    console.log('Listening on port:', port);
 });
 
-var io = require('socket.io')(server);
+// var io = require('socket.io')(server);
