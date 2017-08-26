@@ -4,7 +4,7 @@ myApp.controller('HomeController', function($location) {
 
     hc.go = function(url) {
       console.log(url);
-      $location.path(`/${url}`)
+      $location.path('/' + url)
     }
 
 });

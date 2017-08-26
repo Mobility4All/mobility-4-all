@@ -1,3 +1,9 @@
+-- Create databse first with below command
+
+CREATE DATABASE "mobility_4_all";
+
+-- Navigate into database and use the below data to create tables
+
 CREATE TABLE "drivers" (
   "id" serial PRIMARY KEY,
   "first_name" VARCHAR(30),
@@ -25,8 +31,8 @@ CREATE TABLE "riders" (
   "id" serial PRIMARY KEY,
   "username" VARCHAR(80) NOT NULL UNIQUE,
   "password" VARCHAR(240) NOT NULL,
-  "rider_first" VARCHAR(20) NOT NULL,
-  "rider_last" VARCHAR(20) NOT NULL,
+  "rider_first" VARCHAR(20),
+  "rider_last" VARCHAR(20),
   "rider_photo_url" VARCHAR(200),
   "rider_cell" INT,
   "rider_email" VARCHAR(50),
