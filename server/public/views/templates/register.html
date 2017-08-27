@@ -9,12 +9,16 @@
   <h1 class="lead alert alert-danger" role="alert" ng-if="rc.message != ''">{{rc.message}}</h2>
   <form >
     <div>
-        <label for="username">Username:</label>
+      <md-input-container>
+        <label>Username:</label>
         <input type="text" ng-model="rc.user.username" />
+      </md-input-container>
     </div>
     <div>
-        <label for="password">Password:</label>
+      <md-input-container>
+        <label>Password:</label>
         <input type="password" ng-model="rc.user.password" />
+      </md-input-container>
     </div>
     <md-button class="md-raised md-primary" ng-click="rc.registerUser()">Register</md-button>
     <a href="#home">Cancel</a>

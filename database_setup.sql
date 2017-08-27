@@ -24,7 +24,8 @@ CREATE TABLE "drivers" (
   "wheelchair" BOOLEAN DEFAULT FALSE,
   "service_animal" BOOLEAN DEFAULT FALSE,
   "oxygen" BOOLEAN DEFAULT FALSE,
-  "cpr" BOOLEAN DEFAULT FALSE
+  "cpr" BOOLEAN DEFAULT FALSE,
+  "complete" BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE "riders" (
@@ -45,6 +46,8 @@ CREATE TABLE "riders" (
   "cg_cell" INT,
   "cg_email" VARCHAR(50),
   "cg_relationship" VARCHAR(20),
+  "cg_orders_rides" BOOLEAN,
+  "cg_notifications" BOOLEAN,
   "credit_card_num" INT,
   "credit_cvc" INT,
   "credit_expdate" VARCHAR(10),
@@ -52,7 +55,8 @@ CREATE TABLE "riders" (
   "metmo_id" INT,
   "wheelchair" BOOLEAN DEFAULT FALSE,
   "service_animal" BOOLEAN DEFAULT FALSE,
-  "oxygen" BOOLEAN DEFAULT FALSE
+  "oxygen" BOOLEAN DEFAULT FALSE,
+  "complete" BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE "trips" (

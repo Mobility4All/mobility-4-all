@@ -1,0 +1,158 @@
+<div ng-cloak>
+  <md-content>
+    <md-tabs md-dynamic-height md-border-bottom>
+
+      <!-- Rider Info Tab -->
+      <md-tab label="step 1">
+        <md-content class="md-padding">
+          <h2 class="md-headline">Rider Info</h2>
+          <form>
+            <h4 class="md-subhead">Name:</h4>
+            <div>
+              <md-input-container>
+                <label>First Name</label>
+                <input type="text" ng-model="rc.user.rider_first"/>
+              </md-input-container>
+              <md-input-container>
+                <label>Last Name</label>
+                <input type="text" ng-model="rc.user.rider_last"/>
+              </md-input-container>
+            </div>
+
+            <h4 class="md-subhead">Contact Info:</h4>
+            <!-- Maybe use google places for address? -->
+            <div>
+              <md-input-container class="md-block">
+                <label>Street Address</label>
+                <input type="text" ng-model="rc.user.rider_street"/>
+              </md-input-container>
+              <md-input-container>
+                <label>City</label>
+                <input type="text" ng-model="rc.user.rider_city"/>
+              </md-input-container>
+              <md-input-container>
+                <label>State</label>
+                <md-select ng-model="rc.user.rider_state">
+                  <md-option><em>None</em></md-option>
+                  <md-option ng-repeat="state in rc.states" ng-value="state.abbrev">
+                    {{state.abbrev}}
+                  </md-option>
+                </md-select>
+              </md-input-container>
+            </div>
+            <div>
+              <md-input-container>
+                <label>Cell Phone #</label>
+                <input type="tel" ng-model="rc.user.rider_cell"/>
+              </md-input-container>
+            </div>
+            <div>
+              <md-input-container>
+                <label>Email</label>
+                <input type="email" ng-model="rc.user.rider_email"/>
+              </md-input-container>
+            </div>
+
+            <h4 class="md-subhead">Accessibility Needs:</h4>
+            <div>
+              <md-checkbox ng-model="rc.user.wheelchair">Wheelchair</md-checkbox>
+              <md-checkbox ng-model="rc.user.service_animal">Service Animal</md-checkbox>
+              <md-checkbox ng-model="rc.user.oxygen">Oxygen Tank</md-checkbox>
+            </div>
+
+            <h4 class="md-subhead">Additional Info:</h4>
+            <p>Please include any information you would like to share with your driver</p>
+            <div>
+              <md-input-container class="md-block">
+                <label>Addt'l Info</label>
+                <textarea ng-model="rc.user.rider_addtl_info" rows="5"></textarea>
+              </md-input-container>
+            </div>
+
+          </form>
+        </md-content>
+      </md-tab>
+
+      <!-- Caregiver Info Tab -->
+      <md-tab label="step 2">
+        <md-content class="md-padding">
+          <h2 class="md-headline">Caregiver Info</h2>
+          <md-checkbox ng-model="rc.caregiver" aria-label="caregiver checkbox">
+            I don't have a caregiver
+          </md-checkbox>
+
+          <form>
+            <h4 class="md-subhead">Name:</h4>
+            <md-input-container>
+              <label>First Name</label>
+              <input type="text" ng-model="rc.user.cg_first" ng-disabled="rc.caregiver"/>
+            </md-input-container>
+            <md-input-container>
+              <label>Last Name</label>
+              <input type="text" ng-model="rc.user.cg_last" ng-disabled="rc.caregiver"/>
+            </md-input-container>
+            <md-input-container>
+              <label>Relationship to Rider</label>
+              <input type="text" ng-model="rc.user.cg_relationship" ng-disabled="rc.caregiver"/>
+            </md-input-container>
+
+            <h4 class="md-subhead">Contact Info:</h4>
+            <div>
+              <md-input-container>
+                <label>Cell Phone #</label>
+                <input type="tel" ng-model="rc.user.cg_cell" ng-disabled="rc.caregiver"/>
+              </md-input-container>
+            </div>
+            <div>
+              <md-input-container>
+                <label>Email</label>
+                <input type="email" ng-model="rc.user.cg_email"/>
+              </md-input-container>
+            </div>
+            <div>
+              <md-checkbox ng-model="rc.user.cg_orders_rides" aria-label="caregiver order rides" ng-disabled="rc.caregiver">
+                Caregiver is authorized to order rides
+              </md-checkbox>
+              <md-checkbox ng-model="rc.user.cg_notifications" aria-label="caregiver checkbox" ng-disabled="rc.caregiver">
+                Caregiver will receive notifications at the beginning and end of all rides
+              </md-checkbox>
+            </div>
+          </form>
+        </md-content>
+      </md-tab>
+
+      <!-- Payment/Elegibility Tab -->
+      <md-tab label="step 3">
+        <md-content class="md-padding">
+          <h2 class="md-headline">Eligibility and Payment Info</h2>
+
+          <h4 class="md-subhead">Eligibility:</h4>
+          <md-input-container>
+            <label>Medical Assistance ID</label>
+            <input type="text" ng-model="rc.user.med_id"/>
+          </md-input-container>
+          <md-input-container>
+            <label>Metro Mobility Rider ID</label>
+            <input type="text" ng-model="rc.user.metmo_id"/>
+          </md-input-container>
+
+          <h4 class="md-subhead">Credit Card:</h4>
+          <md-input-container>
+            <label>Credit Card #</label>
+            <input type="text" ng-model="rc.user.credit_card_num"/>
+          </md-input-container>
+          <md-input-container>
+            <label>CVC</label>
+            <input type="text" ng-model="rc.user.credit_cvc"/>
+          </md-input-container>
+          <md-input-container>
+            <label>Expiration Date</label>
+            <input type="text" ng-model="rc.user.credit_expdate"/>
+          </md-input-container>
+          <md-button class="md-raised md-primary" ng-click="rc.updateUser()">Submit</md-button>
+
+        </md-content>
+      </md-tab>
+    </md-tabs>
+  </md-content>
+</div>

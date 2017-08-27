@@ -77,6 +77,15 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
       templateUrl: '/views/templates/rider/rider-login.html',
       controller: 'RiderLoginController as rc'
     })
+    .when('/rider-profile-setup', {
+      templateUrl: '/views/templates/rider/rider-profile-setup.html',
+      controller: 'RiderProfileController as rc',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
     .when('/default-view', {
       templateUrl: '/views/templates/rider/default-view.html',
       controller: 'DefaultViewController as dc',
