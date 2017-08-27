@@ -22,7 +22,7 @@ myApp.controller('RiderLoginController', function($http, $location, UserService,
               $location.path('/rider-profile-setup')
             } else {
               // location works with SPA (ng-route)
-              $location.path('/user'); // http://localhost:5000/#/user
+              $location.path('/on-demand'); // http://localhost:5000/#/user
 
             }
           } else {
