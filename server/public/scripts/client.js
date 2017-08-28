@@ -11,7 +11,7 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
     })
     .when('/user', {
       templateUrl: '/views/templates/user.html',
-      controller: 'UserController as uc',
+      controller: 'HomeController as hc',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();
