@@ -1,3 +1,9 @@
+-- Create databse first with below command
+
+CREATE DATABASE "mobility_4_all";
+
+-- Navigate into database and use the below data to create tables
+
 CREATE TABLE "drivers" (
   "id" serial PRIMARY KEY,
   "first_name" VARCHAR(30),
@@ -18,15 +24,16 @@ CREATE TABLE "drivers" (
   "wheelchair" BOOLEAN DEFAULT FALSE,
   "service_animal" BOOLEAN DEFAULT FALSE,
   "oxygen" BOOLEAN DEFAULT FALSE,
-  "cpr" BOOLEAN DEFAULT FALSE
+  "cpr" BOOLEAN DEFAULT FALSE,
+  "complete" BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE "riders" (
   "id" serial PRIMARY KEY,
   "username" VARCHAR(80) NOT NULL UNIQUE,
   "password" VARCHAR(240) NOT NULL,
-  "rider_first" VARCHAR(20) NOT NULL,
-  "rider_last" VARCHAR(20) NOT NULL,
+  "rider_first" VARCHAR(20),
+  "rider_last" VARCHAR(20),
   "rider_photo_url" VARCHAR(200),
   "rider_cell" INT,
   "rider_email" VARCHAR(50),
@@ -39,6 +46,8 @@ CREATE TABLE "riders" (
   "cg_cell" INT,
   "cg_email" VARCHAR(50),
   "cg_relationship" VARCHAR(20),
+  "cg_orders_rides" BOOLEAN,
+  "cg_notifications" BOOLEAN,
   "credit_card_num" INT,
   "credit_cvc" INT,
   "credit_expdate" VARCHAR(10),
@@ -46,7 +55,8 @@ CREATE TABLE "riders" (
   "metmo_id" INT,
   "wheelchair" BOOLEAN DEFAULT FALSE,
   "service_animal" BOOLEAN DEFAULT FALSE,
-  "oxygen" BOOLEAN DEFAULT FALSE
+  "oxygen" BOOLEAN DEFAULT FALSE,
+  "complete" BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE "trips" (
