@@ -89,7 +89,9 @@ li a:hover {
 /*.lead {
   font-family: 'Lato', sans-serif;
 }*/
-
+.selectCard {
+  background-color: skyblue;
+}
 .o {
   color: rgb(137, 197, 87);
 }

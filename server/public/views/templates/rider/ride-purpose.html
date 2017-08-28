@@ -1,3 +1,25 @@
-<div class="">
+<div layout="column" ng-cloak>
+  <p>Selected Ride Purpose: <span class="radioValue">{{ purposeSelection }}</span> </p>
+  <md-radio-group ng-model="purposeSelection">
+<md-radio-button value="Medical"flex class="selectCard"class="md-primary">
+Medical
+<p>I am going to an appointment with a doctor or pick up a prescription.</p>
+</md-radio-button>
 
+<md-radio-button value="Work, Volunteer, or School"flex class="selectCard">
+Work, Volunteer, or School
+<p>I am going to my place of work, volunteer, or attend school</p>
+</md-radio-button>
+
+<md-radio-button value="Personal Errands"flex class="selectCard">
+Personal Errands
+<p>I am going to do a task that contributes to my well being. e.g. grocery shopping, post office, bank, etc.</p>
+</md-radio-button>
+
+<md-radio-button value="Leisure/Other"flex class="selectCard">
+Leisure/Other
+<p>I am going to do something for fun.</p>
+</md-radio-button>
+
+</md-radio-group>
 </div>
