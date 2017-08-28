@@ -17,17 +17,16 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
           return UserService.getuser();
         }
       }
-  })
-  .when('/info', {
-    templateUrl: '/views/templates/info.html',
-    controller: 'InfoController',
-    resolve: {
-      getuser : function(UserService){
-        return UserService.getuser();
-      }
-    }
     })
-
+    .when('/info', {
+      templateUrl: '/views/templates/info.html',
+      controller: 'InfoController',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
     .when('/register', {
       templateUrl: '/views/templates/register.html',
       controller: 'RiderLoginController as rc',

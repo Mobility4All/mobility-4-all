@@ -18,7 +18,8 @@ router.put('/update', function(req, res, next) {
         "cg_first, cg_last, cg_relationship, cg_cell, cg_email, cg_orders_rides, cg_notifications, " +
         "med_id, metmo_id, credit_card_num, credit_cvc, credit_expdate, complete) " +
         "= ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,true) WHERE id = $24",
-        [rider.rider_first, rider.rider_last, rider.rider_street, rider.rider_city, rider.rider_state,
+        [
+          rider.rider_first, rider.rider_last, rider.rider_street, rider.rider_city, rider.rider_state,
            rider.rider_cell, rider.rider_email, rider.wheelchair, rider.service_animal,
            rider.oxygen, rider.rider_addtl_info, rider.cg_first, rider.cg_last,
            rider.cg_relationship, rider.cg_cell, rider.cg_email, rider.cg_orders_rides,
@@ -27,13 +28,13 @@ router.put('/update', function(req, res, next) {
            req.user.id
          ],
           function (err, result) {
-            client.end();
+            done();
 
             if(err) {
               console.log("Error inserting data: ", err);
-              next(err);
+              res.sendStatus(500);
             } else {
-              res.redirect('/');
+              res.sendStatus(200);
             }
           });
     });
