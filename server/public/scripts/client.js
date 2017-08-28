@@ -17,17 +17,16 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
           return UserService.getuser();
         }
       }
-  })
-  .when('/info', {
-    templateUrl: '/views/templates/info.html',
-    controller: 'InfoController',
-    resolve: {
-      getuser : function(UserService){
-        return UserService.getuser();
-      }
-    }
     })
-
+    .when('/info', {
+      templateUrl: '/views/templates/info.html',
+      controller: 'InfoController',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
     .when('/register', {
       templateUrl: '/views/templates/register.html',
       controller: 'RiderLoginController as rc',
@@ -77,8 +76,26 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
       templateUrl: '/views/templates/rider/rider-login.html',
       controller: 'RiderLoginController as rc'
     })
+    .when('/rider-profile-setup', {
+      templateUrl: '/views/templates/rider/rider-profile-setup.html',
+      controller: 'RiderProfileController as rc',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
+    .when('/on-demand', {
+      templateUrl: '/views/templates/rider/on-demand.html',
+      controller: 'OnDemandController as oc',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
     .when('/default-view', {
-      templateUrl: '/views/templates/rider/default-view.html',
+      templateUrl: '/views/templates/driver/default-view.html',
       controller: 'DefaultViewController as dc',
       resolve: {
         getuser : function(UserService){

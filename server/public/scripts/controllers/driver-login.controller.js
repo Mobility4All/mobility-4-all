@@ -13,7 +13,7 @@ myApp.controller('DriverLoginController', function($http, $location, UserService
         vm.message = "Enter your username and password!";
       } else {
         console.log('LoginController -- login -- sending to server...', vm.user);
-        $http.post('/', vm.user).then(function(response) {
+        $http.post('/driverlogin', vm.user).then(function(response) {
           if(response.data.username) {
             console.log('LoginController -- login -- success: ', response.data);
             // location works with SPA (ng-route)
@@ -29,19 +29,19 @@ myApp.controller('DriverLoginController', function($http, $location, UserService
       }
     };
 
-    vm.registerUser = function() {
-      console.log('LoginController -- registerUser');
-      if(vm.user.username === '' || vm.user.password === '') {
-        vm.message = "Choose a username and password!";
-      } else {
-        console.log('LoginController -- registerUser -- sending to server...', vm.user);
-        $http.post('/register', vm.user).then(function(response) {
-          console.log('LoginController -- registerUser -- success');
-          $location.path('/home');
-        }).catch(function(response) {
-          console.log('LoginController -- registerUser -- error');
-          vm.message = "Please try again."
-        });
-      }
-    }
+    // vm.registerUser = function() {
+    //   console.log('LoginController -- registerUser');
+    //   if(vm.user.username === '' || vm.user.password === '') {
+    //     vm.message = "Choose a username and password!";
+    //   } else {
+    //     console.log('LoginController -- registerUser -- sending to server...', vm.user);
+    //     $http.post('/register', vm.user).then(function(response) {
+    //       console.log('LoginController -- registerUser -- success');
+    //       $location.path('/home');
+    //     }).catch(function(response) {
+    //       console.log('LoginController -- registerUser -- error');
+    //       vm.message = "Please try again."
+    //     });
+    //   }
+    // }
 });
