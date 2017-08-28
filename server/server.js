@@ -12,6 +12,20 @@ var registerRouter = require('./routes/register.router');
 
 var port = process.env.PORT || 5000;
 
+// var client = require('twilio')('AC49334531148f62d5745a66859dd83168', 'dba9b29a8f173b3f20b3fe184b1a629a');
+//
+// app.get('/testtwilio', function(req, res){
+//   client.messages.create({
+//     to: '+16129864532',
+//     from: '+17634029974',
+//     body: 'You just got a message from your sweet app'
+//   }, function(err, data){
+//     if(err)
+//       console.log(err);
+//     console.log(data);
+//   });
+// });
+
 // Body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -34,7 +48,7 @@ app.use('/user', userRouter);
 app.use('/', indexRouter);
 
 // Listen //
-// var server = 
+// var server =
 app.listen(port, function(){
    console.log('Listening on port:', port);
 });
