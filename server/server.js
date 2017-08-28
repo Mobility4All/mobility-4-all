@@ -9,9 +9,22 @@ var sessionConfig = require('./modules/session.config');
 var indexRouter = require('./routes/index.router');
 var userRouter = require('./routes/user.router');
 var registerRouter = require('./routes/register.router');
-var riderRouter = require('./routes/rider.router')
+var riderRouter = require('./routes/rider.router');
+var distanceMatrixRouter = require('./routes/eta.router');
 
 var port = process.env.PORT || 5000;
+
+
+
+
+
+
+
+
+
+
+
+
 
 // var client = require('twilio')('AC49334531148f62d5745a66859dd83168', 'dba9b29a8f173b3f20b3fe184b1a629a');
 //
@@ -42,6 +55,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
+app.use('/eta', distanceMatrixRouter);
 app.use('/register', registerRouter);
 app.use('/user', userRouter);
 app.use('/rider', riderRouter);
