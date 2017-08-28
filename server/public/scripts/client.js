@@ -172,7 +172,44 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
     ]
   });
 
+  $mdThemingProvider.definePalette('logoutPalette', {
+    '50': 'FFEDF1',
+    '100': 'FFD2DC',
+    '200': 'FFB5C4',
+    '300': 'FF97AC',
+    '400': 'FF809B',
+    '500': 'FF6A89',
+    '600': 'FF6281',
+    '700': 'FF5776',
+    '800': 'FF4D6C',
+    '900': 'FF3C59',
+    'A100': 'FFFFFF',
+    'A200': 'FFFFFF',
+    'A400': 'FFE5E8',
+    'A700': 'FFCBD2',
+    'contrastDefaultColor': 'light',
+    'contrastDarkColors': [
+      '50',
+      '100',
+      '200',
+      '300',
+      '400',
+      '500',
+      '600',
+      '700',
+      '800',
+      'A100',
+      'A200',
+      'A400',
+      'A700'
+    ],
+    'contrastLightColors': [
+      '900'
+    ]
+  });
+
   $mdThemingProvider.theme('default')
-    .primaryPalette('mobilityPalette');
+    .primaryPalette('mobilityPalette')
+    .warnPalette('logoutPalette');
 
 });
