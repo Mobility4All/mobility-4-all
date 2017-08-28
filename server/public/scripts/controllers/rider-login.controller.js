@@ -19,7 +19,7 @@ myApp.controller('RiderLoginController', function($http, $location, UserService,
           if(response.data.username) {
             console.log('LoginController -- login -- success: ', response.data);
             if(!response.data.complete) {
-              $location.path('/rider-profile-setup')
+              $location.path('/rider-profile-setup');
             } else {
               // location works with SPA (ng-route)
               $location.path('/on-demand'); // http://localhost:5000/#/user

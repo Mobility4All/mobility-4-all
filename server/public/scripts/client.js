@@ -11,7 +11,7 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
     })
     .when('/user', {
       templateUrl: '/views/templates/user.html',
-      controller: 'UserController as uc',
+      controller: 'HomeController as hc',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();
@@ -79,6 +79,15 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
     .when('/rider-profile-setup', {
       templateUrl: '/views/templates/rider/rider-profile-setup.html',
       controller: 'RiderProfileController as rc',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
+    .when('/driver-profile-setup', {
+      templateUrl: '/views/templates/driver/driver-profile-setup.html',
+      controller: 'DriverProfileController as dc',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();
