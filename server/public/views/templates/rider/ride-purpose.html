@@ -1,5 +1,6 @@
+<div ng-include="'views/partials/sidenavrider.html'"></div>
 <div layout="column" ng-cloak>
-  <p>Selected Ride Purpose: <span class="radioValue">{{ purposeSelection }}</span> </p>
+  <p>The purpose of my trip is: <span class="radioValue">{{ purposeSelection }}</span> </p>
   <md-radio-group ng-model="purposeSelection">
 <md-radio-button value="Medical"flex class="selectCard"class="md-primary">
 Medical
