@@ -12,6 +12,7 @@ CREATE TABLE "drivers" (
   "phone" INT,
   "username" VARCHAR(80) NOT NULL UNIQUE,
   "password" VARCHAR(240) NOT NULL,
+  "street" VARCHAR(50),
   "city" VARCHAR(25),
   "state" VARCHAR(2),
   "make" VARCHAR(20),

@@ -85,6 +85,15 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
         }
       }
     })
+    .when('/driver-profile-setup', {
+      templateUrl: '/views/templates/driver/driver-profile-setup.html',
+      controller: 'DriverProfileController as dc',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
     .when('/on-demand', {
       templateUrl: '/views/templates/rider/on-demand.html',
       controller: 'OnDemandController as oc',
