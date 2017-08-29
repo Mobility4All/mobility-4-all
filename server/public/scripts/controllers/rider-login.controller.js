@@ -7,6 +7,8 @@ myApp.controller('RiderLoginController', function($http, $location, UserService,
       selection:'rider'
     };
 
+    vm.userService = UserService;
+
     vm.message = '';
 
     vm.login = function() {
@@ -18,7 +20,6 @@ myApp.controller('RiderLoginController', function($http, $location, UserService,
         $http.post('/', vm.user).then(function(response) {
           if(response.data.username) {
             console.log('LoginController -- login -- success: ', response.data);
-            UserService.socket = io();
             if(!response.data.complete) {
               $location.path('/rider-profile-setup');
             } else {

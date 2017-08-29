@@ -4,7 +4,7 @@ var encryptLib = require('../modules/encryption');
 var pool = require('../modules/pool.js');
 
 passport.serializeUser(function(user, done) {
-  console.log('serializing:', user);
+  // console.log('serializing:', user);
   if(user.hasOwnProperty('make')) {
     console.log('has make property');
   }
@@ -40,7 +40,7 @@ passport.deserializeUser(function(person, done) {
             return done(null, false, {message: 'Incorrect credentials.'});
         } else {
           // user found
-          console.log('User row ', user);
+          // console.log('User row ', user);
           done(null, user);
         }
 
@@ -63,7 +63,7 @@ passport.deserializeUser(function(person, done) {
             return done(null, false, {message: 'Incorrect credentials.'});
         } else {
           // user found
-          console.log('User row ', user);
+          // console.log('User row ', user);
           done(null, user);
         }
 
@@ -98,7 +98,7 @@ passport.use('local', new localStrategy({
 
             if(result.rows[0] != undefined) {
               user = result.rows[0];
-              console.log('User obj', user);
+              // console.log('User obj', user);
               // Hash and compare
               if(encryptLib.comparePassword(password, user.password)) {
                 // all good!
@@ -131,7 +131,7 @@ passport.use('localdriver', new localStrategy({
           function(err, result) {
             var user = {};
 
-            console.log('here a driver be', result);
+            // console.log('here a driver be', result);
 
             // Handle Errors
             if (err) {
@@ -143,7 +143,7 @@ passport.use('localdriver', new localStrategy({
 
             if(result.rows[0] != undefined) {
               user = result.rows[0];
-              console.log('User obj', user);
+              // console.log('User obj', user);
               // Hash and compare
               if(encryptLib.comparePassword(password, user.password)) {
                 // all good!

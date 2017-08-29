@@ -66,6 +66,7 @@ CREATE TABLE "trips" (
   "id" serial PRIMARY KEY,
   "driver_id" INT,
   "rider_id" INT,
+  "purpose" VARCHAR(10),
   "start_location" VARCHAR(100),
   "end_location" VARCHAR(100),
   "rider_note" VARCHAR(200),
