@@ -123,3 +123,63 @@ li a:hover {
 
 
 /* AUTCOMPLETE INPUT STYLING  */
+
+
+
+/*Google maps style*/
+
+/* Always set the map height explicitly to define the size of the div
+ * element that contains the map. */
+#map {
+  height: 700px;
+  width: 700px;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#floating-panel {
+  position: absolute;
+  top: 10px;
+  left: 25%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+  padding-left: 10px;
+}
+
+#right-panel {
+         float: none;
+         width: auto;
+       }
+
+
+#right-panel {
+   font-family: 'Roboto','sans-serif';
+   line-height: 30px;
+   padding-left: 10px;
+ }
+
+ #right-panel select, #right-panel input {
+   font-size: 15px;
+ }
+
+ #right-panel select {
+   width: 100%;
+ }
+
+#right-panel i {
+   font-size: 12px;
+ }
+#right-panel {
+   height: 100%;
+   float: right;
+   width: 390px;
+   overflow: auto;
+ }
