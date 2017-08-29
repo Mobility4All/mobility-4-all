@@ -9,8 +9,11 @@ myApp.factory('UserService', function($http, $location, $mdSidenav){
     };
   }
 
+  var socket;
+
   return {
     userObject : userObject,
+    socket: socket,
 
     getuser : function(){
       console.log('UserService -- getuser');
@@ -37,6 +40,7 @@ myApp.factory('UserService', function($http, $location, $mdSidenav){
       console.log('UserService -- logout');
       $http.get('/user/logout').then(function(response) {
         console.log('UserService -- logout -- logged out');
+        socket.disconnect();
         $location.path("/home");
       });
     }
