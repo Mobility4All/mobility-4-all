@@ -20,4 +20,57 @@ myApp.controller('DriverProfileController', function($http) {
         console.log('update driver error', response);
       })
     }
+
+    // Photo upload functionality
+    // API key
+    dc.client = filestack.init('AX0Uil0hBT3afjt9bxjXXz');
+    // Feedback for file upload
+    dc.photoMessage = 'Photo is optional and will be displayed to riders'
+    // Upload image and put file url
+    dc.pickProfilePic = function() {
+      console.log('adding driver pic');
+      dc.client.pick({
+        accept: 'image/*',
+        maxFiles:1
+      }).then(function (result) {
+        console.log('json result', JSON.stringify(result));
+        console.log('url:', result.filesUploaded[0].url);
+        var imgUrl = {
+          driver_photo_url: result.filesUploaded[0].url
+        }
+        $http.put('/driver/profilephoto', imgUrl).then(function(response) {
+          console.log('added picture', response);
+          dc.photoMessage = 'Photo added successfully';
+        }).catch(function(response) {
+          console.log('add picture error', response);
+          dc.photoMessage = 'Error uploading photo';
+        })
+      });
+    }
+
+    // Feedback for file upload
+    dc.vehicleMessage = ''
+    // Upload image and put file url
+    dc.pickVehiclePic = function() {
+      console.log('adding vehicle pic');
+      dc.client.pick({
+        accept: 'image/*',
+        maxFiles:1
+      }).then(function (result) {
+        console.log('json result', JSON.stringify(result));
+        console.log('url:', result.filesUploaded[0].url);
+        var imgUrl = {
+          vehicle_photo_url: result.filesUploaded[0].url
+        }
+        $http.put('/driver/vehiclephoto', imgUrl).then(function(response) {
+          console.log('added picture', response);
+          dc.vehicleMessage = 'Photo added successfully';
+        }).catch(function(response) {
+          console.log('add picture error', response);
+          dc.vehicleMessage = 'Error uploading photo';
+        })
+      });
+    }
+
+
 });

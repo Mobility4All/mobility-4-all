@@ -1,6 +1,8 @@
-myApp.controller('RidePurposeController', function($http) {
+myApp.controller('RidePurposeController', function(DataService, $location, $http) {
     console.log('RidePurposeController created');
-    var rpc = this;
+    var rc = this;
+    rc.ride = {};
+    rc.message = '';
 
     geolocate();
 
@@ -40,10 +42,10 @@ myApp.controller('RidePurposeController', function($http) {
     // When the user selects an address from the dropdown, populate the address
     // fields in the form.
     autocomplete.addListener('place_changed', fillInAddress);
-    rpc.addressA = destA;
+    rc.addressA = destA;
 
     autocomplete2.addListener('place_changed', fillInAddress);
-    rpc.addressB = destB;
+    rc.addressB = destB;
 
 
     // Bias the autocomplete object to the user's geographical location,
@@ -65,14 +67,29 @@ myApp.controller('RidePurposeController', function($http) {
       }
     }
 
-    rpc.putDestAB = function() {
+    rc.putDestAB = function() {
       console.log("destA lat/lan are:", latA, lngA);
       console.log("destB lat/lng are:", latB, lngB);
-      $http.put('/rider/destAB', rpc.user).then(function(response) {
+      $http.put('/rider/destAB', rc.user).then(function(response) {
         console.log('destAB put to db', response);
       }).catch(function(response) {
         console.log('destAB put error', response);
       });
     };
 
+    rc.updatePurpose = function(purpose) {
+      rc.ride.purpose = purpose;
+      console.log('ride purpose', rc.ride.purpose);
+    };
+
+    rc.confirmPurpose = function() {
+      console.log('confirming purpose');
+      if (rc.ride.purpose) {
+        DataService.rideObject.purpose = rc.ride.purpose;
+        console.log('data ride:', DataService.rideObject.purpose);
+        $location.path('/input-ride')
+      } else {
+        rc.message = 'Please select a purpose'
+      }
+    }
 });

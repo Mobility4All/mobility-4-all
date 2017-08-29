@@ -22,4 +22,31 @@ myApp.controller('RiderProfileController', function($http) {
         console.log('update rider error', response);
       })
     }
+
+    // Photo upload functionality
+    // API key
+    rc.client = filestack.init('AX0Uil0hBT3afjt9bxjXXz');
+    // Feedback for file upload
+    rc.photoMessage = 'Photo is optional and will be displayed to drivers'
+    // Upload image and put file url
+    rc.pickPic = function() {
+      console.log('adding rider pic');
+      rc.client.pick({
+        accept: 'image/*',
+        maxFiles:1
+      }).then(function (result) {
+        console.log('json result', JSON.stringify(result));
+        console.log('url:', result.filesUploaded[0].url);
+        var imgUrl = {
+          rider_photo_url: result.filesUploaded[0].url
+        }
+        $http.put('/rider/photo', imgUrl).then(function(response) {
+          console.log('added picture', response);
+          rc.photoMessage = 'Photo added successfully';
+        }).catch(function(response) {
+          console.log('add picture error', response);
+          rc.photoMessage = 'Error uploading photo';
+        })
+      });
+    }
 });

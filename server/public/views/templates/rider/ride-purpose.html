@@ -1,3 +1,34 @@
-<div class="">
-
-</div>
+<div ng-include="'views/partials/sidenavrider.html'"></div>
+<h1>The purpose of this trip is:</h1>
+<md-list flex>
+  <md-list-item class="md-2-line" ng-click="rc.updatePurpose('medical')" ng-model="rc.ride.purpose">
+    <div class="md-list-item-text" layout="column">
+      <h2>Medical</h2>
+      <p>I am going to an appointment with a doctor or to pick up a prescription.</p>
+    </div>
+  </md-list-item>
+  <md-divider></md-divider>
+  <md-list-item class="md-2-line" ng-click="rc.updatePurpose('work')" ng-model="rc.ride.purpose">
+    <div class="md-list-item-text" layout="column">
+      <h2>Work, Volunteer, or School</h2>
+      <p>I am going to my place of work, volunteer, or attend school.</p>
+    </div>
+  </md-list-item>
+  <md-divider></md-divider>
+  <md-list-item class="md-2-line" ng-click="rc.updatePurpose('personal')" ng-model="rc.ride.purpose">
+    <div class="md-list-item-text" layout="column">
+      <h2>Personal Errands</h2>
+      <p>I am going to do a task that contributes to my well-being.</p>
+    </div>
+  </md-list-item>
+  <md-divider></md-divider>
+  <md-list-item class="md-2-line" ng-click="rc.updatePurpose('leisure')" ng-model="rc.ride.purpose">
+    <div class="md-list-item-text" layout="column">
+      <h2>Leisure/Other</h2>
+      <p>I am going to do something for fun.</p>
+    </div>
+  </md-list-item>
+  <h4 class="md-warn">{{rc.message}}</h4>
+  <md-button class="md-raised md-warn" href="#/on-demand">Back</md-button>
+  <md-button class="md-raised md-primary" ng-click="rc.confirmPurpose()">Confirm</md-button>
+</md-list>
