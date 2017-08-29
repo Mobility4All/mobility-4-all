@@ -1,5 +1,5 @@
 
-myApp.controller('RiderNotificationController', function($timeout, $mdBottomSheet, $mdToast) {
+myApp.controller('RiderNotificationController', function($timeout, $mdBottomSheet, $mdToast, $mdDialog, $scope) {
 
     console.log('RiderNotificationController created');
     var rc = this;
