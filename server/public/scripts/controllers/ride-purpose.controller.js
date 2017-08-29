@@ -76,8 +76,11 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
       console.log("destB lat/lng are:", rc.ride.latB, rc.ride.lngB);
       $http.post('/rider/destAB', rc.ride).then(function(response) {
         console.log('destAB put to db', response);
+        $location.path('/trip-view');
       }).catch(function(response) {
         console.log('destAB put error', response);
+        // IMPROVE THIS ALERT VALIDATION
+        alert("Oh no! There was an error getting your ride");
       });
     };
 
