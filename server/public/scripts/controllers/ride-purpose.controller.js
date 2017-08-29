@@ -32,11 +32,15 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
         destA = autocomplete.getPlace();
         destB = autocomplete2.getPlace();
 
-            latA = destA.geometry.location.lat();
-            lngA = destA.geometry.location.lng();
-            latB = destB.geometry.location.lat();
-            lngB = destB.geometry.location.lng();
+
+        // check on order of lng/lat AND Geog vs Geom
+        rc.ride.latA = destA.geometry.location.lat();
+        rc.ride.lngA = destA.geometry.location.lng();
+        rc.ride.latB = destB.geometry.location.lat();
+        rc.ride.lngB = destB.geometry.location.lng();
       }
+
+
 
 
     // When the user selects an address from the dropdown, populate the address
@@ -68,12 +72,15 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
     }
 
     rc.putDestAB = function() {
-      console.log("destA lat/lan are:", latA, lngA);
-      console.log("destB lat/lng are:", latB, lngB);
-      $http.put('/rider/destAB', rc.user).then(function(response) {
+      console.log("destA lat/lan are:", rc.ride.latA, rc.ride.lngA);
+      console.log("destB lat/lng are:", rc.ride.latB, rc.ride.lngB);
+      $http.post('/rider/destAB', rc.ride).then(function(response) {
         console.log('destAB put to db', response);
+        $location.path('/trip-view');
       }).catch(function(response) {
         console.log('destAB put error', response);
+        // IMPROVE THIS ALERT VALIDATION
+        alert("Oh no! There was an error getting your ride");
       });
     };
 
