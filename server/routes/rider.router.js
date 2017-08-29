@@ -67,17 +67,18 @@ router.put('/photo', function(req, res, next) {
   }
 });
 
-router.put('/destAB', function(req, res, next) {
+router.post('/destAB', function(req, res, next) {
   var ride = req.body;
   console.log('save rider AB geolocations', ride, req.user.id);
+  console.log('save rider AB geolocations...type:', typeof ride.latA, req.user.id);
   if(req.isAuthenticated()) {
     pool.connect(function(err, client, done) {
       if(err) {
         console.log("Error connecting: ", err);
         next(err);
       }
-      client.query("UPDATE trips SET start_location = $1, end_location = $2 WHERE id = $3",
-        [ride., req.user.id],
+      client.query('INSERT INTO "trips" ("rider_id", "start_location", "end_location", "rider_note") VALUES ($1, ST_GeographyFromText(\'SRID=4326;POINT($2 $3)\'), ST_GeographyFromText(\'SRID=4326;POINT($4 $5)\'), $6);',
+        [req.user.id, ride.latA, ride.lngA, ride.latB, ride.lngB, req.user.id],
           function (err, result) {
             done();
 

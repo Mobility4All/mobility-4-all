@@ -21,7 +21,7 @@ CREATE TABLE "drivers" (
   "driver_photo_url" VARCHAR(100),
   "vehicle_photo_url" VARCHAR(100),
   "live" BOOLEAN DEFAULT FALSE,
-  "location" VARCHAR(100),
+  "location" geography(Point,4326) NOT NULL,
   "wheelchair" BOOLEAN DEFAULT FALSE,
   "service_animal" BOOLEAN DEFAULT FALSE,
   "oxygen" BOOLEAN DEFAULT FALSE,
@@ -64,11 +64,35 @@ CREATE TABLE "trips" (
   "id" serial PRIMARY KEY,
   "driver_id" INT,
   "rider_id" INT,
-  "start_location" VARCHAR(100),
-  "end_location" VARCHAR(100),
+  "start_location" geography(Point,4326) NOT NULL,
+  "end_location" geography(Point,4326) NOT NULL,
   "rider_note" VARCHAR(200),
   "accept" BOOLEAN default false,
   "pickup" BOOLEAN default false,
   "complete" BOOLEAN default false,
   "fare_amt" VARCHAR(10)
 );
+
+#Install PostGIS to make db friendlier for geolocation
+[PostGIS](http://postgis.net/install/) download
+then run -- CREATE EXTENSION postgis;
+
+
+
+-- TOM LEARNING
+CREATE EXTENSION postgis;
+
+CREATE TABLE postal_codes
+(
+  zip character varying(7) NOT NULL,
+  state character(2) NOT NULL,
+  city character varying(50) NOT NULL,
+  geoloc geography(Point,4326) NOT NULL
+);
+INSERT INTO postal_codes
+VALUES (
+    '35004', 'AL', 'Moody',
+    ST_GeographyFromText('SRID=4326;POINT(-86.50249 33.606379)') -- lon lat
+);
+
+UPDATE postal_codes SET geoloc = ST_GeographyFromText('SRID=4326;POINT(-88.50249 38.606379)') WHERE zip = '35004';
