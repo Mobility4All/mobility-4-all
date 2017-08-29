@@ -6,7 +6,7 @@
       <md-radio-button value="driver" class="md-primary"> Driver</md-radio-button>
 
     </md-radio-group>
-  <h1 class="lead alert alert-danger" role="alert" ng-if="rc.message != ''">{{rc.message}}</h2>
+  <h3 class="lead alert alert-danger" role="alert" ng-if="rc.message != ''">{{rc.message}}</h3>
   <form >
     <div>
       <md-input-container>
@@ -21,6 +21,7 @@
       </md-input-container>
     </div>
     <md-button class="md-raised md-primary" ng-click="rc.registerUser()">Register</md-button>
+    <!-- <md-button class="md-raised md-warn" ng-click="">Logout</md-button> -->
     <a href="#home">Cancel</a>
   </form>
 
