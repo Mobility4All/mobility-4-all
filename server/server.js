@@ -10,6 +10,7 @@ var indexRouter = require('./routes/index.router');
 var userRouter = require('./routes/user.router');
 var registerRouter = require('./routes/register.router');
 var riderRouter = require('./routes/rider.router');
+var tripRouter = require('./routes/trip.router');
 
 var distanceMatrixRouter = require('./routes/eta.router');
 
@@ -65,6 +66,7 @@ app.use('/register', registerRouter);
 app.use('/user', userRouter);
 app.use('/rider', riderRouter);
 app.use('/driver', driverRouter);
+app.use('/trip', tripRouter);
 
 // Catch all bucket, must be last!
 app.use('/', indexRouter);
