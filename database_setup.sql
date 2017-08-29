@@ -80,6 +80,7 @@ then run -- CREATE EXTENSION postgis;
 
 
 -- TOM LEARNING
+brew install postgis
 CREATE EXTENSION postgis;
 
 CREATE TABLE postal_codes

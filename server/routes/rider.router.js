@@ -70,6 +70,7 @@ router.put('/photo', function(req, res, next) {
 router.post('/destAB', function(req, res, next) {
   var ride = req.body;
   console.log('save rider AB geolocations', ride, req.user.id);
+  console.log('save rider AB geolocations', ride, req.user.id);
   console.log('save rider AB geolocations...type:', typeof ride.latA, req.user.id);
   if(req.isAuthenticated()) {
     pool.connect(function(err, client, done) {
@@ -77,8 +78,12 @@ router.post('/destAB', function(req, res, next) {
         console.log("Error connecting: ", err);
         next(err);
       }
-      client.query('INSERT INTO "trips" ("rider_id", "start_location", "end_location", "rider_note") VALUES ($1, ST_GeographyFromText(\'SRID=4326;POINT($2 $3)\'), ST_GeographyFromText(\'SRID=4326;POINT($4 $5)\'), $6);',
-        [req.user.id, ride.latA, ride.lngA, ride.latB, ride.lngB, req.user.id],
+      var inputA = 'SRID=4326;POINT(' + ride.lngA + ' ' + ride.latA + ')';
+      var inputB = 'SRID=4326;POINT(' + ride.lngB + ' ' + ride.latB + ')';
+      console.log("inputA:", inputA);
+      console.log("inputB:", inputB);
+      client.query('INSERT INTO "trips" ("rider_id", "start_location", "end_location", "rider_note") VALUES ($1, ST_GeographyFromText($2), ST_GeographyFromText($3), $4);',
+        [req.user.id, inputA, inputB, req.user.id],
           function (err, result) {
             done();
 
@@ -92,6 +97,37 @@ router.post('/destAB', function(req, res, next) {
     });
   }
 });
+//
+// router.get('/destAB', function(req, res, next) {
+//   var ride = req.body;
+//   console.log('save rider AB geolocations', ride, req.user.id);
+//   console.log('save rider AB geolocations', ride, req.user.id);
+//   if(req.isAuthenticated()) {
+//     pool.connect(function(err, client, done) {
+//       if(err) {
+//         console.log("Error connecting: ", err);
+//         next(err);
+//       }
+//       var inputA = 'SRID=4326;POINT(' + ride.lngA + ' ' + ride.latA + ')';
+//       var inputB = 'SRID=4326;POINT(' + ride.lngB + ' ' + ride.latB + ')';
+//       console.log("inputA:", inputA);
+//       console.log("inputB:", inputB);
+//       client.query('INSERT INTO "trips" ("rider_id", "start_location", "end_location", "rider_note") VALUES ($1, $2, $3, $4);',
+//         [req.user.id, inputA, inputB, req.user.id],
+//           function (err, result) {
+//             done();
+//
+//             if(err) {
+//               console.log("Error inserting data: ", err);
+//               res.sendStatus(500);
+//             } else {
+//               res.sendStatus(200);
+//             }
+//           });
+//     });
+//   }
+// });
+//
 
 
 

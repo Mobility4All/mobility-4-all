@@ -32,6 +32,8 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
         destA = autocomplete.getPlace();
         destB = autocomplete2.getPlace();
 
+
+        // check on order of lng/lat AND Geog vs Geom
         rc.ride.latA = destA.geometry.location.lat();
         rc.ride.lngA = destA.geometry.location.lng();
         rc.ride.latB = destB.geometry.location.lat();
