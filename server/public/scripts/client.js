@@ -103,6 +103,15 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
         }
       }
     })
+    .when('/input-ride', {
+      templateUrl: '/views/templates/rider/input-ride.html',
+      controller: 'RidePurposeController as rc',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
     .when('/default-view', {
       templateUrl: '/views/templates/driver/default-view.html',
       controller: 'DefaultViewController as dc',
