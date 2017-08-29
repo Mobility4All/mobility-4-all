@@ -42,5 +42,31 @@ router.put('/update', function(req, res, next) {
   }
 });
 
+router.put('/photo', function(req, res, next) {
+  var rider = req.body;
+  console.log('updating rider photo', rider, req.user.id);
+  if(req.isAuthenticated()) {
+    pool.connect(function(err, client, done) {
+      if(err) {
+        console.log("Error connecting: ", err);
+        next(err);
+      }
+      client.query("UPDATE riders SET rider_photo_url = $1 WHERE id = $2",
+        [rider.rider_photo_url, req.user.id],
+          function (err, result) {
+            done();
+
+            if(err) {
+              console.log("Error inserting data: ", err);
+              res.sendStatus(500);
+            } else {
+              res.sendStatus(200);
+            }
+          });
+    });
+  }
+});
+
+
 
 module.exports = router;

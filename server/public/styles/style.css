@@ -2,6 +2,7 @@
   light green: rgb(137, 197, 87);
   gray: rgb(98, 89, 80);
 */
+
 body {
   margin: 0;
   padding: 0;
@@ -12,7 +13,6 @@ body {
 h2 {
   margin: 0;
   padding: 0;
-  font-family: Lato, sans-serif;
   font-family: Lato, sans-serif;
   text-transform: uppercase;
   color: rgb(137, 197, 87);
@@ -103,13 +103,14 @@ li a:hover {
   text-decoration: underline;
   color: #eee;
 }
+/* sideNav styles for Rider navbar */
+.logosidenav {
+  
+}
 
-/* Header styles */
+/* Nav styles */
 
-/*.lead {
-  font-family: 'Lato', sans-serif;
-}*/
-
-.o {
-  color: rgb(137, 197, 87);
+.horizontal-logo {
+  height: 50px;
+  text-shadow: 1px 1px white;
 }

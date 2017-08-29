@@ -1,4 +1,4 @@
-myApp.factory('DataService', function(){
+myApp.factory('DataService', function($http){
   console.log('DataService Loaded');
 
   var userObject = {};

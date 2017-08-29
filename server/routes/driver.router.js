@@ -36,5 +36,58 @@ router.put('/update', function(req, res, next) {
   }
 });
 
+//Update driver photo url
+router.put('/profilephoto', function(req, res, next) {
+  var driver = req.body;
+  console.log('updating driver photo', driver, req.user.id);
+  if(req.isAuthenticated()) {
+    pool.connect(function(err, client, done) {
+      if(err) {
+        console.log("Error connecting: ", err);
+        next(err);
+      }
+      client.query("UPDATE drivers SET driver_photo_url = $1 WHERE id = $2",
+        [driver.driver_photo_url, req.user.id],
+          function (err, result) {
+            done();
+
+            if(err) {
+              console.log("Error inserting data: ", err);
+              res.sendStatus(500);
+            } else {
+              res.sendStatus(200);
+            }
+          });
+    });
+  }
+});
+
+//Update driver photo url
+router.put('/vehiclephoto', function(req, res, next) {
+  var vehicle = req.body;
+  console.log('updating vehicle photo', vehicle, req.user.id);
+  if(req.isAuthenticated()) {
+    pool.connect(function(err, client, done) {
+      if(err) {
+        console.log("Error connecting: ", err);
+        next(err);
+      }
+      client.query("UPDATE drivers SET vehicle_photo_url = $1 WHERE id = $2",
+        [vehicle.vehicle_photo_url, req.user.id],
+          function (err, result) {
+            done();
+
+            if(err) {
+              console.log("Error inserting data: ", err);
+              res.sendStatus(500);
+            } else {
+              res.sendStatus(200);
+            }
+          });
+    });
+  }
+});
+
+
 
 module.exports = router;
