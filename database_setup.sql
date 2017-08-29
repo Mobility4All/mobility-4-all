@@ -2,6 +2,13 @@
 
 CREATE DATABASE "mobility_4_all";
 
+
+-- Install PostGIS to make db friendlier for geolocation
+brew install postgis  (for reference PostGIS download http://postgis.net/install/)
+then run this in Postico-- CREATE EXTENSION postgis;
+
+
+
 -- Navigate into database and use the below data to create tables
 
 CREATE TABLE "drivers" (
@@ -22,7 +29,8 @@ CREATE TABLE "drivers" (
   "vehicle_photo_url" VARCHAR(100),
   "live" BOOLEAN DEFAULT FALSE,
   "location" geography(Point,4326) NOT NULL,
-  "wheelchair" BOOLEAN DEFAULT FALSE,
+  "elec_wheelchair" BOOLEAN DEFAULT FALSE,
+  "col_wheelchair" BOOLEAN DEFAULT FALSE,
   "service_animal" BOOLEAN DEFAULT FALSE,
   "oxygen" BOOLEAN DEFAULT FALSE,
   "cpr" BOOLEAN DEFAULT FALSE,
@@ -54,7 +62,8 @@ CREATE TABLE "riders" (
   "credit_expdate" VARCHAR(10),
   "med_id" VARCHAR(15),
   "metmo_id" VARCHAR(15),
-  "wheelchair" BOOLEAN DEFAULT FALSE,
+  "elec_wheelchair" BOOLEAN DEFAULT FALSE,
+  "col_wheelchair" BOOLEAN DEFAULT FALSE,
   "service_animal" BOOLEAN DEFAULT FALSE,
   "oxygen" BOOLEAN DEFAULT FALSE,
   "complete" BOOLEAN DEFAULT FALSE
@@ -72,28 +81,3 @@ CREATE TABLE "trips" (
   "complete" BOOLEAN default false,
   "fare_amt" VARCHAR(10)
 );
-
-#Install PostGIS to make db friendlier for geolocation
-[PostGIS](http://postgis.net/install/) download
-then run -- CREATE EXTENSION postgis;
-
-
-
--- TOM LEARNING
-brew install postgis
-CREATE EXTENSION postgis;
-
-CREATE TABLE postal_codes
-(
-  zip character varying(7) NOT NULL,
-  state character(2) NOT NULL,
-  city character varying(50) NOT NULL,
-  geoloc geography(Point,4326) NOT NULL
-);
-INSERT INTO postal_codes
-VALUES (
-    '35004', 'AL', 'Moody',
-    ST_GeographyFromText('SRID=4326;POINT(-86.50249 33.606379)') -- lon lat
-);
-
-UPDATE postal_codes SET geoloc = ST_GeographyFromText('SRID=4326;POINT(-88.50249 38.606379)') WHERE zip = '35004';

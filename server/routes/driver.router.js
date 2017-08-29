@@ -14,12 +14,12 @@ router.put('/update', function(req, res, next) {
         next(err);
       }
       client.query("UPDATE drivers SET (first_name, last_name, email, phone, street, city, " +
-      "state, make, model, license_num, wheelchair, service_animal, oxygen, cpr) " +
-      "= ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) WHERE id = $15",
+      "state, make, model, license_num, elec_wheelchair, col_wheelchair, service_animal, oxygen, cpr, complete) " +
+      "= ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,true) WHERE id = $16",
         [
           driver.first_name, driver.last_name, driver.email, driver.phone, driver.street,
-          driver.city, driver.state, driver.make, driver.model, driver.license_num, driver.wheelchair,
-          driver.service_animal, driver.oxygen, driver.cpr, req.user.id
+          driver.city, driver.state, driver.make, driver.model, driver.license_num, driver.elec_wheelchair,
+          driver.col_wheelchair, driver.service_animal, driver.oxygen, driver.cpr, req.user.id
          ],
           function (err, result) {
             done();

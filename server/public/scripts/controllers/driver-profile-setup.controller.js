@@ -1,4 +1,4 @@
-myApp.controller('DriverProfileController', function($http) {
+myApp.controller('DriverProfileController', function($http, $mdDialog, $location) {
     console.log('DriverProfileController created');
     var dc = this;
 
@@ -16,16 +16,32 @@ myApp.controller('DriverProfileController', function($http) {
       console.log(dc.user);
       $http.put('/driver/update', dc.user).then(function(response) {
         console.log('updated driver', response);
+        dc.showAlert();
+        $location.path('/home');
       }).catch(function(response) {
         console.log('update driver error', response);
       })
     }
 
+    // Alert driver after registration completion
+    dc.showAlert = function(ev) {
+      $mdDialog.show(
+        $mdDialog.alert()
+          .parent(angular.element(document.querySelector('#popupContainer')))
+          .clickOutsideToClose(true)
+          .title('Registration Complete!')
+          .textContent('Someone will contact you about becoming a MO driver.')
+          .ariaLabel('Driver Registration Confirmation')
+          .ok('Got it!')
+          .targetEvent(ev)
+      );
+    };
+
     // Photo upload functionality
     // API key
     dc.client = filestack.init('AX0Uil0hBT3afjt9bxjXXz');
     // Feedback for file upload
-    dc.photoMessage = 'Photo is optional and will be displayed to riders'
+    dc.photoMessage = 'Photo is optional and will be displayed to riders';
     // Upload image and put file url
     dc.pickProfilePic = function() {
       console.log('adding driver pic');
