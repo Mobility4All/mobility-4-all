@@ -1,1 +1,21 @@
 <div ng-include="'views/partials/sidenavrider.html'"></div>
+
+<!-- Tom testing input fields -->
+<div layout="column">
+  <div layout="row" style="height:100px" layout-margin>
+    <md-icon class="material-icons" flex="5">my_location</md-icon>
+    <input id="autocomplete" flex="80" placeholder="Enter your pickup address" type="text" ng-model=rc.addressA></input>
+  </div>
+  <div layout="row" style="height:100px" layout-margin>
+    <md-icon class="material-icons" flex="5">location_on</md-icon>
+    <input flex="80" id="autocomplete2" placeholder="Enter your drop off address" type="text" ng-model=rc.addressB></input>
+  </div>
+  <div layout="row" flex>
+    <md-button aria-label="Call for Ride" ng-click="rc.putDestAB()">
+    <!-- <md-icon class="material-icons">car</md-icon> -->
+    Call for Ride
+  </md-button>
+</div>
+
+
+</div>
