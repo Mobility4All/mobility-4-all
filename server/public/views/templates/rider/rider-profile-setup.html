@@ -1,7 +1,7 @@
 <div ng-include="'views/partials/sidenavrider.html'"></div>
 <div ng-cloak>
   <md-content>
-    <md-tabs md-dynamic-height md-border-bottom>
+    <md-tabs md-dynamic-height md-border-bottom md-selected="rc.selectedTab">
 
       <!-- Rider Info Tab -->
       <md-tab label="step 1">
@@ -56,18 +56,23 @@
               </md-input-container>
             </div>
 
-            <h4 class="md-subhead">Accessibility Needs:</h4>
-            <div>
-              <md-checkbox ng-model="rc.user.wheelchair">Wheelchair</md-checkbox>
+            <h4>Accessibility Needs:</h4>
+            <div layout="column">
+              <h5>Wheelchair:</h5>
+              <div layout="row">
+                <md-checkbox ng-model="rc.user.elec_wheelchair">Electric</md-checkbox>
+                <md-checkbox ng-model="rc.user.col_wheelchair">Collapsible</md-checkbox>
+              </div>
+              <h5>Other:</h5>
               <md-checkbox ng-model="rc.user.service_animal">Service Animal</md-checkbox>
-              <md-checkbox ng-model="rc.user.oxygen">Oxygen Tank</md-checkbox>
+              <md-checkbox ng-model="rc.user.oxygen">Oxygen Tank or Other Special Equipment</md-checkbox>
             </div>
 
-            <h4 class="md-subhead">Additional Info:</h4>
+            <h4>Additional Info:</h4>
             <p>Please include any information you would like to share with your driver</p>
             <div>
               <md-input-container class="md-block">
-                <label>Addt'l Info</label>
+                <label>Addtional Info</label>
                 <textarea ng-model="rc.user.rider_addtl_info" rows="5"></textarea>
               </md-input-container>
             </div>
@@ -152,10 +157,14 @@
             <label>Expiration Date</label>
             <input type="text" ng-model="rc.user.credit_expdate"/>
           </md-input-container>
-          <md-button class="md-raised md-primary" ng-click="rc.updateUser()">Complete Profile</md-button>
-
         </md-content>
       </md-tab>
     </md-tabs>
+
+    <div layout="row" layout-align="space-around center">
+      <md-button class="md-raised secondary" ng-click="rc.switchTab('back')" ng-disabled="rc.selectedTab === 0">Back</md-button>
+      <md-button class="md-raised secondary" ng-click="rc.switchTab('next')" ng-hide="rc.selectedTab === 2">Next</md-button>
+      <md-button class="md-raised md-primary" ng-click="rc.updateUser()" ng-show="rc.selectedTab === 2">Complete Profile</md-button>
+    </div>
   </md-content>
 </div>

@@ -14,13 +14,13 @@ router.put('/update', function(req, res, next) {
         next(err);
       }
       client.query("UPDATE riders SET (rider_first, rider_last, rider_street, rider_city, rider_state, " +
-        "rider_cell, rider_email, wheelchair, service_animal, oxygen, rider_addtl_info, " +
+        "rider_cell, rider_email, elec_wheelchair, col_wheelchair, service_animal, oxygen, rider_addtl_info, " +
         "cg_first, cg_last, cg_relationship, cg_cell, cg_email, cg_orders_rides, cg_notifications, " +
         "med_id, metmo_id, credit_card_num, credit_cvc, credit_expdate, complete) " +
-        "= ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,true) WHERE id = $24",
+        "= ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,true) WHERE id = $25",
         [
           rider.rider_first, rider.rider_last, rider.rider_street, rider.rider_city, rider.rider_state,
-           rider.rider_cell, rider.rider_email, rider.wheelchair, rider.service_animal,
+           rider.rider_cell, rider.rider_email, rider.elec_wheelchair, rider.col_wheelchair, rider.service_animal,
            rider.oxygen, rider.rider_addtl_info, rider.cg_first, rider.cg_last,
            rider.cg_relationship, rider.cg_cell, rider.cg_email, rider.cg_orders_rides,
            rider.cg_notifications, rider.med_id, rider.metmo_id,
@@ -67,6 +67,36 @@ router.put('/photo', function(req, res, next) {
   }
 });
 
+router.get('/ride', function(req, res, next) {
+  console.log('matching ride', req.user);
+  var queryText = ['SELECT * FROM drivers WHERE live = true'];
+  if(req.user.elec_wheelchair) queryText.push('elec_wheelchair = true');
+  if(req.user.col_wheelchair) queryText.push('col_wheelchair = true');
+  if(req.user.service_animal) queryText.push('service_animal = true');
+  if(req.user.oxygen) queryText.push('oxygen = true');
+  queryText = queryText.join(' AND ')
+  console.log('query text', queryText);
+  if(req.isAuthenticated()) {
+    pool.connect(function(err, client, done) {
+      if(err) {
+        console.log("Error connecting: ", err);
+        next(err);
+      }
+      client.query(queryText, function (err, result) {
+        done();
+
+        if(err) {
+          console.log("Error inserting data: ", err);
+          res.sendStatus(500);
+        } else {
+          res.send({drivers: result.rows})
+        }
+      });
+    });
+  }
+}
+
+);
 
 
 module.exports = router;
