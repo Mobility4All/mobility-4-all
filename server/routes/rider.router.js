@@ -67,6 +67,31 @@ router.put('/photo', function(req, res, next) {
   }
 });
 
+router.put('/destAB', function(req, res, next) {
+  var ride = req.body;
+  console.log('save rider AB geolocations', ride, req.user.id);
+  if(req.isAuthenticated()) {
+    pool.connect(function(err, client, done) {
+      if(err) {
+        console.log("Error connecting: ", err);
+        next(err);
+      }
+      client.query("UPDATE trips SET start_location = $1, end_location = $2 WHERE id = $3",
+        [ride., req.user.id],
+          function (err, result) {
+            done();
+
+            if(err) {
+              console.log("Error inserting data: ", err);
+              res.sendStatus(500);
+            } else {
+              res.sendStatus(200);
+            }
+          });
+    });
+  }
+});
+
 
 
 module.exports = router;

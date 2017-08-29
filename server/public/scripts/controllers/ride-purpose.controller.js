@@ -32,11 +32,13 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
         destA = autocomplete.getPlace();
         destB = autocomplete2.getPlace();
 
-            latA = destA.geometry.location.lat();
-            lngA = destA.geometry.location.lng();
-            latB = destB.geometry.location.lat();
-            lngB = destB.geometry.location.lng();
+        ride.latA = destA.geometry.location.lat();
+        ride.lngA = destA.geometry.location.lng();
+        ride.latB = destB.geometry.location.lat();
+        ride.lngB = destB.geometry.location.lng();
       }
+
+
 
 
     // When the user selects an address from the dropdown, populate the address
@@ -68,9 +70,9 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
     }
 
     rc.putDestAB = function() {
-      console.log("destA lat/lan are:", latA, lngA);
-      console.log("destB lat/lng are:", latB, lngB);
-      $http.put('/rider/destAB', rc.user).then(function(response) {
+      console.log("destA lat/lan are:", ride.latA, ride.lngA);
+      console.log("destB lat/lng are:", ride.latB, ride.lngB);
+      $http.put('/rider/destAB', rc.ride).then(function(response) {
         console.log('destAB put to db', response);
       }).catch(function(response) {
         console.log('destAB put error', response);
