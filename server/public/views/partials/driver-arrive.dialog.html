@@ -1,0 +1,32 @@
+<md-dialog aria-label="driver arrival">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <h2>Your driver is here!</h2>
+        <p>
+          Driver Photo
+        </p>
+        <p>
+          Driver Vehicle Photo
+        </p>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+
+      <md-button ng-click="cancel()" >
+        Okay!
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
