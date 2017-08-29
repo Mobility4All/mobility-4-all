@@ -1,4 +1,4 @@
-myApp.controller('DefaultViewController', function() {
+myApp.controller('DefaultViewController', function($scope, $interval) {
   console.log('DefaultViewController created');
   var dc = this;
 
@@ -8,7 +8,7 @@ myApp.controller('DefaultViewController', function() {
     dc.buttonVisible = !dc.buttonVisible;
     console.log(dc.buttonVisible);
   };
-  
+
 
   // These functions take in user input for start and end destinations, and returns
   //a google map with polyline route and with text driving directions
@@ -57,6 +57,30 @@ myApp.controller('DefaultViewController', function() {
     }
 
   }; //end of init map function
+
+  //HTML 5 geolocation pure JS
+
+  dc.message = '';
+
+  dc.showPosition = function(position) {
+    // dc.message = "Latitude:  " + position.coords.latitude + "";
+    console.log('latitude is', position.coords.latitude);
+    console.log('longitude is',position.coords.longitude);
+    dc.message = "Latitude:  " + position.coords.latitude + "  Longitude: " + position.coords.longitude + "";
+    $scope.$apply();
+  }
+
+  var getLocation = function() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(dc.showPosition);
+    } else {
+      dc.message = "Geolocation is not supported by this browser.";
+    }
+  }
+
+  dc.geoLocate = getLocation;
+
+//end of html5 geo
 
 
 
