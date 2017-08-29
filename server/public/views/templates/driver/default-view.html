@@ -1,4 +1,8 @@
-<h1>Driver default view</h1>
-<div class="">
-
+<div ng-include="'views/partials/sidenavdriver.html'"></div>
+<div layout="row" layout-align="center center">
+  <md-button style="width:50%; height:40px; margin:10px" ng-show="dc.buttonVisible" ng-click="dc.toggle()" class="secondary md-raised">Go Live</md-button>
+  <md-button style="width:50%; height:40px; margin:10px" ng-hide="dc.buttonVisible" ng-click="dc.toggle()" class="secondary md-raised">Online</md-button>
+</div>
+<div layout="row" layout-sm="column" layout-align="space-around">
+  <md-progress-circular md-mode="indeterminate"></md-progress-circular>
 </div>

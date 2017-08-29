@@ -26,6 +26,10 @@ h3{
   color: red;
 }
 
+.md-button.secondary {
+  background-color: #E8E8E8;
+}
+
 .header .container h1 {
   font-size: 32px;
   font-weight: 600;
