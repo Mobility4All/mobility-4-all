@@ -18,6 +18,8 @@
                 <input type="text" ng-model="rc.user.rider_last"/>
               </md-input-container>
             </div>
+            <p>{{rc.photoMessage}}</p>
+            <md-button class="md-raised md-primary" ng-click="rc.pickPic()">Choose Photo</md-button>
 
             <h4 class="md-subhead">Contact Info:</h4>
             <!-- Maybe use google places for address? -->

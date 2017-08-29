@@ -12,6 +12,8 @@
       <input type="text" ng-model="dc.user.last_name"/>
     </md-input-container>
   </div>
+  <p>{{dc.photoMessage}}</p>
+  <md-button class="md-raised md-primary" ng-click="dc.pickProfilePic()">Choose Profile Photo</md-button>
 
   <h4>Contact Info:</h4>
   <div>
@@ -61,6 +63,8 @@
     <label>License #</label>
     <input type="text" ng-model="dc.user.license_num"/>
   </md-input-container>
+  <p>{{dc.vehicleMessage}}</p>
+  <md-button class="md-raised md-primary" ng-click="dc.pickVehiclePic()">Choose Vehicle Photo</md-button>
 
   <h4>Accessibility Needs you are able to accommodate:</h4>
   <div>
