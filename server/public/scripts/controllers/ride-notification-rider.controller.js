@@ -4,9 +4,9 @@ myApp.controller('RiderNotificationController', function($mdDialog, $scope) {
     rc.driver = "james";
     var eta = "10";
 
-    $scope.showDriverArrivalAdvanced = function(ev) {
+    $scope.showDriverMatched = function(ev) {
         $mdDialog.show({
-          controller: DialogController,
+          controller: 'RiderNotificationController',
           templateUrl: 'views/partials/arrive.dialog.html',
           parent: angular.element(document.body),
           targetEvent: ev,
@@ -19,7 +19,22 @@ myApp.controller('RiderNotificationController', function($mdDialog, $scope) {
           $scope.status = 'You cancelled the dialog.';
         });
       };
-      function DialogController($scope, $mdDialog) {
+      $scope.showDriverArrived = function(ev) {
+          $mdDialog.show({
+            controller: 'RiderNotificationController',
+            templateUrl: 'views/partials/driver-arrive.dialog.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose:true,
+            fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+          })
+          .then(function(answer) {
+            $scope.status = answer;
+          }, function() {
+            
+          });
+        };
+
     $scope.hide = function() {
       $mdDialog.hide();
     };
@@ -31,5 +46,5 @@ myApp.controller('RiderNotificationController', function($mdDialog, $scope) {
     $scope.answer = function(answer) {
       $mdDialog.hide(answer);
     };
-  }
+
 });

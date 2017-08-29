@@ -1,11 +1,15 @@
 <div ng-include="'views/partials/sidenavrider.html'"></div>
 
-<md-button class="md-primary md-raised" ng-click="showDriverArrivalAdvanced($event)">
-      Driver Arrived
-    </md-button>
+<md-button class="md-primary md-raised" ng-click="showDriverMatched($event)">
+  Driver Matched
+</md-button>
 
-    <div ng-if="status" id="status">
-        <b layout="row" layout-align="center center" class="md-padding">
-          {{status}}
-        </b>
-      </div>
+<div ng-if="status" id="status">
+  <b layout="row" layout-align="center center" class="md-padding">
+    {{status}}
+  </b>
+</div>
+
+<md-button class="md-primary md-raised" ng-click="showDriverArrived($event)">
+  Driver Arrived
+</md-button>
