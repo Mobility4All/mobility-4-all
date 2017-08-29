@@ -1,6 +1,17 @@
-myApp.controller('RiderProfileController', function($http) {
+myApp.controller('RiderProfileController', function($http, $mdDialog, $location) {
     console.log('RiderProfileController created');
     var rc = this;
+
+    rc.selectedTab = 0;
+
+    rc.switchTab = function(direction) {
+      if(direction === 'back') {
+        if(rc.selectedTab > 0) rc.selectedTab--;
+      }
+      if(direction === 'next') {
+        if(rc.selectedTab < 2) rc.selectedTab++;
+      }
+    }
 
     // Set default checkbox behavior
     rc.caregiver = false;
@@ -13,11 +24,27 @@ myApp.controller('RiderProfileController', function($http) {
             'WY').split(' ').map(function (state) { return { abbrev: state }; }
     );
 
+    rc.showAlert = function(ev) {
+      $mdDialog.show(
+        $mdDialog.alert()
+          .parent(angular.element(document.querySelector('#popupContainer')))
+          .clickOutsideToClose(true)
+          .title('Profile Complete!')
+          .textContent('Your profile has been completed. We can now match you with drivers.')
+          .ariaLabel('Rider Registration Confirmation')
+          .ok('Got it!')
+          .targetEvent(ev)
+      );
+    };
+
+
     // Updates rider profile after setup
     rc.updateUser = function() {
       console.log(rc.user);
       $http.put('/rider/update', rc.user).then(function(response) {
         console.log('updated rider', response);
+        rc.showAlert();
+        $location.path('/on-demand')
       }).catch(function(response) {
         console.log('update rider error', response);
       })
