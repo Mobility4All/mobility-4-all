@@ -2,7 +2,7 @@ myApp.controller('RiderNotificationController', function($timeout, $mdBottomShee
     console.log('RiderNotificationController created');
     var rc = this;
 
-    //
+    //hide/show current fare price at the end of the ride
     rc.showGridBottomSheet = function() {
       rc.alert = '';
       $mdBottomSheet.show({
