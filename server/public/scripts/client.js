@@ -18,9 +18,9 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
         }
       }
     })
-    .when('/info', {
-      templateUrl: '/views/templates/info.html',
-      controller: 'InfoController',
+    .when('/about', {
+      templateUrl: '/views/templates/about.html',
+      controller: 'AboutController as ac',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();
@@ -35,24 +35,6 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
     .when('/ride-purpose', {
       templateUrl: '/views/templates/rider/ride-purpose.html',
       controller: 'RidePurposeController as rc',
-      resolve: {
-        getuser : function(UserService){
-          return UserService.getuser();
-        }
-      }
-    })
-    .when('/send-ride', {
-      templateUrl: '/views/templates/rider/send-ride.html',
-      controller: 'SendRideController as sc',
-      resolve: {
-        getuser : function(UserService){
-          return UserService.getuser();
-        }
-      }
-    })
-    .when('/ride-arrival', {
-      templateUrl: '/views/templates/rider/ride-arrival.html',
-      controller: 'RideArrivalController as rc',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();
@@ -121,33 +103,16 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
         }
       }
     })
-    .when('/ride-notification', {
-      templateUrl: '/views/templates/rider/ride-notification.html',
-      controller: 'RideNotificationController as rc',
+    .when('/trip-view', {
+      templateUrl: '/views/templates/rider/trip-view.html',
+      controller: 'RiderNotificationController as rc',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();
         }
       }
     })
-    .when('/pickup-view', {
-      templateUrl: '/views/templates/rider/pickup-view.html',
-      controller: 'PickupViewController as pc',
-      resolve: {
-        getuser : function(UserService){
-          return UserService.getuser();
-        }
-      }
-    })
-    .when('/ride-complete', {
-      templateUrl: '/views/templates/rider/ride-complete.html',
-      controller: 'RideCompleteController as rc',
-      resolve: {
-        getuser : function(UserService){
-          return UserService.getuser();
-        }
-      }
-    })
+    
     .otherwise({
       redirectTo: 'home'
     });
