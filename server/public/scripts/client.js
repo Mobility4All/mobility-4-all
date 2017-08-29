@@ -112,7 +112,7 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
         }
       }
     })
-    
+
     .otherwise({
       redirectTo: 'home'
     });

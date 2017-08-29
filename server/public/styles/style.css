@@ -30,6 +30,12 @@ h3{
   background-color: #E8E8E8;
 }
 
+.text {
+  text-align: center;
+  font-size: 18px;
+  font-family: Lato, sans-serif;
+}
+
 .header .container h1 {
   font-size: 32px;
   font-weight: 600;
