@@ -1,14 +1,20 @@
-myApp.controller('DefaultViewController', function() {
+myApp.controller('DefaultViewController', function(DataService) {
   console.log('DefaultViewController created');
   var dc = this;
 
   dc.buttonVisible = false;
 
   dc.toggle = function() {
+    if(dc.buttonVisible) {
+      DataService.connectRider();
+    }
+    if(!dc.buttonVisible) {
+      DataService.disconnectRider();
+    }
     dc.buttonVisible = !dc.buttonVisible;
     console.log(dc.buttonVisible);
   };
-  
+
 
   // These functions take in user input for start and end destinations, and returns
   //a google map with polyline route and with text driving directions

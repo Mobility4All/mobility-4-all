@@ -84,4 +84,8 @@ io.on('connection', function(socket){
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
+
+  socket.on('test', function(data) {
+    console.log('testing data', data);
+  })
 });

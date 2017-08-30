@@ -1,4 +1,4 @@
-myApp.controller('OnDemandController', function($http) {
+myApp.controller('OnDemandController', function($http, UserService) {
     console.log('OnDemandController created');
     var oc = this;
 
@@ -7,5 +7,10 @@ myApp.controller('OnDemandController', function($http) {
       $http.get('/trip/match').then(function(response) {
         console.log('response from match', response);
       })
+    }
+
+    oc.test = function() {
+      console.log('testing socket');
+      UserService.test();
     }
 });

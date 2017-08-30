@@ -68,6 +68,8 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
     }
 
     rc.putDestAB = function() {
+      DataService.connectRider();
+
       console.log("destA lat/lan are:", latA, lngA);
       console.log("destB lat/lng are:", latB, lngB);
       $http.put('/rider/destAB', rc.user).then(function(response) {
