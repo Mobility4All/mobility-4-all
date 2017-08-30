@@ -7,6 +7,8 @@ myApp.controller('RiderLoginController', function($http, $location, UserService,
       selection:'rider'
     };
 
+    vm.userService = UserService;
+
     vm.message = '';
 
     vm.login = function() {

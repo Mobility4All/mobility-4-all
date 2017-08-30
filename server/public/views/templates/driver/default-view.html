@@ -1,7 +1,7 @@
 <div ng-include="'views/partials/sidenavdriver.html'"></div>
 <div layout="row" layout-align="center center">
   <md-button style="width:50%; height:40px; margin:10px" ng-show="dc.buttonVisible" ng-click="dc.toggle()" class="secondary md-raised">Go Live</md-button>
-  <md-button style="width:50%; height:40px; margin:10px" ng-hide="dc.buttonVisible" ng-click="dc.toggle()" class="secondary md-raised">Online</md-button>
+  <md-button style="width:50%; height:40px; margin:10px" ng-hide="dc.buttonVisible" ng-click="dc.toggle()" class="md-raised md-primary">Online</md-button>
 </div>
 <div layout="row" layout-sm="column" layout-align="space-around">
   <md-progress-circular md-mode="indeterminate"></md-progress-circular>
@@ -10,7 +10,7 @@
 <button ng-click="dc.geoLocate()">Current Coordinates: {{dc.message}}</button>
 
 
-<div id="floating-panel">
+<!-- <div id="floating-panel">
   <b>Start: </b>
   <input type="text" ng-model="dc.start">
   <b>End: </b>
@@ -18,4 +18,4 @@
   <button type="button" ng-click="dc.onClick()">Find Directions</button>
 </div>
 <div id="right-panel"></div>
-<div id="map"></div>
+<div id="map"></div> -->

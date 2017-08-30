@@ -72,9 +72,12 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
     }
 
     rc.putDestAB = function() {
+
+      DataService.connectRider();
       console.log("destA lat/lan are:", rc.ride.latA, rc.ride.lngA);
       console.log("destB lat/lng are:", rc.ride.latB, rc.ride.lngB);
       $http.post('/rider/destAB', rc.ride).then(function(response) {
+
         console.log('destAB put to db', response);
         $location.path('/trip-view');
       }).catch(function(response) {
