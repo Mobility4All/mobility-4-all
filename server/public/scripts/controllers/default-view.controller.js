@@ -62,25 +62,54 @@ myApp.controller('DefaultViewController', function($scope, $interval) {
 
   dc.message = '';
 
-  dc.showPosition = function(position) {
-    // dc.message = "Latitude:  " + position.coords.latitude + "";
-    console.log('latitude is', position.coords.latitude);
-    console.log('longitude is',position.coords.longitude);
-    dc.message = "Latitude:  " + position.coords.latitude + "  Longitude: " + position.coords.longitude + "";
-    $scope.$apply();
-  }
+  // dc.showPosition = function(position) {
+  //   // dc.message = "Latitude:  " + position.coords.latitude + "";
+  //   console.log('latitude is', position.coords.latitude);
+  //   console.log('longitude is',position.coords.longitude);
+  //   dc.message = "Latitude:  " + position.coords.latitude + "  Longitude: " + position.coords.longitude + "";
+  //   $scope.$apply();
+  // }
+  //
+  // var getLocation = function() {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(dc.showPosition);
+  //   } else {
+  //     dc.message = "Geolocation is not supported by this browser.";
+  //   }
+  // }
 
-  var getLocation = function() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(dc.showPosition);
-    } else {
-      dc.message = "Geolocation is not supported by this browser.";
+  dc.geoLocate = function() {
+    console.log('update location function called');
+
+    geolocation();
+
+    dc.showPosition = function(position) {
+      // dc.message = "Latitude:  " + position.coords.latitude + "";
+      console.log('latitude is', position.coords.latitude);
+      console.log('longitude is',position.coords.longitude);
+      dc.message = "Latitude:  " + position.coords.latitude + "  Longitude: " + position.coords.longitude + "";
+      $scope.$apply();
     }
-  }
 
-  dc.geoLocate = getLocation;
+    var getLocation = function() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(dc.showPosition);
+      } else {
+        dc.message = "Geolocation is not supported by this browser.";
+      }
+    }
+
+    $http.put('/driver/geolocation', vm.position.coords).then(function(response) {
+    console.log('update location -- success', response);
+
+  })
+
+
+  }
 
 //end of html5 geo
+
+
 
 
 

@@ -89,5 +89,35 @@ router.put('/vehiclephoto', function(req, res, next) {
 });
 
 
+router.put('/geolocation', function(req, res, next) {
+  var geolocation = req.body;
+  console.log('updating driver geolocation', geolocation, req.user.id);
+  if(req.isAuthenticated()) {
+    pool.connect(function(err, client, done) {
+      if(err) {
+        console.log("Error connecting: ", err);
+        next(err);
+      }
+      var input = 'SRID=4326;POINT(' + geolocation.lng + ' ' + geolocation.lat + ')';
+      client.query("UPDATE drivers SET location = ST_GeographyFromText($1) WHERE id = $2",
+        [input, req.user.id],
+          function (err, result) {
+            done();
+
+            if(err) {
+              console.log("Error inserting data: ", err);
+              res.sendStatus(500);
+            } else {
+              res.sendStatus(200);
+            }
+          });
+    });
+  }
+});
+
+
+
+
+
 
 module.exports = router;
