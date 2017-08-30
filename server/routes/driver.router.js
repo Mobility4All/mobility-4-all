@@ -6,7 +6,7 @@ var pool = require('../modules/pool.js');
 // Handles driver profile setup request
 router.put('/update', function(req, res, next) {
   var driver = req.body;
-  console.log('updating driver', driver, req.user.id);
+  // console.log('updating driver', driver, req.user.id);
   if(req.isAuthenticated()) {
     pool.connect(function(err, client, done) {
       if(err) {
@@ -65,7 +65,7 @@ router.put('/profilephoto', function(req, res, next) {
 //Update driver photo url
 router.put('/vehiclephoto', function(req, res, next) {
   var vehicle = req.body;
-  console.log('updating vehicle photo', vehicle, req.user.id);
+  // console.log('updating vehicle photo', vehicle, req.user.id);
   if(req.isAuthenticated()) {
     pool.connect(function(err, client, done) {
       if(err) {

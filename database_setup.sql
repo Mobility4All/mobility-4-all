@@ -75,6 +75,7 @@ CREATE TABLE "trips" (
   "id" serial PRIMARY KEY,
   "driver_id" INT,
   "rider_id" INT,
+  "purpose" VARCHAR(10),
   "start_location" geography(Point,4326) NOT NULL,
   "end_location" geography(Point,4326) NOT NULL,
   "rider_note" VARCHAR(200),

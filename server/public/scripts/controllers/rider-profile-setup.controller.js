@@ -1,4 +1,4 @@
-myApp.controller('RiderProfileController', function($http, $mdDialog, $location) {
+myApp.controller('RiderProfileController', function($http, $mdDialog, $location, $window) {
     console.log('RiderProfileController created');
     var rc = this;
 
@@ -6,10 +6,16 @@ myApp.controller('RiderProfileController', function($http, $mdDialog, $location)
 
     rc.switchTab = function(direction) {
       if(direction === 'back') {
-        if(rc.selectedTab > 0) rc.selectedTab--;
+        if(rc.selectedTab > 0) {
+          rc.selectedTab--;
+          $window.scrollTo(0, 0);
+        }
       }
       if(direction === 'next') {
-        if(rc.selectedTab < 2) rc.selectedTab++;
+        if(rc.selectedTab < 2) {
+          rc.selectedTab++;
+          $window.scrollTo(0, 0);
+        }
       }
     }
 
