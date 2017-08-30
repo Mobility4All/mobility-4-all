@@ -105,7 +105,6 @@ myApp.controller('DefaultViewController', function(DataService, $http, $scope, $
 };
 
 
-
   function updateDriverLocation() {
     $http.put('/driver/geolocation', dc.coords).then(function(response) {
       console.log('update location -- success', response);
