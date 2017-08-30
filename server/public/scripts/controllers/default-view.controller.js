@@ -62,7 +62,7 @@ myApp.controller('DefaultViewController', function(DataService, $http, $scope, $
       });
     }
 
-  }; //end of init map function
+  } //end of init map function
 
   //HTML 5 geolocation pure JS
 
@@ -95,12 +95,14 @@ myApp.controller('DefaultViewController', function(DataService, $http, $scope, $
         dc.message = "Geolocation is not supported by this browser.";
       }
     } //end of getLocation fn
-
-
-  } //end geolocat
-
+  }; //end geolocat
   //end of html5 geo
 
+
+  $scope.callInterval = function() {
+  //Show current seconds value 5 times after every 1000 ms
+  $interval(dc.geoLocate, 60000);
+};
 
 
   function updateDriverLocation() {
