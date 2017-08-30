@@ -7,7 +7,7 @@
   <md-progress-circular md-mode="indeterminate"></md-progress-circular>
 </div>
 {{dc.test.message}}
-<button ng-click="dc.geoLocate()">Current Coordinates: {{dc.message}}</button>
+<button ng-click="dc.geoLocate(); callInterval()">Current Coordinates: {{dc.message}}</button>
 
 
 <!-- <div id="floating-panel">
@@ -17,5 +17,9 @@
   <input type="text" ng-model="dc.end" value="">
   <button type="button" ng-click="dc.onClick()">Find Directions</button>
 </div>
-<div id="right-panel"></div>
-<div id="map"></div> -->
+<div id="right-panel"></div> -->
+
+
+<div ng-include="'views/partials/driver-notifications.html'"></div>
+
+<div id="map"></div>
