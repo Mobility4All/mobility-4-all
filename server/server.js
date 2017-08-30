@@ -80,12 +80,13 @@ var server = app.listen(port, function(){
 var io = require('socket.io')(server);
 
 io.on('connection', function(socket){
-  console.log('a user connected');
+  console.log('a user connected', socket.id);
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
 
-  socket.on('test', function(data) {
-    console.log('testing data', data);
+  socket.on('ride-request', function(data) {
+    console.log('ride request data', data);
+    io.emit('find-driver', data);
   })
 });

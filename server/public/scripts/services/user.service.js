@@ -40,16 +40,8 @@ myApp.factory('UserService', function($http, $location, $mdSidenav){
       console.log('UserService -- logout');
       $http.get('/user/logout').then(function(response) {
         console.log('UserService -- logout -- logged out');
-        // socket.disconnect();
         $location.path("/home");
       });
-    },
-
-    test: function() {
-      console.log('user service test');
-      socket.emit('test', {
-        user: userObject
-      })
     }
   };
 });

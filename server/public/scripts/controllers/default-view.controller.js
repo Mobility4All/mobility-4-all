@@ -6,10 +6,10 @@ myApp.controller('DefaultViewController', function(DataService, $scope, $interva
 
   dc.toggle = function() {
     if(dc.buttonVisible) {
-      DataService.connectRider();
+      DataService.connectDriver();
     }
     if(!dc.buttonVisible) {
-      DataService.disconnectRider();
+      DataService.disconnectDriver();
     }
     dc.buttonVisible = !dc.buttonVisible;
     console.log(dc.buttonVisible);
