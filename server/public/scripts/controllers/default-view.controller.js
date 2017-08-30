@@ -1,10 +1,16 @@
-myApp.controller('DefaultViewController', function($scope, $interval) {
+myApp.controller('DefaultViewController', function(DataService, $scope, $interval) {
   console.log('DefaultViewController created');
   var dc = this;
 
-  dc.buttonVisible = false;
+  dc.buttonVisible = true;
 
   dc.toggle = function() {
+    if(dc.buttonVisible) {
+      DataService.connectRider();
+    }
+    if(!dc.buttonVisible) {
+      DataService.disconnectRider();
+    }
     dc.buttonVisible = !dc.buttonVisible;
     console.log(dc.buttonVisible);
   };

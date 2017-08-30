@@ -6,7 +6,7 @@ var pool = require('../modules/pool.js');
 // Handles rider profile setup request
 router.put('/update', function(req, res, next) {
   var rider = req.body;
-  console.log('updating rider', rider, req.user.id);
+  // console.log('updating rider', rider, req.user.id);
   if(req.isAuthenticated()) {
     pool.connect(function(err, client, done) {
       if(err) {
@@ -44,7 +44,7 @@ router.put('/update', function(req, res, next) {
 
 router.put('/photo', function(req, res, next) {
   var rider = req.body;
-  console.log('updating rider photo', rider, req.user.id);
+  // console.log('updating rider photo', rider, req.user.id);
   if(req.isAuthenticated()) {
     pool.connect(function(err, client, done) {
       if(err) {
@@ -100,7 +100,7 @@ router.post('/destAB', function(req, res, next) {
 
 
 router.get('/ride', function(req, res, next) {
-  console.log('matching ride', req.user);
+  // console.log('matching ride', req.user);
   var queryText = ['SELECT * FROM drivers WHERE live = true'];
   if(req.user.elec_wheelchair) queryText.push('elec_wheelchair = true');
   if(req.user.col_wheelchair) queryText.push('col_wheelchair = true');
