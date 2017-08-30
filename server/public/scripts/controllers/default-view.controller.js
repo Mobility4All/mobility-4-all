@@ -2,7 +2,7 @@ myApp.controller('DefaultViewController', function(DataService, $scope, $interva
   console.log('DefaultViewController created');
   var dc = this;
 
-  dc.buttonVisible = false;
+  dc.buttonVisible = true;
 
   dc.toggle = function() {
     if(dc.buttonVisible) {
