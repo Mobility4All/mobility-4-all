@@ -68,55 +68,45 @@ myApp.controller('DefaultViewController', function(DataService, $http, $scope, $
 
   dc.message = '';
   dc.coords = {
-    position: ''
+    lat: '',
+    lng: ''
   };
-  // dc.showPosition = function(position) {
-  //   // dc.message = "Latitude:  " + position.coords.latitude + "";
-  //   console.log('latitude is', position.coords.latitude);
-  //   console.log('longitude is',position.coords.longitude);
-  //   dc.message = "Latitude:  " + position.coords.latitude + "  Longitude: " + position.coords.longitude + "";
-  //   $scope.$apply();
-  // }
-  //
-  // var getLocation = function() {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(dc.showPosition);
-  //   } else {
-  //     dc.message = "Geolocation is not supported by this browser.";
-  //   }
-  // }
+
 
   dc.geoLocate = function() {
     console.log('update location function called');
 
+    getLocation();
 
-
-    dc.showPosition = function(position) {
+    function showPosition(position) {
       dc.message = "Latitude:  " + position.coords.latitude + "  Longitude: " + position.coords.longitude + "";
       $scope.$apply();
       console.log('position coords', position.coords);
-      dc.coords = position.coords;
+      dc.coords.lat = position.coords.latitude;
+      dc.coords.lng = position.coords.longitude;
       console.log('dc.coords', dc.coords);
-          $http.put('/driver/geolocation', dc.coords).then(function(response) {
-          console.log('update location -- success', response);
-        }) //end put req
-    } // end show position functoin
+      updateDriverLocation();
+    } // end show position function
 
-    var getLocation = function() {
+    function getLocation () {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(dc.showPosition);
+        navigator.geolocation.getCurrentPosition(showPosition);
       } else {
         dc.message = "Geolocation is not supported by this browser.";
       }
-    }
-    getLocation();
+    } //end of getLocation fn
+
 
   } //end geolocat
 
-//end of html5 geo
+  //end of html5 geo
 
 
 
-
+  function updateDriverLocation() {
+    $http.put('/driver/geolocation', dc.coords).then(function(response) {
+      console.log('update location -- success', response);
+    })
+  } //end put req
 
 }); //end of controller
