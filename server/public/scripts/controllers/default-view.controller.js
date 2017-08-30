@@ -1,4 +1,4 @@
-myApp.controller('DefaultViewController', function(DataService, $scope, $interval) {
+myApp.controller('DefaultViewController', function(DataService, $http, $scope, $interval) {
   console.log('DefaultViewController created');
   var dc = this;
 
@@ -67,7 +67,9 @@ myApp.controller('DefaultViewController', function(DataService, $scope, $interva
   //HTML 5 geolocation pure JS
 
   dc.message = '';
-  dc.positionCoords;
+  dc.coords = {
+    position: ''
+  };
   // dc.showPosition = function(position) {
   //   // dc.message = "Latitude:  " + position.coords.latitude + "";
   //   console.log('latitude is', position.coords.latitude);
@@ -94,7 +96,11 @@ myApp.controller('DefaultViewController', function(DataService, $scope, $interva
       $scope.$apply();
       console.log('position coords', position.coords);
       dc.coords = position.coords;
-    }
+      console.log('dc.coords', dc.coords);
+          $http.put('/driver/geolocation', dc.coords).then(function(response) {
+          console.log('update location -- success', response);
+        }) //end put req
+    } // end show position functoin
 
     var getLocation = function() {
       if (navigator.geolocation) {
@@ -105,13 +111,7 @@ myApp.controller('DefaultViewController', function(DataService, $scope, $interva
     }
     getLocation();
 
-    $http.put('/driver/geolocation', dc.coords).then(function(response) {
-    console.log('update location -- success', response);
-
-  })
-
-
-  }
+  } //end geolocat
 
 //end of html5 geo
 
