@@ -1,4 +1,4 @@
-myApp.controller('DefaultViewController', function(DataService) {
+myApp.controller('DefaultViewController', function(DataService, $scope, $interval) {
   console.log('DefaultViewController created');
   var dc = this;
 
@@ -63,6 +63,30 @@ myApp.controller('DefaultViewController', function(DataService) {
     }
 
   }; //end of init map function
+
+  //HTML 5 geolocation pure JS
+
+  dc.message = '';
+
+  dc.showPosition = function(position) {
+    // dc.message = "Latitude:  " + position.coords.latitude + "";
+    console.log('latitude is', position.coords.latitude);
+    console.log('longitude is',position.coords.longitude);
+    dc.message = "Latitude:  " + position.coords.latitude + "  Longitude: " + position.coords.longitude + "";
+    $scope.$apply();
+  }
+
+  var getLocation = function() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(dc.showPosition);
+    } else {
+      dc.message = "Geolocation is not supported by this browser.";
+    }
+  }
+
+  dc.geoLocate = getLocation;
+
+//end of html5 geo
 
 
 

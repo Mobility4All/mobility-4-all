@@ -2,6 +2,15 @@
 
 CREATE DATABASE "mobility_4_all";
 
+
+-- Install PostGIS to make db friendlier for geolocation
+brew install postgis
+--(for reference PostGIS download http://postgis.net/install/)
+--then run this in Postico--
+CREATE EXTENSION postgis;
+
+
+
 -- Navigate into database and use the below data to create tables
 
 CREATE TABLE "drivers" (
@@ -21,7 +30,7 @@ CREATE TABLE "drivers" (
   "driver_photo_url" VARCHAR(100),
   "vehicle_photo_url" VARCHAR(100),
   "live" BOOLEAN DEFAULT FALSE,
-  "location" VARCHAR(100),
+  "location" geography(Point,4326),
   "elec_wheelchair" BOOLEAN DEFAULT FALSE,
   "col_wheelchair" BOOLEAN DEFAULT FALSE,
   "service_animal" BOOLEAN DEFAULT FALSE,
@@ -67,8 +76,8 @@ CREATE TABLE "trips" (
   "driver_id" INT,
   "rider_id" INT,
   "purpose" VARCHAR(10),
-  "start_location" VARCHAR(100),
-  "end_location" VARCHAR(100),
+  "start_location" geography(Point,4326) NOT NULL,
+  "end_location" geography(Point,4326) NOT NULL,
   "rider_note" VARCHAR(200),
   "accept" BOOLEAN default false,
   "pickup" BOOLEAN default false,
