@@ -1,4 +1,4 @@
-myApp.controller('DefaultViewController', function($scope, $interval) {
+myApp.controller('DefaultViewController', function($http, $scope, $interval) {
   console.log('DefaultViewController created');
   var dc = this;
 
@@ -61,7 +61,7 @@ myApp.controller('DefaultViewController', function($scope, $interval) {
   //HTML 5 geolocation pure JS
 
   dc.message = '';
-
+  dc.positionCoords;
   // dc.showPosition = function(position) {
   //   // dc.message = "Latitude:  " + position.coords.latitude + "";
   //   console.log('latitude is', position.coords.latitude);
@@ -81,14 +81,13 @@ myApp.controller('DefaultViewController', function($scope, $interval) {
   dc.geoLocate = function() {
     console.log('update location function called');
 
-    geolocation();
+
 
     dc.showPosition = function(position) {
-      // dc.message = "Latitude:  " + position.coords.latitude + "";
-      console.log('latitude is', position.coords.latitude);
-      console.log('longitude is',position.coords.longitude);
       dc.message = "Latitude:  " + position.coords.latitude + "  Longitude: " + position.coords.longitude + "";
       $scope.$apply();
+      console.log('position coords', position.coords);
+      dc.coords = position.coords;
     }
 
     var getLocation = function() {
@@ -98,8 +97,9 @@ myApp.controller('DefaultViewController', function($scope, $interval) {
         dc.message = "Geolocation is not supported by this browser.";
       }
     }
+    getLocation();
 
-    $http.put('/driver/geolocation', vm.position.coords).then(function(response) {
+    $http.put('/driver/geolocation', dc.coords).then(function(response) {
     console.log('update location -- success', response);
 
   })

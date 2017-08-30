@@ -90,6 +90,7 @@ router.put('/vehiclephoto', function(req, res, next) {
 
 
 router.put('/geolocation', function(req, res, next) {
+  console.log('req body', req.body); 
   var geolocation = req.body;
   console.log('updating driver geolocation', geolocation, req.user.id);
   if(req.isAuthenticated()) {
