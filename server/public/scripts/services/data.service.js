@@ -18,6 +18,7 @@ myApp.factory('DataService', function($http, UserService){
       console.log('ride object for request', rideObject, socket.r);
       // Sends ride request to socket
       socket.emit('ride-request', rideObject);
+      // Handles response of ride being accepted
       socket.on('rider-accepted', function(ride) {
         console.log('accepted ride', ride);
       })
@@ -32,7 +33,7 @@ myApp.factory('DataService', function($http, UserService){
         console.log(ride);
       })
     },
-
+    // Handles driver accepting ride
     acceptRide: function() {
       console.log('accepting ride');
       socket.emit('driver-accept', rideObject);
