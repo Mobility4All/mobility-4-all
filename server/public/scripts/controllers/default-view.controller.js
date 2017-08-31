@@ -1,16 +1,18 @@
-myApp.controller('DefaultViewController', function($http, $timeout, $mdBottomSheet, $mdToast, DataService, $scope, $interval) {
+myApp.controller('DefaultViewController', function(UserService, DataService, $http, $timeout, $mdBottomSheet, $mdToast, DataService, $scope, $interval) {
 
   console.log('DefaultViewController created');
   var dc = this;
 
   dc.buttonVisible = true;
-
+//toggle function to show driver online and golive
   dc.toggle = function() {
     if(dc.buttonVisible) {
-      DataService.connectRider();
+      $http.put('/driver/live/');
+      DataService.connectDriver();
     }
     if(!dc.buttonVisible) {
-      DataService.disconnectRider();
+      $http.put('/driver/unlive/');
+      DataService.disconnectDriver();
     }
     dc.buttonVisible = !dc.buttonVisible;
     console.log(dc.buttonVisible);

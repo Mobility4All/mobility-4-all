@@ -30,7 +30,7 @@ var googleMapsClient = require('@google/maps').createClient({
     })
     .asPromise()
     .then(function(response) {
-      console.log('matrix test response from the router', response.json.rows);
+      // console.log('matrix test response from the router', response.json.rows);
     })
 
 

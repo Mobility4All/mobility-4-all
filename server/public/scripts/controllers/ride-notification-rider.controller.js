@@ -12,7 +12,7 @@ myApp.controller('RiderNotificationController', function($timeout, $mdBottomShee
           templateUrl: 'views/partials/arrive.dialog.html',
           parent: angular.element(document.body),
           targetEvent: ev,
-          clickOutsideToClose:true,
+          clickOutsideToClose:false,
           fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
         })
         .then(function(answer) {
@@ -27,7 +27,7 @@ myApp.controller('RiderNotificationController', function($timeout, $mdBottomShee
             templateUrl: 'views/partials/driver-arrive.dialog.html',
             parent: angular.element(document.body),
             targetEvent: ev,
-            clickOutsideToClose:true,
+            clickOutsideToClose:false,
             fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
           })
           .then(function(answer) {
