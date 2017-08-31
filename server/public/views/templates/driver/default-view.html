@@ -10,6 +10,7 @@
 <button ng-click="dc.geoLocate(); callInterval()">Current Coordinates: {{dc.message}}</button>
 
 
+
 <!-- <div id="floating-panel">
   <b>Start: </b>
   <input type="text" ng-model="dc.start">
@@ -19,7 +20,18 @@
 </div>
 <div id="right-panel"></div> -->
 
+<div class="bottom-sheet-demo inset" layout="row" layout-sm="column" layout-align="center" >
+    <md-button flex="50" class="md-primary md-raised" ng-click="dc.showGridBottomSheet()">New Rider</md-button>
+</div>
+<div  ng-if="alert">
+  <br/>
+  <b layout="row" layout-align="center center" class="md-padding">
+    {{alert}}
+  </b>
+</div>
 
 <div ng-include="'views/partials/driver-notifications.html'"></div>
+
+<div ng-include="'views/partials/driver-ride-notification.html'"></div>
 
 <div id="map"></div>

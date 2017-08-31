@@ -1,4 +1,5 @@
-myApp.controller('DefaultViewController', function(DataService, $http, $scope, $interval) {
+myApp.controller('DefaultViewController', function($http, $timeout, $mdBottomSheet, $mdToast, DataService, $scope, $interval) {
+
   console.log('DefaultViewController created');
   var dc = this;
 
@@ -104,6 +105,24 @@ myApp.controller('DefaultViewController', function(DataService, $http, $scope, $
   $interval(dc.geoLocate, 60000);
 };
 
+//hide/show accept a rider
+dc.showGridBottomSheet = function() {
+  dc.alert = '';
+  $mdBottomSheet.show({
+    templateUrl: 'views/partials/driver-ride-notification.html',
+    controller: 'ArrivalController',
+    clickOutsideToClose: false
+  }).then(function(clickedItem) {
+    $mdToast.show(
+          $mdToast.simple()
+            .textContent(clickedItem['name'] + ' clicked!')
+            .position('top right')
+            .hideDelay(1500)
+        );
+  }).catch(function(error) {
+    // User clicked outside or hit escape
+  });
+};
 
   function updateDriverLocation() {
     $http.put('/driver/geolocation', dc.coords).then(function(response) {
