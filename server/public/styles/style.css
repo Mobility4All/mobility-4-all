@@ -131,18 +131,18 @@ li a:hover {
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
 #map {
-  height: 700px;
-  width: 700px;
+  height: 300px;
+  width: 300px;
 }
 /* Optional: Makes the sample page fill the window. */
-html, body {
+/*html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-}
+}*/
 #floating-panel {
-  position: absolute;
-  top: 10px;
+  /*position: absolute;*/
+  top: 75px;
   left: 25%;
   z-index: 5;
   background-color: #fff;
@@ -177,8 +177,9 @@ html, body {
 #right-panel i {
    font-size: 12px;
  }
+
 #right-panel {
-   height: 100%;
+   height: 300px;
    float: right;
    width: 390px;
    overflow: auto;
