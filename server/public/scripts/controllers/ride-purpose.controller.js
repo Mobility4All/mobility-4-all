@@ -38,6 +38,12 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
         rc.ride.lngA = destA.geometry.location.lng();
         rc.ride.latB = destB.geometry.location.lat();
         rc.ride.lngB = destB.geometry.location.lng();
+
+        // Adds location data to ride object on data service
+        DataService.rideObject.latA = destA.geometry.location.lat();
+        DataService.rideObject.lngA = destA.geometry.location.lng();
+        DataService.rideObject.latB = destB.geometry.location.lat();
+        DataService.rideObject.lngB = destB.geometry.location.lng();
       }
 
 
@@ -72,7 +78,6 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
     }
 
     rc.putDestAB = function() {
-
       DataService.connectRider();
       console.log("destA lat/lan are:", rc.ride.latA, rc.ride.lngA);
       console.log("destB lat/lng are:", rc.ride.latB, rc.ride.lngB);
@@ -87,11 +92,13 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
       });
     };
 
+    // Assigns the purpose of the ride
     rc.updatePurpose = function(purpose) {
       rc.ride.purpose = purpose;
       console.log('ride purpose', rc.ride.purpose);
     };
 
+    // Confirm and assigns the purpose property of the ride object in data service
     rc.confirmPurpose = function() {
       console.log('confirming purpose');
       if (rc.ride.purpose) {
