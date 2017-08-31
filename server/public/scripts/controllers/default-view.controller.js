@@ -137,6 +137,11 @@ dc.showGridBottomSheet = function() {
   } //end put req
 
 
+  dc.acceptRide = function() {
+    DataService.acceptRide();
+  }
+
+
 //REVERSE GEOCODE CODE
   // create new GeoCoder
     var geocoder = new google.maps.Geocoder;
