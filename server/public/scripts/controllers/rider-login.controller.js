@@ -14,11 +14,11 @@ myApp.controller('RiderLoginController', function($http, $location, UserService,
     vm.login = function() {
       console.log('LoginController -- login');
       if(vm.user.username === '' || vm.user.password === '') {
-        vm.message = "Enter your username and password!";
+        vm.message = "Please enter your username and password";
       } else {
         console.log('LoginController -- login -- sending to server...', vm.user);
         $http.post('/', vm.user).then(function(response) {
-          if(response.data.username) {
+          if(response.data.userName) {
             console.log('LoginController -- login -- success: ', response.data);
             if(!response.data.complete) {
               $location.path('/rider-profile-setup');
@@ -29,11 +29,11 @@ myApp.controller('RiderLoginController', function($http, $location, UserService,
             }
           } else {
             console.log('LoginController -- login -- failure: ', response);
-            vm.message = "Wrong!!";
+            vm.message = "Wrong username or password";
           }
         }).catch(function(response){
           console.log('LoginController -- registerUser -- failure: ', response);
-          vm.message = "Wrong!!";
+          vm.message = "Wrong username or password";
         });
       }
     };

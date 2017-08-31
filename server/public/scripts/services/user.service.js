@@ -9,8 +9,6 @@ myApp.factory('UserService', function($http, $location, $mdSidenav){
     };
   }
 
-  // var socket = io();
-
   return {
     userObject : userObject,
     // socket: socket,
@@ -18,10 +16,13 @@ myApp.factory('UserService', function($http, $location, $mdSidenav){
     getuser : function(){
       console.log('UserService -- getuser');
       $http.get('/user').then(function(response) {
-          if(response.data.username) {
+          if(response.data.userName) {
               // user has a curret session on the server
-              userObject.userName = response.data.username;
-              userObject.complete = response.data.complete;
+              for(key in response.data) {
+                userObject[key] = response.data[key]
+              }
+              // userObject.userName = response.data.userName;
+              // userObject.complete = response.data.complete;
               console.log('UserService -- getuser -- User Data: ', userObject);
           } else {
               console.log('UserService -- getuser -- failure');
@@ -40,16 +41,8 @@ myApp.factory('UserService', function($http, $location, $mdSidenav){
       console.log('UserService -- logout');
       $http.get('/user/logout').then(function(response) {
         console.log('UserService -- logout -- logged out');
-        // socket.disconnect();
         $location.path("/home");
       });
-    },
-
-    test: function() {
-      console.log('user service test');
-      socket.emit('test', {
-        user: userObject
-      })
     }
   };
 });

@@ -1,15 +1,18 @@
-myApp.controller('DefaultViewController', function(DataService, $http, $scope, $interval) {
+myApp.controller('DefaultViewController', function(UserService, DataService, $http, $timeout, $mdBottomSheet, $mdToast, DataService, $scope, $interval) {
+
   console.log('DefaultViewController created');
   var dc = this;
 
   dc.buttonVisible = true;
-
+//toggle function to show driver online and golive
   dc.toggle = function() {
     if(dc.buttonVisible) {
-      DataService.connectRider();
+      $http.put('/driver/live/');
+      DataService.connectDriver();
     }
     if(!dc.buttonVisible) {
-      DataService.disconnectRider();
+      $http.put('/driver/unlive/');
+      DataService.disconnectDriver();
     }
     dc.buttonVisible = !dc.buttonVisible;
     console.log(dc.buttonVisible);
@@ -104,11 +107,50 @@ myApp.controller('DefaultViewController', function(DataService, $http, $scope, $
   $interval(dc.geoLocate, 60000);
 };
 
+//hide/show accept a rider
+dc.showGridBottomSheet = function() {
+  dc.alert = '';
+  $mdBottomSheet.show({
+    templateUrl: 'views/partials/driver-ride-notification.html',
+    controller: 'ArrivalController',
+    clickOutsideToClose: false
+  }).then(function(clickedItem) {
+    $mdToast.show(
+          $mdToast.simple()
+            .textContent(clickedItem['name'] + ' clicked!')
+            .position('top right')
+            .hideDelay(1500)
+        );
+  }).catch(function(error) {
+    // User clicked outside or hit escape
+  });
+};
 
   function updateDriverLocation() {
     $http.put('/driver/geolocation', dc.coords).then(function(response) {
       console.log('update location -- success', response);
     })
   } //end put req
+
+  dc.userName = UserService.userObject.userName;
+  dc.tripMessage = 'Arrive for ';
+
+  dc.arrive = function() {
+    console.log('DriverNotificationController');
+    if(dc.tripMessage === 'Arrive for ') {
+      console.log(dc.message);
+      dc.tripMessage = 'Pick up ';
+      //also send rider pickup dialog
+    } else if (dc.tripMessage === 'Pick up '){
+        dc.tripMessage = 'Drop off ';
+        //also starts destination routing
+      } else if (dc.tripMessage === 'Drop off '){
+          //also calls rider fare dialog
+        }
+    };
+
+  dc.acceptRide = function() {
+    DataService.acceptRide();
+  }
 
 }); //end of controller

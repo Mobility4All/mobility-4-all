@@ -1,0 +1,16 @@
+<md-bottom-sheet class="md-grid" layout="column" ng-controller="ArrivalController as ac">
+  <div layout="row" layout-align="center center" ng-cloak>
+    <p class="text">Tap to accept</p>
+  </div>
+  <div ng-cloak>
+    <md-list flex layout="row" layout-align="center center">
+      <md-list-item ng-repeat="item in ac.items">
+        <div>
+          <md-button class="md-grid-item-content" ng-click="ac.listItemClick($index)">
+            <div class="md-grid-text"> {{ item.name }} </div>
+          </md-button>
+        </div>
+      </md-list-item>
+    </md-list>
+  </div>
+</md-bottom-sheet>
