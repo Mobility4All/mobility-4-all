@@ -1,4 +1,4 @@
-myApp.controller('ArrivalController', function($timeout, $mdBottomSheet, $mdToast) {
+myApp.controller('ArrivalController', function($timeout, $mdBottomSheet) {
     console.log('ArrivalController created');
     var ac = this;
     ac.alert = '';
