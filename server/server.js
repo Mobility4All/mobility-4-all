@@ -79,13 +79,23 @@ var server = app.listen(port, function(){
 
 var io = require('socket.io')(server);
 
+// Handles socket requests
 io.on('connection', function(socket){
-  console.log('a user connected');
+  console.log('a user connected', socket.id);
+  // When user disconnects
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
+  // Emits ride data to drivers on request
+  socket.on('ride-request', function(data) {
+    console.log('ride request data', data);
+    data.rider_id = socket.id;
+    // Sends to all drivers right now, will update
+    io.emit('find-driver', data);
+  });
 
-  socket.on('test', function(data) {
-    console.log('testing data', data);
+  socket.on('driver-accept', function(data) {
+    console.log('ride acceptance data', data);
+    io.to(data.rider_id).emit('rider-accepted', data);
   })
 });
