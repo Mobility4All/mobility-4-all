@@ -1,4 +1,5 @@
-myApp.controller('DefaultViewController', function($timeout, $mdBottomSheet, $mdToast, DataService, $scope, $interval) {
+myApp.controller('DefaultViewController', function($http, $timeout, $mdBottomSheet, $mdToast, DataService, $scope, $interval) {
+
   console.log('DefaultViewController created');
   var dc = this;
 
@@ -62,31 +63,47 @@ myApp.controller('DefaultViewController', function($timeout, $mdBottomSheet, $md
       });
     }
 
-  }; //end of init map function
+  } //end of init map function
 
   //HTML 5 geolocation pure JS
 
   dc.message = '';
+  dc.coords = {
+    lat: '',
+    lng: ''
+  };
 
-  dc.showPosition = function(position) {
-    // dc.message = "Latitude:  " + position.coords.latitude + "";
-    console.log('latitude is', position.coords.latitude);
-    console.log('longitude is',position.coords.longitude);
-    dc.message = "Latitude:  " + position.coords.latitude + "  Longitude: " + position.coords.longitude + "";
-    $scope.$apply();
-  }
 
-  var getLocation = function() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(dc.showPosition);
-    } else {
-      dc.message = "Geolocation is not supported by this browser.";
-    }
-  }
+  dc.geoLocate = function() {
+    console.log('update location function called');
 
-  dc.geoLocate = getLocation;
+    getLocation();
 
-//end of html5 geo
+    function showPosition(position) {
+      dc.message = "Latitude:  " + position.coords.latitude + "  Longitude: " + position.coords.longitude + "";
+      $scope.$apply();
+      console.log('position coords', position.coords);
+      dc.coords.lat = position.coords.latitude;
+      dc.coords.lng = position.coords.longitude;
+      console.log('dc.coords', dc.coords);
+      updateDriverLocation();
+    } // end show position function
+
+    function getLocation () {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        dc.message = "Geolocation is not supported by this browser.";
+      }
+    } //end of getLocation fn
+  }; //end geolocat
+  //end of html5 geo
+
+
+  $scope.callInterval = function() {
+  //Show current seconds value 5 times after every 1000 ms
+  $interval(dc.geoLocate, 60000);
+};
 
 //hide/show accept a rider
 dc.showGridBottomSheet = function() {
@@ -107,5 +124,10 @@ dc.showGridBottomSheet = function() {
   });
 };
 
+  function updateDriverLocation() {
+    $http.put('/driver/geolocation', dc.coords).then(function(response) {
+      console.log('update location -- success', response);
+    })
+  } //end put req
 
 }); //end of controller
