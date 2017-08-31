@@ -1,4 +1,4 @@
-myApp.controller('DefaultViewController', function(DataService, $http, $scope, $interval) {
+myApp.controller('DefaultViewController', function(UserService, DataService, $http, $scope, $interval) {
   console.log('DefaultViewController created');
   var dc = this;
 
@@ -6,9 +6,11 @@ myApp.controller('DefaultViewController', function(DataService, $http, $scope, $
 
   dc.toggle = function() {
     if(dc.buttonVisible) {
+      $http.put('/driver/live/');
       DataService.connectDriver();
     }
     if(!dc.buttonVisible) {
+      $http.put('/driver/unlive/');
       DataService.disconnectDriver();
     }
     dc.buttonVisible = !dc.buttonVisible;
@@ -110,5 +112,26 @@ myApp.controller('DefaultViewController', function(DataService, $http, $scope, $
       console.log('update location -- success', response);
     })
   } //end put req
+
+  dc.userName = UserService.userObject.userName;
+  dc.tripMessage = 'Arrive for ';
+
+  dc.arrive = function() {
+    console.log('DriverNotificationController');
+    if(dc.tripMessage === 'Arrive for ') {
+      console.log(dc.message);
+      dc.tripMessage = 'Pick up ';
+      //also send rider pickup dialog
+    } else if (dc.tripMessage === 'Pick up '){
+        dc.tripMessage = 'Drop off ';
+        //also starts destination routing
+      } else if (dc.tripMessage === 'Drop off '){
+          //also calls rider fare dialog
+        }
+    };
+
+  dc.acceptRide = function() {
+    DataService.acceptRide();
+  }
 
 }); //end of controller

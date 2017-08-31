@@ -18,7 +18,7 @@ myApp.controller('RiderLoginController', function($http, $location, UserService,
       } else {
         console.log('LoginController -- login -- sending to server...', vm.user);
         $http.post('/', vm.user).then(function(response) {
-          if(response.data.username) {
+          if(response.data.userName) {
             console.log('LoginController -- login -- success: ', response.data);
             if(!response.data.complete) {
               $location.path('/rider-profile-setup');

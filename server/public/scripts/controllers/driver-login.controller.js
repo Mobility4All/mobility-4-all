@@ -14,7 +14,7 @@ myApp.controller('DriverLoginController', function($http, $location, UserService
       } else {
         console.log('LoginController -- login -- sending to server...', vm.user);
         $http.post('/driverlogin', vm.user).then(function(response) {
-          if(response.data.username) {
+          if(response.data.userName) {
             console.log('LoginController -- login -- success: ', response.data);
             if(!response.data.complete) {
               $location.path('/driver-profile-setup'); // http://localhost:5000/#/user

@@ -90,7 +90,7 @@ router.put('/vehiclephoto', function(req, res, next) {
 
 
 router.put('/geolocation', function(req, res, next) {
-  console.log('req body coords', req.body); 
+  console.log('req body coords', req.body);
   var geolocation = req.body;
   console.log('updating driver geolocation', geolocation, req.user.id);
   if(req.isAuthenticated()) {
@@ -116,9 +116,55 @@ router.put('/geolocation', function(req, res, next) {
   }
 });
 
+router.put('/live', function(req, res, next) {
+  var driverId = req.user.id;
+  console.log('switching live status', req.user.id);
+  if(req.isAuthenticated()) {
+    pool.connect(function(err, client, done) {
+      if(err) {
+        console.log("Error connecting: ", err);
+        next(err);
+      }
+      client.query("UPDATE drivers SET live = true WHERE id = $1",
+        [req.user.id],
+          function (err, result) {
+            done();
 
+            if(err) {
+              console.log("Error inserting data: ", err);
+              res.sendStatus(500);
+            } else {
+              res.sendStatus(200);
+            }
+          });
+    });
+  }
+});
 
+router.put('/unlive', function(req, res, next) {
+  var driverId = req.user.id;
+  console.log('switching status to unlive', req.user.id);
+  if(req.isAuthenticated()) {
+    pool.connect(function(err, client, done) {
+      if(err) {
+        console.log("Error connecting: ", err);
+        next(err);
+      }
+      client.query("UPDATE drivers SET live = false WHERE id = $1",
+        [req.user.id],
+          function (err, result) {
+            done();
 
+            if(err) {
+              console.log("Error inserting data: ", err);
+              res.sendStatus(500);
+            } else {
+              res.sendStatus(200);
+            }
+          });
+    });
+  }
+});
 
 
 module.exports = router;

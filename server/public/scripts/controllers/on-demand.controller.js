@@ -5,12 +5,8 @@ myApp.controller('OnDemandController', function($http, UserService) {
     oc.testMatch = function() {
       console.log('finding matched ride');
       $http.get('/trip/match').then(function(response) {
-        console.log('response from match', response);
+        console.log('response from match', response.data.drivers);
       })
     }
 
-    oc.test = function() {
-      console.log('testing socket');
-      UserService.test();
-    }
 });

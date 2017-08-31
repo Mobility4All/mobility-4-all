@@ -111,14 +111,13 @@ li a:hover {
 }
 /* sideNav styles for Rider navbar */
 .logosidenav {
-  height: 185px;
+  height: 150px;
 }
 
 /* Nav styles */
 
 .horizontal-logo {
   height: 50px;
-  text-shadow: 1px 1px white;
 }
 
 

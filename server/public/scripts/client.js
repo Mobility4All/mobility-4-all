@@ -112,15 +112,6 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
         }
       }
     })
-    .when('/default-view', {
-      templateUrl: '/views/templates/driver/default-view.html',
-      controller: 'DriverNotificationController as dc',
-      resolve: {
-        getuser : function(UserService){
-          return UserService.getuser();
-        }
-      }
-    })
     .otherwise({
       redirectTo: 'home'
     });
