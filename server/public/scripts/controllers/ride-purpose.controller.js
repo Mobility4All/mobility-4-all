@@ -70,7 +70,7 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
         });
       }
     }
-
+    
     rc.putDestAB = function() {
 
       DataService.connectRider();
@@ -86,20 +86,22 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
         alert("Oh no! There was an error getting your ride");
       });
     };
-
+    // Users can select between the options and the option will update as they click on the options
     rc.updatePurpose = function(purpose) {
       rc.ride.purpose = purpose;
       console.log('ride purpose', rc.ride.purpose);
     };
-
+    // Whichever selection is picked the rider purpose will be sent alont with the ride object
+    // At a later date this is where the determineation for Medical purpose to be paid with a Medical
+    // card or medicaid discount
     rc.confirmPurpose = function() {
       console.log('confirming purpose');
       if (rc.ride.purpose) {
         DataService.rideObject.purpose = rc.ride.purpose;
         console.log('data ride:', DataService.rideObject.purpose);
-        $location.path('/input-ride')
+        $location.path('/input-ride');
       } else {
-        rc.message = 'Please select a purpose'
+        rc.message = 'Please select a purpose';
       }
-    }
+    };
 });

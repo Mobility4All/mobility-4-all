@@ -4,7 +4,7 @@ myApp.controller('DefaultViewController', function($http, $timeout, $mdBottomShe
   var dc = this;
 
   dc.buttonVisible = true;
-
+//toggle function to show driver online and golive
   dc.toggle = function() {
     if(dc.buttonVisible) {
       DataService.connectRider();
