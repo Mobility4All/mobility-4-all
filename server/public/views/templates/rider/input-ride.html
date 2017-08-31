@@ -11,7 +11,8 @@
     <input flex="80" id="autocomplete2" placeholder="Enter your drop off address" type="text" ng-model=rc.addressB></input>
   </div>
   <div layout="row" flex>
-    <md-button aria-label="Call for Ride" ng-click="rc.putDestAB()">
+    <md-button class="md-raised md-warn" href="#/ride-purpose">Back</md-button>
+    <md-button aria-label="Call for Ride" class="md-raised" ng-click="rc.putDestAB()">
     <!-- <md-icon class="material-icons">car</md-icon> -->
     Call for Ride
   </md-button>

@@ -92,21 +92,25 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
       });
     };
 
+
     // Assigns the purpose of the ride
+
     rc.updatePurpose = function(purpose) {
       rc.ride.purpose = purpose;
       console.log('ride purpose', rc.ride.purpose);
     };
 
+
     // Confirm and assigns the purpose property of the ride object in data service
+
     rc.confirmPurpose = function() {
       console.log('confirming purpose');
       if (rc.ride.purpose) {
         DataService.rideObject.purpose = rc.ride.purpose;
         console.log('data ride:', DataService.rideObject.purpose);
-        $location.path('/input-ride')
+        $location.path('/input-ride');
       } else {
-        rc.message = 'Please select a purpose'
+        rc.message = 'Please select a purpose';
       }
-    }
+    };
 });

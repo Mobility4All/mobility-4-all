@@ -4,7 +4,7 @@ myApp.controller('DefaultViewController', function(UserService, DataService, $ht
   var dc = this;
 
   dc.buttonVisible = true;
-
+//toggle function to show driver online and golive
   dc.toggle = function() {
     if(dc.buttonVisible) {
       $http.put('/driver/live/');
