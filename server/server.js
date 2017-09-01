@@ -67,6 +67,7 @@ var server = app.listen(port, function(){
 
 var io = require('socket.io')(server);
 var userSocket;
+var coord;
 // Handles socket requests
 io.on('connection', function(socket){
   console.log('a user connected', socket.id);
@@ -78,23 +79,31 @@ io.on('connection', function(socket){
   // Emits ride data to drivers on request
   socket.on('ride-request', function(data) {
     console.log('ride request data', data);
+    coord = {
+  latA: data.latA,
+  latB: data.latB,
+  lngA: data.lngA,
+  lngB: data.lngB
+  };
     data.rider_id = socket.id;
-    // Sends to all drivers right now, will update
-    io.emit('find-driver', data);
-    // io.to(data.driver.driver_socket).emit('find-driver', data);
   });
-
   socket.on('driver-accept', function(data) {
     console.log('ride acceptance data', data);
-    io.to(data.rider_id).emit('rider-accepted', data);
-  })
+    io.to(data.rider.socket_id).emit('rider-accepted', data);
+  });
+  // listening for arriveForRider
+  socket.on('driver-arrive', function(data) {
+    console.log('driver arrive socket listening', data);
+    io.to(data.rider.socket_id).emit('rider-pickup', data);
+  });
 });
 
 app.use(function(req, res, next) {
   req.io = io;
+  req.coord = coord;
   req.socket = userSocket;
   next();
-})
+});
 
 // Routes
 app.use('/register', registerRouter);

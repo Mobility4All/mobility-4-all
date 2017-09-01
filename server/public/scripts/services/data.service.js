@@ -23,6 +23,8 @@ myApp.factory('DataService', function($http, $mdBottomSheet, $mdToast, UserServi
     });
   };
 
+
+
   return {
     rideObject: rideObject,
 
@@ -38,16 +40,20 @@ myApp.factory('DataService', function($http, $mdBottomSheet, $mdToast, UserServi
       // Handles response of ride being accepted
       socket.on('rider-accepted', function(ride) {
         console.log('accepted ride', ride);
-      })
+        // add code here to show "driver is on the way" dialog to rider
+      });
+      socket.on('rider-pickup', function(driver) {
+        console.log('rider getting picked up', driver);
+      });
     },
     // Connects driver to socket
     connectDriver: function() {
       socket = io();
       console.log('connected driver to socket', socket);
-      socket.on('find-driver', function(ride) {
-        rideObject.rider = ride;
-        rideObject.driver = UserService.userObject;
-        console.log('rider info', ride);
+      socket.on('find-driver', function(rider) {
+        rideObject.rider = rider;
+        rideObject.driver = UserService.userObject; // tbd if this is important
+        console.log('rider info', rider);
         showRideRequest();
       })
     },
@@ -55,6 +61,11 @@ myApp.factory('DataService', function($http, $mdBottomSheet, $mdToast, UserServi
     acceptRide: function() {
       console.log('accepting ride');
       socket.emit('driver-accept', rideObject);
+    },
+    // Handles driver arriving for rider
+    arriveForRider: function() {
+      console.log('driver has tapped arrive for rider');
+      socket.emit('driver-arrive', rideObject);
     },
     // Disconnect rider from socket
     disconnectRider: function() {

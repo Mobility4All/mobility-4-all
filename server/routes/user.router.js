@@ -39,6 +39,8 @@ router.get('/', function(req, res) {
       userInfo.oxygen = req.user.oxygen;
       userInfo.driver_photo_url = req.user.driver_photo_url;
       userInfo.vehicle_photo_url = req.user.vehicle_photo_url;
+      userInfo.make = req.user.make;
+      userInfo.model = req.user.model;
       userInfo.complete = req.user.complete;
     }
     res.send(userInfo);
