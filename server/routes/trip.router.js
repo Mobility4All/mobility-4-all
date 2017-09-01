@@ -31,8 +31,8 @@ router.get('/match', function(req, res, next) {
           console.log("Error inserting data: ", err);
           res.sendStatus(500);
         } else {
-          res.send({drivers: result.rows});
-        }
+          res.send({drivers: result.rows.driver_socket});
+          io.to(data.driver_id).emit('find-driver', data);        }
       });
     });
   }

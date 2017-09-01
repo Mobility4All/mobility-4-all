@@ -91,8 +91,11 @@ io.on('connection', function(socket){
     console.log('ride request data', data);
     data.rider_id = socket.id;
     // Sends to all drivers right now, will update
+      // *** could be --     io.to(data.driver_id).emit('find-driver', data);
     io.emit('find-driver', data);
   });
+// lets just take this script ^^ and call it inside trip.router.js
+
 
   socket.on('driver-accept', function(data) {
     console.log('ride acceptance data', data);

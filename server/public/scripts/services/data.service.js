@@ -27,8 +27,11 @@ myApp.factory('DataService', function($http, UserService){
     connectDriver: function() {
       socket = io();
       console.log('connected driver to socket', socket);
+      // ***       rideObject.driver_id = socket.id;
+      // should they be rideObject.driver.driver_id = socket.id ??
       socket.on('find-driver', function(ride) {
         rideObject = ride;
+        // call function to display diaolog to rider 
         rideObject.driver = UserService.userObject;
         console.log(ride);
       })
