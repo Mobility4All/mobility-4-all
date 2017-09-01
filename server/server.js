@@ -99,3 +99,8 @@ io.on('connection', function(socket){
     io.to(data.rider_id).emit('rider-accepted', data);
   })
 });
+
+app.use(function(req, res, next) {
+  req.io = io;
+  next();
+})
