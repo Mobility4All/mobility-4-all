@@ -21,14 +21,14 @@
   <input type="text" ng-model="dc.end" value="">
   <button type="button" ng-click="dc.onClick()">Find Directions</button>
 </div>
+<div ng-if="dc.accept" id="map"></div>
 
-<!-- <div id="right-panel"></div> -->
-<div id="map"></div>
-<div ng-include="'views/partials/directions.sidenav.html'"></div>
+<!-- <div ng-hide="dc.accept"id="map"></div> -->
+
 <!-- ^^ end google maps directions ^^ -->
 
-<div ng-if="dc.accept" id="right-panel"></div>
-<div  ng-if="dc.accept" id="map"></div>
+<!-- <div ng-if="dc.accept" id="right-panel"></div> -->
+
 
 
 <!-- THIS IS THE DEFAULT VIEW MAP -->
@@ -41,6 +41,7 @@
 </div>
 
 
+<div ng-include="'views/partials/directions.sidenav.html'"></div>
 
 <div  ng-if="alert">
   <br/>
