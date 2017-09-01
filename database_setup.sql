@@ -15,6 +15,7 @@ CREATE EXTENSION postgis;
 
 CREATE TABLE "drivers" (
   "id" serial PRIMARY KEY,
+  "driver_socket" VARCHAR(30),
   "first_name" VARCHAR(30),
   "last_name" VARCHAR(30),
   "email" VARCHAR(30),

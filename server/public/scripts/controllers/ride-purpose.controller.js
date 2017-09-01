@@ -82,8 +82,11 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
       console.log("destA lat/lan are:", rc.ride.latA, rc.ride.lngA);
       console.log("destB lat/lng are:", rc.ride.latB, rc.ride.lngB);
       $http.post('/rider/destAB', rc.ride).then(function(response) {
-
         console.log('destAB put to db', response);
+
+        $http.get('/trip/match').then(function(res) {
+          console.log('response from match', res.data.drivers);
+        })
         $location.path('/trip-view');
       }).catch(function(response) {
         console.log('destAB put error', response);
