@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
     // console.log('logged in', req.user);
     var userInfo = {};
     if(req.user.hasOwnProperty('rider_first')) {
-      userInfo.id = req.user.id
+      userInfo.id = req.user.id;
       userInfo.userName = req.user.username;
       userInfo.rider_first = req.user.rider_first;
       userInfo.rider_last = req.user.rider_last;
@@ -27,7 +27,8 @@ router.get('/', function(req, res) {
       userInfo.service_animal = req.user.service_animal;
       userInfo.oxygen = req.user.oxygen;
     } else {
-      userInfo.id = req.user.id
+      userInfo.id = req.user.id;
+      userInfo.id = req.user.driver_socket;
       userInfo.userName = req.user.username;
       userInfo.first_name = req.user.first_name;
       userInfo.last_name = req.user.last_name;
