@@ -19,6 +19,11 @@ myApp.controller('DefaultViewController', function(UserService, DataService, $ht
   };
 
 
+
+dc.accept = false;
+
+
+
   // These functions take in user input for start and end destinations, and returns
   //a google map with polyline route and with text driving directions
   dc.startAndEndInput = {
@@ -137,9 +142,13 @@ dc.showGridBottomSheet = function() {
   } //end put req
 
 
+  dc.accept = false;
+
+
   dc.acceptRide = function() {
     DataService.acceptRide();
     dc.buttonVisible = true;
+    dc.accept = !dc.accept;
   };
 
 
