@@ -67,6 +67,7 @@ var server = app.listen(port, function(){
 
 var io = require('socket.io')(server);
 var userSocket;
+var coord;
 // Handles socket requests
 io.on('connection', function(socket){
   console.log('a user connected', socket.id);
@@ -78,6 +79,12 @@ io.on('connection', function(socket){
   // Emits ride data to drivers on request
   socket.on('ride-request', function(data) {
     console.log('ride request data', data);
+    coord = {
+  latA: data.latA,
+  latB: data.latB,
+  lngA: data.lngA,
+  lngB: data.lngB
+  };
     data.rider_id = socket.id;
   });
   socket.on('driver-accept', function(data) {
@@ -93,9 +100,10 @@ io.on('connection', function(socket){
 
 app.use(function(req, res, next) {
   req.io = io;
+  req.coord = coord;
   req.socket = userSocket;
   next();
-})
+});
 
 // Routes
 app.use('/register', registerRouter);

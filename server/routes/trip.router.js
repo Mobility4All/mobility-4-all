@@ -16,6 +16,7 @@ router.get('/match', function(req, res, next) {
   queryText = queryText.join(' ');
   console.log('query text', queryText);
   req.user.socket_id = req.socket.id;
+  req.user.coord = req.coord;
   if(req.isAuthenticated()) {
     pool.connect(function(err, client, done) {
       if(err) {
