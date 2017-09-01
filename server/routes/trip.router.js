@@ -6,7 +6,7 @@ var pool = require('../modules/pool.js');
 
 // match rider to driver based on (1) driver being live, (2) specific needs, (3) 5 drivers closest to rider
 router.get('/match', function(req, res, next) {
-  console.log('matching ride', req.user, req.socket);
+  console.log('matching ride', req.user);
   var queryText = ['WITH rider_lng AS (SELECT ST_X(start_location::geometry) AS rlng FROM trips WHERE complete = FALSE AND rider_id = $1), rider_lat AS (SELECT ST_Y(start_location::geometry) AS rlat FROM trips WHERE complete = FALSE AND rider_id = $1) SELECT *, id FROM drivers WHERE live = true'];
   if(req.user.elec_wheelchair) queryText.push(' AND elec_wheelchair = true');
   if(req.user.col_wheelchair) queryText.push(' AND col_wheelchair = true');
@@ -31,6 +31,7 @@ router.get('/match', function(req, res, next) {
           console.log("Error inserting data: ", err);
           res.sendStatus(500);
         } else {
+          req.io.to(result.rows[0].driver_socket).emit('find-driver', req.user);
           res.send({drivers: result.rows});
         }
       });

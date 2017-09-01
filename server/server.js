@@ -58,14 +58,6 @@ app.use(sessionConfig);
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes
-app.use('/register', registerRouter);
-app.use('/user', userRouter);
-app.use('/rider', riderRouter);
-app.use('/trip', tripRouter);
-
-// Catch all bucket, must be last!
-app.use('/', indexRouter);
 
 // Listen //
 
@@ -104,4 +96,12 @@ app.use(function(req, res, next) {
   next();
 })
 
+// Routes
+app.use('/register', registerRouter);
+app.use('/user', userRouter);
+app.use('/rider', riderRouter);
 app.use('/driver', driverRouter);
+app.use('/trip', tripRouter);
+
+// Catch all bucket, must be last!
+app.use('/', indexRouter);
