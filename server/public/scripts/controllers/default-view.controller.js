@@ -1,4 +1,4 @@
-myApp.controller('DefaultViewController', function(UserService, DataService, $http, $timeout, $mdBottomSheet, $mdToast, DataService, $scope, $interval) {
+myApp.controller('DefaultViewController', function(UserService, DataService, $http, $timeout, $mdSidenav, $mdBottomSheet, $mdToast, DataService, $scope, $interval) {
 
   console.log('DefaultViewController created');
   var dc = this;
@@ -17,7 +17,13 @@ myApp.controller('DefaultViewController', function(UserService, DataService, $ht
     dc.buttonVisible = !dc.buttonVisible;
     console.log(dc.buttonVisible);
   };
-
+  function buildToggler(componentId) {
+    return function() {
+      $mdSidenav(componentId).toggle();
+    };
+  }
+  $scope.toggleLeft = buildToggler('left');
+  $scope.toggleRight = buildToggler('right');
 
   // These functions take in user input for start and end destinations, and returns
   //a google map with polyline route and with text driving directions
