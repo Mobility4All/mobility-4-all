@@ -79,14 +79,11 @@ io.on('connection', function(socket){
   socket.on('ride-request', function(data) {
     console.log('ride request data', data);
     data.rider_id = socket.id;
-    // Sends to all drivers right now, will update
-    io.emit('find-driver', data);
-    // io.to(data.driver.driver_socket).emit('find-driver', data);
   });
 
   socket.on('driver-accept', function(data) {
     console.log('ride acceptance data', data);
-    io.to(data.rider_id).emit('rider-accepted', data);
+    io.to(data.rider.socket_id).emit('rider-accepted', data);
   })
 });
 

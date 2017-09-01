@@ -12,12 +12,10 @@ router.get('/match', function(req, res, next) {
   if(req.user.col_wheelchair) queryText.push(' AND col_wheelchair = true');
   if(req.user.service_animal) queryText.push(' AND service_animal = true');
   if(req.user.oxygen) queryText.push(' AND oxygen = true');
-  // HOW TO PASS rider_lng and rider_lat into st_makepoint???
   queryText.push('ORDER BY location <-> st_setsrid(st_makepoint((SELECT rlng FROM rider_lng), (SELECT rlat FROM rider_lat)),4326) LIMIT 5');
   queryText = queryText.join(' ');
   console.log('query text', queryText);
-  // console.log('rider_lng', rider_lng);
-  // console.log('rider_lat', rider_lat);
+  req.user.socket_id = req.socket.id;
   if(req.isAuthenticated()) {
     pool.connect(function(err, client, done) {
       if(err) {
