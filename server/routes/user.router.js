@@ -36,6 +36,8 @@ router.get('/', function(req, res) {
       userInfo.col_wheelchair = req.user.col_wheelchair;
       userInfo.service_animal = req.user.service_animal;
       userInfo.oxygen = req.user.oxygen;
+      userInfo.driver_photo_url = req.user.driver_photo_url;
+      userInfo.vehicle_photo_url = req.user.vehicle_photo_url;
       userInfo.complete = req.user.complete;
     }
     res.send(userInfo);

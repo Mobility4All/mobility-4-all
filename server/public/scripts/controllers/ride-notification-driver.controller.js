@@ -12,11 +12,11 @@ myApp.controller('DriverNotificationController', function(UserService) {
         dc.tripMessage = 'Pick up ';
         //also send rider pickup dialog
       } else if (dc.tripMessage === 'Pick up '){
-          dc.tripMessage = 'Drop off ';
-          //also starts destination routing
-        } else if (dc.tripMessage === 'Drop off '){
-            //also calls rider fare dialog
-          }
-      };
+        dc.tripMessage = 'Drop off ';
+        //also starts destination routing
+      } else if (dc.tripMessage === 'Drop off '){
+        //also calls rider fare dialog
+      }
+    };
 
 });
