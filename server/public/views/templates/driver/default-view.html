@@ -1,17 +1,19 @@
 <div ng-include="'views/partials/sidenavdriver.html'"></div>
-<div layout="row" layout-align="center center">
+<div ng-hide="dc.accept" layout="row" layout-align="center center">
   <md-button style="width:50%; height:40px; margin:10px" ng-show="dc.buttonVisible" ng-click="dc.toggle()" class="secondary md-raised">Go Live</md-button>
   <md-button style="width:50%; height:40px; margin:10px" ng-hide="dc.buttonVisible" ng-click="dc.toggle()" class="md-raised md-primary">Online</md-button>
 </div>
-<div ng-if="!dc.buttonVisible"layout="row" layout-sm="column" layout-align="space-around">
-  <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+<div ng-hide="dc.accept">
+  <div ng-hide="dc.buttonVisible" ng-hide="dc.accept" layout="row" layout-sm="column" layout-align="space-around">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
 </div>
 {{dc.test.message}}
 <button ng-click="dc.geoLocate(); callInterval()">Current Coordinates: {{dc.message}}</button>
 <md-button ng-click="dc.acceptRide()" class="md-raised md-primary">Accept Ride</md-button>
 
 
-<!-- This is the input for google maps directons -->
+<!-- THIS IS LIVE google maps directons -->
 <div id="floating-panel">
   <b>Start: </b>
   <input type="text" ng-model="dc.start">
@@ -19,10 +21,27 @@
   <input type="text" ng-model="dc.end" value="">
   <button type="button" ng-click="dc.onClick()">Find Directions</button>
 </div>
+
 <!-- <div id="right-panel"></div> -->
 <div id="map"></div>
 <div ng-include="'views/partials/directions.sidenav.html'"></div>
 <!-- ^^ end google maps directions ^^ -->
+
+<div ng-if="dc.accept" id="right-panel"></div>
+<div  ng-if="dc.accept" id="map"></div>
+
+
+<!-- THIS IS THE DEFAULT VIEW MAP -->
+<div ng-hide="dc.accept">
+<ng-map  zoom="14" center="[0,0]">
+  <shape id="circle" name="circle" centered="true"
+    stroke-color='SkyBlue' stroke-opacity="0.8" stroke-weight="2"
+    center="current-position" radius="200" editable="false" ></shape>
+</ng-map>
+</div>
+
+
+
 <div  ng-if="alert">
   <br/>
   <b layout="row" layout-align="center center" class="md-padding">

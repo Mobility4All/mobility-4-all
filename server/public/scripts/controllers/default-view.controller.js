@@ -18,6 +18,7 @@ myApp.controller('DefaultViewController', function(UserService, DataService, $ht
     console.log(dc.buttonVisible);
   };
 
+
   function buildToggler(componentId) {
     return function() {
       $mdSidenav(componentId).toggle();
@@ -25,6 +26,14 @@ myApp.controller('DefaultViewController', function(UserService, DataService, $ht
   }
   dc.toggleLeft = buildToggler('left');
   dc.toggleRight = buildToggler('right');
+
+
+
+dc.accept = false;
+
+
+
+
   // These functions take in user input for start and end destinations, and returns
   //a google map with polyline route and with text driving directions
   dc.startAndEndInput = {
@@ -143,9 +152,13 @@ dc.showGridBottomSheet = function() {
   } //end put req
 
 
+  dc.accept = false;
+
+
   dc.acceptRide = function() {
     DataService.acceptRide();
     dc.buttonVisible = true;
+    dc.accept = !dc.accept;
   };
 
 
