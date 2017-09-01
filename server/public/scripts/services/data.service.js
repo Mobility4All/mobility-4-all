@@ -1,10 +1,27 @@
-myApp.factory('DataService', function($http, UserService){
+myApp.factory('DataService', function($http, $mdBottomSheet, $mdToast, UserService){
   console.log('DataService Loaded');
   // Ride object that is sent with ride request
   var rideObject = {
     rider: UserService.userObject
   };
   var socket;
+  function showRideRequest() {
+    // dc.alert = '';
+    $mdBottomSheet.show({
+      templateUrl: 'views/partials/driver-ride-notification.html',
+      controller: 'ArrivalController',
+      clickOutsideToClose: false
+    }).then(function(clickedItem) {
+      $mdToast.show(
+            $mdToast.simple()
+              .textContent(clickedItem['name'] + ' clicked!')
+              .position('top right')
+              .hideDelay(1500)
+          );
+    }).catch(function(error) {
+      // User clicked outside or hit escape
+    });
+  };
 
   return {
     rideObject: rideObject,
@@ -28,9 +45,10 @@ myApp.factory('DataService', function($http, UserService){
       socket = io();
       console.log('connected driver to socket', socket);
       socket.on('find-driver', function(ride) {
-        rideObject = ride;
+        rideObject.rider = ride;
         rideObject.driver = UserService.userObject;
-        console.log(ride);
+        console.log('rider info', ride);
+        showRideRequest();
       })
     },
     // Handles driver accepting ride

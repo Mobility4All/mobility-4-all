@@ -118,15 +118,15 @@ router.put('/geolocation', function(req, res, next) {
 
 router.put('/live', function(req, res, next) {
   var driverId = req.user.id;
-  console.log('switching live status', req.user.id);
+  console.log('switching live status', req.user.id, req.socket.id);
   if(req.isAuthenticated()) {
     pool.connect(function(err, client, done) {
       if(err) {
         console.log("Error connecting: ", err);
         next(err);
       }
-      client.query("UPDATE drivers SET live = true WHERE id = $1",
-        [req.user.id],
+      client.query("UPDATE drivers SET live = true, driver_socket = $1 WHERE id = $2",
+        [req.socket.id, req.user.id],
           function (err, result) {
             done();
 
@@ -143,14 +143,14 @@ router.put('/live', function(req, res, next) {
 
 router.put('/unlive', function(req, res, next) {
   var driverId = req.user.id;
-  console.log('switching status to unlive', req.user.id);
+  console.log('switching status to unlive', req.user.id, req.socket.id);
   if(req.isAuthenticated()) {
     pool.connect(function(err, client, done) {
       if(err) {
         console.log("Error connecting: ", err);
         next(err);
       }
-      client.query("UPDATE drivers SET live = false WHERE id = $1",
+      client.query("UPDATE drivers SET live = false, driver_socket = null WHERE id = $1",
         [req.user.id],
           function (err, result) {
             done();

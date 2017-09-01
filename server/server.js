@@ -58,15 +58,6 @@ app.use(sessionConfig);
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes
-app.use('/register', registerRouter);
-app.use('/user', userRouter);
-app.use('/rider', riderRouter);
-app.use('/driver', driverRouter);
-app.use('/trip', tripRouter);
-
-// Catch all bucket, must be last!
-app.use('/', indexRouter);
 
 // Listen //
 
@@ -75,10 +66,11 @@ var server = app.listen(port, function(){
 });
 
 var io = require('socket.io')(server);
-
+var userSocket;
 // Handles socket requests
 io.on('connection', function(socket){
   console.log('a user connected', socket.id);
+  userSocket = socket;
   // When user disconnects
   socket.on('disconnect', function(){
     console.log('user disconnected');
@@ -89,6 +81,7 @@ io.on('connection', function(socket){
     data.rider_id = socket.id;
     // Sends to all drivers right now, will update
     io.emit('find-driver', data);
+    // io.to(data.driver.driver_socket).emit('find-driver', data);
   });
 
   socket.on('driver-accept', function(data) {
@@ -96,3 +89,19 @@ io.on('connection', function(socket){
     io.to(data.rider_id).emit('rider-accepted', data);
   })
 });
+
+app.use(function(req, res, next) {
+  req.io = io;
+  req.socket = userSocket;
+  next();
+})
+
+// Routes
+app.use('/register', registerRouter);
+app.use('/user', userRouter);
+app.use('/rider', riderRouter);
+app.use('/driver', driverRouter);
+app.use('/trip', tripRouter);
+
+// Catch all bucket, must be last!
+app.use('/', indexRouter);
