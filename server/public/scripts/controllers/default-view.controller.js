@@ -1,4 +1,4 @@
-myApp.controller('DefaultViewController', function(UserService, DataService, $http, $timeout, $mdBottomSheet, $mdToast, DataService, $scope, $interval) {
+myApp.controller('DefaultViewController', function(UserService, DataService, $http, $timeout, $mdBottomSheet,$mdSidenav, $mdToast, DataService, $scope, $interval) {
 
   console.log('DefaultViewController created');
   var dc = this;
@@ -17,6 +17,21 @@ myApp.controller('DefaultViewController', function(UserService, DataService, $ht
     dc.buttonVisible = !dc.buttonVisible;
     console.log(dc.buttonVisible);
   };
+
+
+  function buildToggler(componentId) {
+    return function() {
+      $mdSidenav(componentId).toggle();
+    };
+  }
+  dc.toggleLeft = buildToggler('left');
+  dc.toggleRight = buildToggler('right');
+
+
+
+dc.accept = false;
+
+
 
 
   // These functions take in user input for start and end destinations, and returns
@@ -137,9 +152,14 @@ dc.showGridBottomSheet = function() {
   } //end put req
 
 
+  dc.accept = false;
+
+
   dc.acceptRide = function() {
     DataService.acceptRide();
-  }
+    dc.buttonVisible = true;
+    dc.accept = !dc.accept;
+  };
 
 
 //REVERSE GEOCODE CODE
