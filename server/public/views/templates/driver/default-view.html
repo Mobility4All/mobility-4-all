@@ -3,7 +3,7 @@
   <md-button style="width:50%; height:40px; margin:10px" ng-show="dc.buttonVisible" ng-click="dc.toggle()" class="secondary md-raised">Go Live</md-button>
   <md-button style="width:50%; height:40px; margin:10px" ng-hide="dc.buttonVisible" ng-click="dc.toggle()" class="md-raised md-primary">Online</md-button>
 </div>
-<div layout="row" layout-sm="column" layout-align="space-around">
+<div ng-if="!dc.buttonVisible"layout="row" layout-sm="column" layout-align="space-around">
   <md-progress-circular md-mode="indeterminate"></md-progress-circular>
 </div>
 {{dc.test.message}}
