@@ -41,15 +41,6 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
         }
       }
     })
-    .when('/arrival', {
-      templateUrl: '/views/templates/rider/arrival.html',
-      controller: 'ArrivalController as rc',
-      resolve: {
-        getuser : function(UserService){
-          return UserService.getuser();
-        }
-      }
-    })
     .when('/driver-login', {
       templateUrl: '/views/templates/driver/driver-login.html',
       controller: 'DriverLoginController as dc'
@@ -112,6 +103,7 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
         }
       }
     })
+
     .otherwise({
       redirectTo: 'home'
     });

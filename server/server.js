@@ -12,8 +12,6 @@ var registerRouter = require('./routes/register.router');
 var riderRouter = require('./routes/rider.router');
 var tripRouter = require('./routes/trip.router');
 
-var distanceMatrixRouter = require('./routes/eta.router');
-
 var driverRouter = require('./routes/driver.router');
 
 
@@ -61,7 +59,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use('/eta', distanceMatrixRouter);
 app.use('/register', registerRouter);
 app.use('/user', userRouter);
 app.use('/rider', riderRouter);
