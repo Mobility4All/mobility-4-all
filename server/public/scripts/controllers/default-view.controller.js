@@ -1,4 +1,4 @@
-myApp.controller('DefaultViewController', function(UserService, DataService, $http, $timeout, $mdBottomSheet, $mdToast, DataService, $scope, $interval) {
+myApp.controller('DefaultViewController', function(UserService, DataService, $http, $timeout, $mdBottomSheet,$mdSidenav, $mdToast, DataService, $scope, $interval) {
 
   console.log('DefaultViewController created');
   var dc = this;
@@ -20,8 +20,18 @@ myApp.controller('DefaultViewController', function(UserService, DataService, $ht
   };
 
 
+  function buildToggler(componentId) {
+    return function() {
+      $mdSidenav(componentId).toggle();
+    };
+  }
+  dc.toggleLeft = buildToggler('left');
+  dc.toggleRight = buildToggler('right');
+
+
 
 dc.accept = false;
+
 
 
 

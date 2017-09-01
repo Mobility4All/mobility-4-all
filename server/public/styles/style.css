@@ -131,7 +131,7 @@ li a:hover {
  * element that contains the map. */
 #map {
   height: 300px;
-  width: 300px;
+
 }
 /* Optional: Makes the sample page fill the window. */
 /*html, body {
@@ -178,8 +178,8 @@ li a:hover {
  }
 
 #right-panel {
-   height: 300px;
+   height: 600px;
    float: right;
-   width: 390px;
    overflow: auto;
+   font-size: 15px;
  }
