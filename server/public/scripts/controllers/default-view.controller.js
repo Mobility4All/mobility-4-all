@@ -139,7 +139,8 @@ dc.showGridBottomSheet = function() {
 
   dc.acceptRide = function() {
     DataService.acceptRide();
-  }
+    dc.buttonVisible = true;
+  };
 
 
 //REVERSE GEOCODE CODE
