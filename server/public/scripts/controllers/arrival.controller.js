@@ -3,5 +3,4 @@ myApp.controller('ArrivalController', function(DataService, $timeout, $mdBottomS
     var ac = this;
     ac.riderInfo = DataService.rideObject.rider;
 
-
 });

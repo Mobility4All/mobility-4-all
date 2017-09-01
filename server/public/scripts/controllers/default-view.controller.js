@@ -4,6 +4,7 @@ myApp.controller('DefaultViewController', function(UserService, DataService, $ht
   var dc = this;
 
   dc.buttonVisible = true;
+  dc.buttonShow = true;
 //toggle function to show driver online and golive
   dc.toggle = function() {
     if(dc.buttonVisible) {
@@ -149,6 +150,7 @@ dc.showGridBottomSheet = function() {
     DataService.acceptRide();
     dc.buttonVisible = true;
     dc.accept = !dc.accept;
+    dc.buttonShow = !dc.buttonShow;
   };
 
 
