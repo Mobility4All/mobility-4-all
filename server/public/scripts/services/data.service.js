@@ -45,8 +45,8 @@ myApp.factory('DataService', function($http, $mdBottomSheet, $mdToast, UserServi
       socket = io();
       console.log('connected driver to socket', socket);
       socket.on('find-driver', function(ride) {
-        // rideObject = ride;
-        // rideObject.driver = UserService.userObject;
+        rideObject.rider = ride;
+        rideObject.driver = UserService.userObject;
         console.log('rider info', ride);
         showRideRequest();
       })
