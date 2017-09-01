@@ -80,11 +80,15 @@ io.on('connection', function(socket){
     console.log('ride request data', data);
     data.rider_id = socket.id;
   });
-
   socket.on('driver-accept', function(data) {
     console.log('ride acceptance data', data);
     io.to(data.rider.socket_id).emit('rider-accepted', data);
-  })
+  });
+  // listening for arriveForRider
+  socket.on('driver-arrive', function(data) {
+    console.log('driver arrive socket listening', data);
+    io.to(data.rider.socket_id).emit('rider-pickup', data);
+  });
 });
 
 app.use(function(req, res, next) {
