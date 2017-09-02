@@ -2,9 +2,10 @@ myApp.controller('DefaultViewController', function(UserService, DataService, $ht
 
   console.log('DefaultViewController created');
   var dc = this;
+  dc.riderInfo = DataService.rideObject.rider;
 
   dc.buttonVisible = true;
-  dc.buttonShow = true;
+  dc.buttonShow = false;
 //toggle function to show driver online and golive
   dc.toggle = function() {
     if(dc.buttonVisible) {
@@ -157,11 +158,17 @@ dc.showGridBottomSheet = function() {
 
 
   dc.acceptRide = function() {
+    console.log('button showing?', dc.buttonShow);
     DataService.acceptRide();
     dc.buttonVisible = true;
     dc.accept = !dc.accept;
     dc.buttonShow = !dc.buttonShow;
+    console.log('button showing 2?', dc.buttonShow);
+
   };
+  dc.toggleShow = function() {
+    dc.buttonShow = !dc.buttonShow;
+  }
 
 
 //REVERSE GEOCODE CODE
