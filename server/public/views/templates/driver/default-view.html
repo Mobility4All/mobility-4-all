@@ -2,7 +2,7 @@
 <div ng-hide="dc.accept" layout="row" layout-align="center center">
   <md-button style="width:50%; height:40px; margin:10px" ng-show="dc.buttonVisible" ng-click="dc.toggle()" class="secondary md-raised">Go Live</md-button>
   <md-button style="width:50%; height:40px; margin:10px" ng-hide="dc.buttonVisible" ng-click="dc.toggle()" class="md-raised md-primary">Online</md-button>
-  <md-button ng-click="dc.toggleShow()">Toggle Show</md-button>
+  <md-button ng-click="dc.acceptRide()">Toggle Show</md-button>
 </div>
 <div ng-hide="dc.accept">
   <div ng-hide="dc.buttonVisible" ng-hide="dc.accept" layout="row" layout-sm="column" layout-align="space-around">
@@ -52,4 +52,4 @@
 </div>
 
 
-<div ng-if="dc.buttonShow" ng-include="'views/partials/driver-notifications.html'"></div>
+<div  ng-show="dc.buttonShow" ng-include="'views/partials/driver-notifications.html'"></div>

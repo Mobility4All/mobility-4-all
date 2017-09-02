@@ -28,7 +28,6 @@ router.get('/', function(req, res) {
       userInfo.oxygen = req.user.oxygen;
     } else {
       userInfo.id = req.user.id;
-      userInfo.id = req.user.driver_socket;
       userInfo.userName = req.user.username;
       userInfo.first_name = req.user.first_name;
       userInfo.last_name = req.user.last_name;

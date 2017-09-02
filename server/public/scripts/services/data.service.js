@@ -5,6 +5,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
     rider: UserService.userObject
   };
   var socket;
+
   function showRideRequest() {
     // dc.alert = '';
     $mdBottomSheet.show({
@@ -33,8 +34,11 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
         clickOutsideToClose:false,
         // fullscreen: rc.customFullscreen // Only for -xs, -sm breakpoints.
       })
-      .then(function(answer) {
+      .then(function(message) {
         // $scope.status = answer;
+        rideObject.note = message;
+        console.log('sending driver note', message);
+        socket.emit('driver-note', rideObject);
       }, function() {
         // $scope.status = 'You cancelled the dialog.';
       });
@@ -80,22 +84,33 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
         showDriverArrived();
       });
     },
+    // Sends driver optional note after acceptance notification
+    // sendDriverNote: function(note) {
+    //   console.log('sending driver note');
+    //   rideObject.note = note;
+    //   socket.emit('driver-note', rideObject);
+    // }
     // Connects driver to socket
     connectDriver: function() {
       socket = io();
       console.log('connected driver to socket', socket);
+      // Handles ride match
       socket.on('find-driver', function(rider) {
         rideObject.rider = rider;
         rideObject.driver = UserService.userObject; // tbd if this is important
         console.log('rider info', rider);
         showRideRequest();
+      });
+      // Handles receiving note from rider
+      socket.on('receive-note', function(ride) {
+        console.log('receiving note', ride.note);
       })
     },
     // Handles driver accepting ride
     acceptRide: function() {
       console.log('accepting ride');
       socket.emit('driver-accept', rideObject);
-      // $mdBottomSheet.hide();
+      $mdBottomSheet.hide();
     },
     // Handles driver arriving for rider
     arriveForRider: function() {

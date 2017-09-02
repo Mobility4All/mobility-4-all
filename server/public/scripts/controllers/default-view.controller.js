@@ -158,12 +158,11 @@ dc.showGridBottomSheet = function() {
 
 
   dc.acceptRide = function() {
-    console.log('button showing?', dc.buttonShow);
     DataService.acceptRide();
     dc.buttonVisible = true;
     dc.accept = !dc.accept;
     dc.buttonShow = !dc.buttonShow;
-    console.log('button showing 2?', dc.buttonShow);
+    console.log('who\'s the rider?', DataService.rideObject);
 
   };
   dc.toggleShow = function() {

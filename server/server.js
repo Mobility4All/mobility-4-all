@@ -80,14 +80,19 @@ io.on('connection', function(socket){
   socket.on('ride-request', function(data) {
     console.log('ride request data', data);
     coord = {
-  latA: data.latA,
-  latB: data.latB,
-  lngA: data.lngA,
-  lngB: data.lngB
-  };
+      latA: data.latA,
+      latB: data.latB,
+      lngA: data.lngA,
+      lngB: data.lngB
+    };
     data.rider_id = socket.id;
   });
+  socket.on('driver-note', function(data) {
+    console.log('driver note', data);
+    io.to(data.driver.driver_socket).emit('receive-note', data);
+  })
   socket.on('driver-accept', function(data) {
+    data.driver.driver_socket = socket.id;
     console.log('ride acceptance data', data);
     io.to(data.rider.socket_id).emit('rider-accepted', data);
   });
