@@ -2,7 +2,6 @@
 <div ng-hide="dc.accept" layout="row" layout-align="center center">
   <md-button style="width:50%; height:40px; margin:10px" ng-show="dc.buttonVisible" ng-click="dc.toggle()" class="secondary md-raised">Go Live</md-button>
   <md-button style="width:50%; height:40px; margin:10px" ng-hide="dc.buttonVisible" ng-click="dc.toggle()" class="md-raised md-primary">Online</md-button>
-  <md-button ng-click="dc.acceptRide()">Toggle Show</md-button>
 </div>
 <div ng-hide="dc.accept">
   <div ng-hide="dc.buttonVisible" ng-hide="dc.accept" layout="row" layout-sm="column" layout-align="space-around">
@@ -34,14 +33,14 @@
 
 <!-- THIS IS THE DEFAULT VIEW MAP -->
 <div ng-hide="dc.accept">
-<ng-map  zoom="14" center="[0,0]">
-  <shape id="circle" name="circle" centered="true"
-    stroke-color='SkyBlue' stroke-opacity="0.8" stroke-weight="2"
-    center="current-position" radius="200" editable="false" ></shape>
-</ng-map>
+  <ng-map  zoom="14" center="[0,0]">
+    <shape id="circle" name="circle" centered="true"
+      stroke-color='SkyBlue' stroke-opacity="0.8" stroke-weight="2"
+      center="current-position" radius="200" editable="false" ></shape>
+  </ng-map>
 </div>
 
-<h1 ng-if="dc.buttonShow" >button show working?</h1>
+<h1 ng-if="dc.dataService.buttonShow" >button show working?</h1>
 <div ng-include="'views/partials/directions.sidenav.html'"></div>
 
 <div  ng-if="alert">
@@ -52,4 +51,4 @@
 </div>
 
 
-<div  ng-show="dc.buttonShow" ng-include="'views/partials/driver-notifications.html'"></div>
+<div ng-show="dc.dataService.buttonShow" ng-include="'views/partials/driver-notifications.html'"></div>

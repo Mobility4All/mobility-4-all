@@ -4,6 +4,7 @@ myApp.controller('DriverNotificationController', function(UserService, DataServi
 
     dc.userName = DataService.rideObject.rider.rider_first;
     dc.tripMessage = 'Arrive for ';
+    dc.dataService = DataService;
 
     dc.arrive = function() {
       console.log('arriving for', DataService.rideObject.rider.rider_first);

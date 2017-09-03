@@ -5,6 +5,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
     rider: UserService.userObject
   };
   var socket;
+  var buttonShow = false;
 
   function showRideRequest() {
     // dc.alert = '';
@@ -62,7 +63,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
 
   return {
     rideObject: rideObject,
-
+    buttonShow: buttonShow,
     socket: socket,
     // Connects rider to socket
     connectRider: function() {
