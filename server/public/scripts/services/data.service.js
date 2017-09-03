@@ -4,9 +4,12 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
   var rideObject = {
     rider: UserService.userObject
   };
+  // Variable that socket will be assigned to
   var socket;
+  // Arrive/pickup partial shows based on this boolean
   var buttonShow = false;
 
+  // Bottom sheet shows on ride request
   function showRideRequest() {
     // dc.alert = '';
     $mdBottomSheet.show({
@@ -26,6 +29,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
     });
   };
 
+  // Dialog shows to rider on acceptance from driver
   function showDriverMatched(ev) {
       $mdDialog.show({
         controller: 'RiderNotificationController as rc',
@@ -45,6 +49,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       });
     };
 
+    // Dialog shows on driver arriving; triggered by driver
     showDriverArrived = function(ev) {
         $mdDialog.show({
           controller: 'RiderNotificationController',
@@ -85,12 +90,6 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
         showDriverArrived();
       });
     },
-    // Sends driver optional note after acceptance notification
-    // sendDriverNote: function(note) {
-    //   console.log('sending driver note');
-    //   rideObject.note = note;
-    //   socket.emit('driver-note', rideObject);
-    // }
     // Connects driver to socket
     connectDriver: function() {
       socket = io();
@@ -104,6 +103,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       });
       // Handles receiving note from rider
       socket.on('receive-note', function(ride) {
+        rideObject.note = ride.note;
         console.log('receiving note', ride.note);
       })
     },

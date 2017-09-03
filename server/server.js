@@ -1,7 +1,6 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-
 var passport = require('./strategies/sql.localstrategy');
 var sessionConfig = require('./modules/session.config');
 
@@ -11,38 +10,9 @@ var userRouter = require('./routes/user.router');
 var registerRouter = require('./routes/register.router');
 var riderRouter = require('./routes/rider.router');
 var tripRouter = require('./routes/trip.router');
-
 var driverRouter = require('./routes/driver.router');
 
-
-
 var port = process.env.PORT || 5000;
-
-
-
-
-
-
-
-
-
-
-
-
-
-// var client = require('twilio')('AC49334531148f62d5745a66859dd83168', 'dba9b29a8f173b3f20b3fe184b1a629a');
-//
-// app.get('/testtwilio', function(req, res){
-//   client.messages.create({
-//     to: '+16129864532',
-//     from: '+17634029974',
-//     body: 'You just got a message from your sweet app'
-//   }, function(err, data){
-//     if(err)
-//       console.log(err);
-//     console.log(data);
-//   });
-// });
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -57,7 +27,6 @@ app.use(sessionConfig);
 // Start up passport sessions
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 // Listen //
 
@@ -79,6 +48,7 @@ io.on('connection', function(socket){
   // Emits ride data to drivers on request
   socket.on('ride-request', function(data) {
     console.log('ride request data', data);
+    // Assigns coordinates to global variable
     coord = {
       latA: data.latA,
       latB: data.latB,
@@ -87,10 +57,12 @@ io.on('connection', function(socket){
     };
     data.rider_id = socket.id;
   });
+  // Sends rider note to driver
   socket.on('driver-note', function(data) {
     console.log('driver note', data);
     io.to(data.driver.driver_socket).emit('receive-note', data);
   })
+  // Sends driver info to rider
   socket.on('driver-accept', function(data) {
     data.driver.driver_socket = socket.id;
     console.log('ride acceptance data', data);
@@ -103,6 +75,7 @@ io.on('connection', function(socket){
   });
 });
 
+// Assigns properties to req object to make available to routers
 app.use(function(req, res, next) {
   req.io = io;
   req.coord = coord;
@@ -119,3 +92,17 @@ app.use('/trip', tripRouter);
 
 // Catch all bucket, must be last!
 app.use('/', indexRouter);
+
+// var client = require('twilio')('AC49334531148f62d5745a66859dd83168', 'dba9b29a8f173b3f20b3fe184b1a629a');
+//
+// app.get('/testtwilio', function(req, res){
+//   client.messages.create({
+//     to: '+16129864532',
+//     from: '+17634029974',
+//     body: 'You just got a message from your sweet app'
+//   }, function(err, data){
+//     if(err)
+//       console.log(err);
+//     console.log(data);
+//   });
+// });

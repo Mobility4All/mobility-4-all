@@ -2,7 +2,6 @@ myApp.controller('DriverNotificationController', function(UserService, DataServi
     console.log('DriverNotificationController created');
     var dc = this;
 
-    dc.userName = DataService.rideObject.rider.rider_first;
     dc.tripMessage = 'Arrive for ';
     dc.dataService = DataService;
 
