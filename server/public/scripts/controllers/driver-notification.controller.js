@@ -18,6 +18,7 @@ myApp.controller('DriverNotificationController', function(UserService, DataServi
         //also starts destination routing
       } else if (dc.tripMessage === 'Drop off '){
         //also calls rider fare dialog
+        DataService.completeRide();
       }
     };
 
