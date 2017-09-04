@@ -68,6 +68,7 @@ io.on('connection', function(socket){
     console.log('ride acceptance data', data);
     io.to(data.rider.socket_id).emit('rider-accepted', data);
     // terminate loop
+    tripRouter.matched();
   });
   // listening for arriveForRider
   socket.on('driver-arrive', function(data) {
@@ -95,6 +96,8 @@ app.use('/user', userRouter);
 app.use('/rider', riderRouter);
 app.use('/driver', driverRouter);
 app.use('/trip', tripRouter);
+// tripRouter(app, io);
+
 
 // Catch all bucket, must be last!
 app.use('/', indexRouter);
