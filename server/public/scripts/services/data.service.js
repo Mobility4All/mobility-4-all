@@ -87,6 +87,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
     rideObject: rideObject,
     buttonShow: buttonShow,
     socket: socket,
+    showDriverMatched: showDriverMatched,
     // Connects rider to socket
     connectRider: function() {
       socket = io();

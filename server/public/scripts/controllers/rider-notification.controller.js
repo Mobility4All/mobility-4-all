@@ -3,9 +3,11 @@ myApp.controller('RiderNotificationController', function(DataService, $timeout, 
 
     console.log('RiderNotificationController created');
     var rc = this;
+
     rc.driver = "james";
     var eta = "10";
     rc.rideObject = DataService.rideObject;
+    rc.DataService = DataService;
 
     // $scope.showDriverMatched = function(ev) {
     //     $mdDialog.show({
