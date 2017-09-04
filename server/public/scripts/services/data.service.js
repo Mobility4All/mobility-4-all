@@ -14,7 +14,27 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
     // dc.alert = '';
     $mdBottomSheet.show({
       templateUrl: 'views/partials/driver-ride-notification.html',
-      controller: 'ArrivalController',
+      controller: 'DefaultViewController as dc',
+      clickOutsideToClose: false
+    }).then(function(clickedItem) {
+      $mdBottomSheet.hide(clickedItem);
+      $mdToast.show(
+            $mdToast.simple()
+              .textContent(clickedItem['name'] + ' clicked!')
+              .position('top right')
+              .hideDelay(1500)
+          );
+    }).catch(function(error) {
+      // User clicked outside or hit escape
+    });
+  };
+
+  // Bottom sheet shows on ride request
+  function showRiderInfo() {
+    // dc.alert = '';
+    $mdBottomSheet.show({
+      templateUrl: 'views/partials/rider-info.html',
+      controller: 'DefaultViewController as dc',
       clickOutsideToClose: false
     }).then(function(clickedItem) {
       $mdBottomSheet.hide(clickedItem);
@@ -69,7 +89,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       function showRiderFare() {
         $mdBottomSheet.show({
           templateUrl: 'views/partials/rider-arrival.html',
-          controller: 'ArrivalController',
+          controller: 'RiderNotificationController as rc',
           clickOutsideToClose: false
         }).then(function(clickedItem) {
           $mdToast.show(
