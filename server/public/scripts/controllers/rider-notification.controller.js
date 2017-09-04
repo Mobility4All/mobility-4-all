@@ -7,36 +7,21 @@ myApp.controller('RiderNotificationController', function(DataService, $timeout, 
     var eta = "10";
     rc.rideObject = DataService.rideObject;
 
-    // $scope.showDriverMatched = function(ev) {
-    //     $mdDialog.show({
-    //       controller: 'RiderNotificationController as rc',
-    //       templateUrl: 'views/partials/arrive.dialog.html',
-    //       parent: angular.element(document.body),
-    //       targetEvent: ev,
-    //       clickOutsideToClose:false,
-    //       fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-    //     })
-    //     .then(function(answer) {
-    //       $scope.status = answer;
-    //     }, function() {
-    //       $scope.status = 'You cancelled the dialog.';
-    //     });
-    //   };
-      $scope.showDriverArrived = function(ev) {
-          $mdDialog.show({
-            controller: 'RiderNotificationController',
-            templateUrl: 'views/partials/driver-arrive.dialog.html',
-            parent: angular.element(document.body),
-            targetEvent: ev,
-            clickOutsideToClose:false,
-            fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-          })
-          .then(function(answer) {
-            $scope.status = answer;
-          }, function() {
+    $scope.showDriverArrived = function(ev) {
+        $mdDialog.show({
+          controller: 'RiderNotificationController',
+          templateUrl: 'views/partials/driver-arrive.dialog.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose:false,
+          fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+        })
+        .then(function(answer) {
+          $scope.status = answer;
+        }, function() {
 
-          });
-        };
+        });
+      };
 
     $scope.hide = function() {
       $mdDialog.hide();
@@ -48,24 +33,5 @@ myApp.controller('RiderNotificationController', function(DataService, $timeout, 
 
     $scope.answer = function(answer) {
       $mdDialog.hide(answer);
-    };
-
-    //hide/show current fare price at the end of the ride
-    rc.showGridBottomSheet = function() {
-      rc.alert = '';
-      $mdBottomSheet.show({
-        templateUrl: 'views/partials/rider-arrival.html',
-        controller: 'ArrivalController',
-        clickOutsideToClose: false
-      }).then(function(clickedItem) {
-        $mdToast.show(
-              $mdToast.simple()
-                .textContent(clickedItem['name'] + ' clicked!')
-                .position('top right')
-                .hideDelay(1500)
-            );
-      }).catch(function(error) {
-        // User clicked outside or hit escape
-      });
     };
 });

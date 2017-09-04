@@ -53,9 +53,9 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
     };
 
     // Dialog shows on driver arriving; triggered by driver
-    showDriverArrived = function(ev) {
+    function showDriverArrived(ev) {
         $mdDialog.show({
-          controller: 'RiderNotificationController',
+          controller: 'RiderNotificationController as rc',
           templateUrl: 'views/partials/driver-arrive.dialog.html',
           parent: angular.element(document.body),
           targetEvent: ev,
@@ -68,11 +68,30 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
 
         });
       };
+      // Bottom sheet shows rider fare info on ride completion
+      function showRiderFare() {
+        $mdBottomSheet.show({
+          templateUrl: 'views/partials/rider-arrival.html',
+          controller: 'ArrivalController',
+          clickOutsideToClose: false
+        }).then(function(clickedItem) {
+          $mdToast.show(
+                $mdToast.simple()
+                  .textContent(clickedItem['name'] + ' clicked!')
+                  .position('top right')
+                  .hideDelay(1500)
+              );
+        }).catch(function(error) {
+          // User clicked outside or hit escape
+        });
+      };
 
   return {
     rideObject: rideObject,
     buttonShow: buttonShow,
     socket: socket,
+    showDriverMatched: showDriverMatched,
+    showDriverArrived: showDriverArrived,
     // Connects rider to socket
     connectRider: function() {
       socket = io();
@@ -86,12 +105,15 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
         console.log('accepted ride', ride);
         rideObject.driver = ride.driver;
         showDriverMatched();
-        // add code here to show "driver is on the way" dialog to rider
       });
       socket.on('rider-pickup', function(driver) {
         console.log('rider getting picked up', driver);
         showDriverArrived();
       });
+      socket.on('fare-dialog', function(ride) {
+        console.log('show me the money', ride);
+        showRiderFare();
+      })
     },
     // Connects driver to socket
     connectDriver: function() {
@@ -108,13 +130,31 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       socket.on('receive-note', function(ride) {
         rideObject.note = ride.note;
         console.log('receiving note', ride.note);
-      })
+      });
+      // Hides the bottom sheet from driver because exceeded time limit to accept ride
+      socket.on('remove-accept', function(ride) {
+        $mdBottomSheet.hide();
+        console.log('remove accept called');
+      });
     },
     // Handles driver accepting ride
     acceptRide: function() {
       console.log('accepting ride');
       socket.emit('driver-accept', rideObject);
       $mdBottomSheet.hide();
+      // STOP THE MATCHING LOOP
+      socket.emit('matched-dr', rideObject);
+      // Marks trip accepted in database
+      $http.put('/trip/accept', rideObject).then(function(response) {
+        console.log('accepted and updated', response);
+      }).catch(function(err) {
+        console.log('error accepting arrived', err);
+      })
+    },
+    // Handles driver completing ride
+    completeRide: function() {
+      console.log('completing ride');
+      socket.emit('complete-ride', rideObject);
     },
     // Handles driver arriving for rider
     arriveForRider: function() {
