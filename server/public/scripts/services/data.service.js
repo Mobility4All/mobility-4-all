@@ -9,6 +9,9 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
   // Arrive/pickup partial shows based on this boolean
   var buttonShow = false;
 
+
+
+
   // Bottom sheet shows on ride request
   function showRideRequest() {
     // dc.alert = '';
