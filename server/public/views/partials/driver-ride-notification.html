@@ -2,6 +2,6 @@
   <div layout="row" layout-align="center center" ng-cloak>
     <img ng-src="dc.riderInfo.rider_photo_url">
     <p class="text">Ride Request: {{dc.riderInfo.rider_first}}</p>
-    <md-button ng-click="dc.acceptRide()" class="md-raised md-primary">Accept Ride</md-button>
+    <md-button ng-click="dc.navigationService.acceptRide()" class="md-raised md-primary">Accept Ride</md-button>
   </div>
 </md-bottom-sheet>
