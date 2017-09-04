@@ -133,6 +133,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       socket.emit('driver-accept', rideObject);
       $mdBottomSheet.hide();
       // STOP THE MATCHING LOOP
+      socket.emit('matched-dr', rideObject);
     },
     // Handles driver completing ride
     completeRide: function() {

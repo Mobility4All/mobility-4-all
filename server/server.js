@@ -61,12 +61,13 @@ io.on('connection', function(socket){
   socket.on('driver-note', function(data) {
     console.log('driver note', data);
     io.to(data.driver.driver_socket).emit('receive-note', data);
-  })
+  });
   // Sends driver info to rider
   socket.on('driver-accept', function(data) {
     data.driver.driver_socket = socket.id;
     console.log('ride acceptance data', data);
     io.to(data.rider.socket_id).emit('rider-accepted', data);
+    // terminate loop
   });
   // listening for arriveForRider
   socket.on('driver-arrive', function(data) {
