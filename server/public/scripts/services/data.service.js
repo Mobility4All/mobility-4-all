@@ -50,7 +50,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
     };
 
     // Dialog shows on driver arriving; triggered by driver
-    showDriverArrived = function(ev) {
+    function showDriverArrived(ev) {
         $mdDialog.show({
           controller: 'RiderNotificationController',
           templateUrl: 'views/partials/driver-arrive.dialog.html',
@@ -63,6 +63,23 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
           // $scope.status = answer;
         }, function() {
 
+        });
+      };
+      // Bottom sheet shows rider fare info on ride completion
+      function showRiderFare() {
+        $mdBottomSheet.show({
+          templateUrl: 'views/partials/rider-arrival.html',
+          controller: 'ArrivalController',
+          clickOutsideToClose: false
+        }).then(function(clickedItem) {
+          $mdToast.show(
+                $mdToast.simple()
+                  .textContent(clickedItem['name'] + ' clicked!')
+                  .position('top right')
+                  .hideDelay(1500)
+              );
+        }).catch(function(error) {
+          // User clicked outside or hit escape
         });
       };
 
@@ -83,12 +100,15 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
         console.log('accepted ride', ride);
         rideObject.driver = ride.driver;
         showDriverMatched();
-        // add code here to show "driver is on the way" dialog to rider
       });
       socket.on('rider-pickup', function(driver) {
         console.log('rider getting picked up', driver);
         showDriverArrived();
       });
+      socket.on('fare-dialog', function(ride) {
+        console.log('show me the money', ride);
+        showRiderFare();
+      })
     },
     // Connects driver to socket
     connectDriver: function() {
@@ -113,6 +133,11 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       socket.emit('driver-accept', rideObject);
       $mdBottomSheet.hide();
       // STOP THE MATCHING LOOP
+    },
+    // Handles driver completing ride
+    completeRide: function() {
+      console.log('completing ride');
+      socket.emit('complete-ride', rideObject);
     },
     // Handles driver arriving for rider
     arriveForRider: function() {

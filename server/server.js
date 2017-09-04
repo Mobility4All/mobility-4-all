@@ -73,6 +73,11 @@ io.on('connection', function(socket){
     console.log('driver arrive socket listening', data);
     io.to(data.rider.socket_id).emit('rider-pickup', data);
   });
+  // Listening for ride to completeRide
+  socket.on('complete-ride', function(data) {
+    console.log('completing ride', data);
+    io.to(data.rider.socket_id).emit('fare-dialog', data);
+  })
 });
 
 // Assigns properties to req object to make available to routers
