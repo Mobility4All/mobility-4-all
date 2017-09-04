@@ -3,7 +3,7 @@ var router = express.Router();
 var passport = require('passport'); // probably unnecessary but moving this over from eta.router.js
 var path = require('path');
 var pool = require('../modules/pool.js');
-var matchCountdown;
+var matchCountdown, driver;
 
 
  router.matched = function() {
@@ -11,9 +11,12 @@ var matchCountdown;
    clearInterval(matchCountdown);
  };
 
- function offerDriverRide() {
-   console.log("Offering ride to driver");
- }
+ // router.offerDriverRide = function(req) {
+ //   console.log("Offering ride to driver");
+ //   driver = 0;
+ //   req.io.to(result.rows[driver].driver_socket).emit('find-driver', req.user);
+ //   driver++;
+ // };
 
 // match rider to driver based on (1) driver being live, (2) specific needs, (3) 5 drivers closest to rider
 router.get('/match', function(req, res, next) {
@@ -38,20 +41,25 @@ router.get('/match', function(req, res, next) {
       client.query(queryText, [req.user.id], function(err, result) {
         done();
 
+        function offerDriverRide(){
+          console.log("Offering ride to driver");
+          driver = 0;
+          req.io.to(result.rows[driver].driver_socket).emit('find-driver', req.user);
+          driver++;
+        }
+
         if(err) {
           console.log("Error inserting data: ", err);
           res.sendStatus(500);
         } else {
-          req.io.to(result.rows[0].driver_socket).emit('find-driver', req.user);
+          // req.io.to(result.rows[0].driver_socket).emit('find-driver', req.user);
+          matchCountdown = setInterval(offerDriverRide, 5000);
           res.send({drivers: result.rows});
-          matchCountdown = setInterval(offerDriverRide,1000);
-
 
 
           // send info to [0].driver via socket, if they don't accept ride in 60 seconds, then loop through array
           // until a driver does accept
           // so we need to send the info to the first driver
-          // if they accept call function inside socket.on('driver-accept') that closes this matching logic
           // else if timer gets to 60 seconds, repeat process with next driver in array
           // for(var i = 0, i < result.rows.length, i++) {
             //  function(i) {

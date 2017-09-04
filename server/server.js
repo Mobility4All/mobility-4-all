@@ -67,7 +67,7 @@ io.on('connection', function(socket){
     data.driver.driver_socket = socket.id;
     console.log('ride acceptance data', data);
     io.to(data.rider.socket_id).emit('rider-accepted', data);
-    // terminate loop
+    // terminate matching loop in trip.router.js
     tripRouter.matched();
   });
   // listening for arriveForRider
