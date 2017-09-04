@@ -12,19 +12,16 @@
     <md-dialog-content>
       <div class="md-dialog-content">
         <h2>Your driver is on the way!</h2>
-        <p>
-          Driver Photo
-        </p>
-        <p>
-          Driver Vehicle Photo
-        </p>
+        <h2>{{rc.rideObject.driver.first_name}}</h2>
+        <img ng-src="{{rc.rideObject.driver.driver_photo_url}}"/>
+        <img ng-src="{{rc.rideObject.driver.vehicle_photo_url}}"/>
         <p>
           ETA data here
         </p>
         <p>Would you like to send your driver an additional message?</p>
         <md-input-container>
           <label for="message">Message:</label>
-          <input type="text" ng-model="answer.message" />
+          <input type="text" ng-model="message" />
         </md-input-container>
       </div>
     </md-dialog-content>
@@ -34,7 +31,7 @@
       <md-button ng-click="answer('Your driver is on the way.')">
        No Thanks
       </md-button>
-      <md-button ng-click="answer('Message was sent to the Driver')">
+      <md-button ng-click="answer(message)">
         Send
       </md-button>
     </md-dialog-actions>

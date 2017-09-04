@@ -2,10 +2,12 @@ myApp.controller('DefaultViewController', function(UserService, DataService, $ht
 
   console.log('DefaultViewController created');
   var dc = this;
+  dc.riderInfo = DataService.rideObject.rider;
+  dc.dataService = DataService;
 
   dc.buttonVisible = true;
-  dc.buttonShow = true;
-//toggle function to show driver online and golive
+  dc.buttonShow = false;
+  //toggle function to show driver online and golive
   dc.toggle = function() {
     if(dc.buttonVisible) {
       $http.put('/driver/live/');
@@ -123,28 +125,28 @@ dc.accept = false;
 
 
   $scope.callInterval = function() {
-  //Show current seconds value 5 times after every 1000 ms
-  $interval(dc.geoLocate, 60000);
-};
+    //Show current seconds value 5 times after every 1000 ms
+    $interval(dc.geoLocate, 60000);
+  };
 
-//hide/show accept a rider
-dc.showGridBottomSheet = function() {
-  dc.alert = '';
-  $mdBottomSheet.show({
-    templateUrl: 'views/partials/driver-ride-notification.html',
-    controller: 'ArrivalController',
-    clickOutsideToClose: false
-  }).then(function(clickedItem) {
-    $mdToast.show(
-          $mdToast.simple()
-            .textContent(clickedItem['name'] + ' clicked!')
-            .position('top right')
-            .hideDelay(1500)
-        );
-  }).catch(function(error) {
-    // User clicked outside or hit escape
-  });
-};
+// //hide/show accept a rider
+// dc.showGridBottomSheet = function() {
+//   dc.alert = '';
+//   $mdBottomSheet.show({
+//     templateUrl: 'views/partials/driver-ride-notification.html',
+//     controller: 'ArrivalController',
+//     clickOutsideToClose: false
+//   }).then(function(clickedItem) {
+//     $mdToast.show(
+//           $mdToast.simple()
+//             .textContent(clickedItem['name'] + ' clicked!')
+//             .position('top right')
+//             .hideDelay(1500)
+//         );
+//   }).catch(function(error) {
+//     // User clicked outside or hit escape
+//   });
+// };
 
   function updateDriverLocation() {
     $http.put('/driver/geolocation', dc.coords).then(function(response) {
@@ -160,8 +162,13 @@ dc.showGridBottomSheet = function() {
     DataService.acceptRide();
     dc.buttonVisible = true;
     dc.accept = !dc.accept;
-    dc.buttonShow = !dc.buttonShow;
+    DataService.buttonShow = !DataService.buttonShow;
+    console.log('who\'s the rider?', DataService.rideObject);
+
   };
+  dc.toggleShow = function() {
+    DataService.buttonShow = !DataService.buttonShow;
+  }
 
 
 //REVERSE GEOCODE CODE

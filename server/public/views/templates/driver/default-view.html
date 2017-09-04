@@ -10,7 +10,7 @@
 </div>
 {{dc.test.message}}
 <button ng-click="dc.geoLocate(); callInterval()">Current Coordinates: {{dc.message}}</button>
-<md-button ng-click="dc.acceptRide()" class="md-raised md-primary">Accept Ride</md-button>
+<!-- <md-button ng-click="dc.acceptRide()" class="md-raised md-primary">Accept Ride</md-button> -->
 
 
 <!-- THIS IS LIVE google maps directons -->
@@ -33,13 +33,12 @@
 
 <!-- THIS IS THE DEFAULT VIEW MAP -->
 <div ng-hide="dc.accept">
-<ng-map  zoom="14" center="[0,0]">
-  <shape id="circle" name="circle" centered="true"
-    stroke-color='SkyBlue' stroke-opacity="0.8" stroke-weight="2"
-    center="current-position" radius="200" editable="false" ></shape>
-</ng-map>
+  <ng-map  zoom="14" center="[0,0]">
+    <shape id="circle" name="circle" centered="true"
+      stroke-color='SkyBlue' stroke-opacity="0.8" stroke-weight="2"
+      center="current-position" radius="200" editable="false" ></shape>
+  </ng-map>
 </div>
-
 
 <div ng-include="'views/partials/directions.sidenav.html'"></div>
 
@@ -51,4 +50,4 @@
 </div>
 
 
-<div ng-hide="dc.buttonShow" ng-include="'views/partials/driver-notifications.html'"></div>
+<div ng-show="dc.dataService.buttonShow" ng-include="'views/partials/driver-notifications.html'"></div>

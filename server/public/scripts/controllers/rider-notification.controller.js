@@ -1,26 +1,27 @@
 
-myApp.controller('RiderNotificationController', function($timeout, $mdBottomSheet, $mdToast, $mdDialog, $scope) {
+myApp.controller('RiderNotificationController', function(DataService, $timeout, $mdBottomSheet, $mdToast, $mdDialog, $scope) {
 
     console.log('RiderNotificationController created');
     var rc = this;
     rc.driver = "james";
     var eta = "10";
+    rc.rideObject = DataService.rideObject;
 
-    $scope.showDriverMatched = function(ev) {
-        $mdDialog.show({
-          controller: 'RiderNotificationController',
-          templateUrl: 'views/partials/arrive.dialog.html',
-          parent: angular.element(document.body),
-          targetEvent: ev,
-          clickOutsideToClose:false,
-          fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-        })
-        .then(function(answer) {
-          $scope.status = answer;
-        }, function() {
-          $scope.status = 'You cancelled the dialog.';
-        });
-      };
+    // $scope.showDriverMatched = function(ev) {
+    //     $mdDialog.show({
+    //       controller: 'RiderNotificationController as rc',
+    //       templateUrl: 'views/partials/arrive.dialog.html',
+    //       parent: angular.element(document.body),
+    //       targetEvent: ev,
+    //       clickOutsideToClose:false,
+    //       fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+    //     })
+    //     .then(function(answer) {
+    //       $scope.status = answer;
+    //     }, function() {
+    //       $scope.status = 'You cancelled the dialog.';
+    //     });
+    //   };
       $scope.showDriverArrived = function(ev) {
           $mdDialog.show({
             controller: 'RiderNotificationController',

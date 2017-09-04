@@ -2,14 +2,14 @@ myApp.controller('DriverNotificationController', function(UserService, DataServi
     console.log('DriverNotificationController created');
     var dc = this;
 
-    dc.userName = UserService.userObject.userName;
     dc.tripMessage = 'Arrive for ';
+    dc.dataService = DataService;
 
     dc.arrive = function() {
-      console.log('DriverNotificationController');
+      console.log('arriving for', DataService.rideObject.rider.rider_first);
       if(dc.tripMessage === 'Arrive for ') {
-        DataService.arriveForRider(); // this is displaying to the driver... not the rider
-        console.log(dc.message);
+        DataService.arriveForRider();
+        console.log(dc.tripMessage);
         dc.tripMessage = 'Pick up ';
         //also send rider pickup dialog
         // route here to mark trip arrived

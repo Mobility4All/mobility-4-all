@@ -1,10 +1,15 @@
-myApp.factory('DataService', function($http, $mdBottomSheet, $mdToast, UserService){
+myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast, UserService){
   console.log('DataService Loaded');
   // Ride object that is sent with ride request
   var rideObject = {
     rider: UserService.userObject
   };
+  // Variable that socket will be assigned to
   var socket;
+  // Arrive/pickup partial shows based on this boolean
+  var buttonShow = false;
+
+  // Bottom sheet shows on ride request
   function showRideRequest() {
     // dc.alert = '';
     $mdBottomSheet.show({
@@ -12,6 +17,7 @@ myApp.factory('DataService', function($http, $mdBottomSheet, $mdToast, UserServi
       controller: 'ArrivalController',
       clickOutsideToClose: false
     }).then(function(clickedItem) {
+      $mdBottomSheet.hide(clickedItem);
       $mdToast.show(
             $mdToast.simple()
               .textContent(clickedItem['name'] + ' clicked!')
@@ -23,11 +29,46 @@ myApp.factory('DataService', function($http, $mdBottomSheet, $mdToast, UserServi
     });
   };
 
+  // Dialog shows to rider on acceptance from driver
+  function showDriverMatched(ev) {
+      $mdDialog.show({
+        controller: 'RiderNotificationController as rc',
+        templateUrl: 'views/partials/arrive.dialog.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:false,
+        // fullscreen: rc.customFullscreen // Only for -xs, -sm breakpoints.
+      })
+      .then(function(message) {
+        // $scope.status = answer;
+        rideObject.note = message;
+        console.log('sending driver note', message);
+        socket.emit('driver-note', rideObject);
+      }, function() {
+        // $scope.status = 'You cancelled the dialog.';
+      });
+    };
 
+    // Dialog shows on driver arriving; triggered by driver
+    showDriverArrived = function(ev) {
+        $mdDialog.show({
+          controller: 'RiderNotificationController',
+          templateUrl: 'views/partials/driver-arrive.dialog.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose:false,
+          // fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+        })
+        .then(function(answer) {
+          // $scope.status = answer;
+        }, function() {
+
+        });
+      };
 
   return {
     rideObject: rideObject,
-
+    buttonShow: buttonShow,
     socket: socket,
     // Connects rider to socket
     connectRider: function() {
@@ -40,27 +81,37 @@ myApp.factory('DataService', function($http, $mdBottomSheet, $mdToast, UserServi
       // Handles response of ride being accepted
       socket.on('rider-accepted', function(ride) {
         console.log('accepted ride', ride);
+        rideObject.driver = ride.driver;
+        showDriverMatched();
         // add code here to show "driver is on the way" dialog to rider
       });
       socket.on('rider-pickup', function(driver) {
         console.log('rider getting picked up', driver);
+        showDriverArrived();
       });
     },
     // Connects driver to socket
     connectDriver: function() {
       socket = io();
       console.log('connected driver to socket', socket);
+      // Handles ride match
       socket.on('find-driver', function(rider) {
         rideObject.rider = rider;
         rideObject.driver = UserService.userObject; // tbd if this is important
         console.log('rider info', rider);
         showRideRequest();
+      });
+      // Handles receiving note from rider
+      socket.on('receive-note', function(ride) {
+        rideObject.note = ride.note;
+        console.log('receiving note', ride.note);
       })
     },
     // Handles driver accepting ride
     acceptRide: function() {
       console.log('accepting ride');
       socket.emit('driver-accept', rideObject);
+      $mdBottomSheet.hide();
     },
     // Handles driver arriving for rider
     arriveForRider: function() {
