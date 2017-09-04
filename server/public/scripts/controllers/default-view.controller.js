@@ -31,6 +31,7 @@ myApp.controller('DefaultViewController', function(UserService, DataService, Nav
   dc.toggleRight = buildToggler('right');
 
 
+
   // //what is this connected to??
   // dc.toggleShow = function() {
   //   NavigationService.buttonShow = !NavigationService.buttonShow;

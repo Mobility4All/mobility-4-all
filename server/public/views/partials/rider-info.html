@@ -1,0 +1,31 @@
+<md-dialog aria-label="driver arrival">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="dc.cancel()">
+          <md-icon aria-label="Close dialog">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <h2>Your rider: {{dc.dataService.rideObject.rider.rider_first}}</h2>
+        <div layout="row">
+          <img style="height:150px;" ng-src="{{dc.dataService.rideObject.rider.rider_photo_url}}"/>
+        </div>
+        <p>
+          {{dc.dataService.rideObject.note}}
+        </p>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="dc.cancel()">
+       close
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

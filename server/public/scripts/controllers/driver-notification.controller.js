@@ -35,4 +35,17 @@ myApp.controller('DriverNotificationController', function(UserService, DataServi
       }
     };
 
+    dc.hide = function() {
+      $mdDialog.hide();
+    };
+
+    dc.cancel = function() {
+      $mdDialog.cancel();
+    };
+
+    dc.answer = function(answer) {
+      $mdDialog.hide(answer);
+    };
+
+
 });

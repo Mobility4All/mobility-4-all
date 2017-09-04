@@ -1,22 +1,19 @@
-<div   ng-controller="DefaultViewController as dc">
-       <div  layout="column">
-         <div flex layout="row" layout-align="center center">
-
-           <md-button  class="md-raised"ng-click="dc.toggleRight()" ng-disabled="false">
-           Turn by Turn Directions</md-button>
-         </div>
-         <div layout="column" ng-cloak>
-           <section layout="row" flex>
-             <md-sidenav style="height:700px;"class="md-sidenav-right md-whiteframe-z2" md-component-id="right" md-disable-backdrop md-whiteframe="4">
-             <md-content layout-margin layout-align="center">
-            <div id="right-panel"></div>
-                     <md-button style="width:100%; height:40px; margin:10px;"layout-align="end bottom" ng-click="dc.toggleRight()" class="secondary md-raised">
-                       <md-icon class="material-icons">close</md-icon>
-                      </md-button>
-                 </md-content>
-           </md-sidenav>
-           </section>
-           </div>
-         </div>
-
+<div ng-controller="DefaultViewController as dc">
+   <div  layout="column">
+     <div flex layout="row" layout-align="center center">
+       <md-button  class="md-raised"ng-click="dc.toggleRight()" ng-disabled="false">Turn by Turn Directions</md-button>
+     </div>
+     <div layout="column" ng-cloak>
+       <section layout="row" flex>
+         <md-sidenav style="height:700px;"class="md-sidenav-right md-whiteframe-z2" md-component-id="right" md-disable-backdrop md-whiteframe="4">
+         <md-content layout-margin layout-align="center">
+          <div id="right-panel"></div>
+           <md-button style="width:100%; height:40px; margin:10px;"layout-align="end bottom" ng-click="dc.toggleRight()" class="secondary md-raised">
+             <md-icon class="material-icons">close</md-icon>
+            </md-button>
+         </md-content>
+       </md-sidenav>
+       </section>
+     </div>
+   </div>
 </div>

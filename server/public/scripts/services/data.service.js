@@ -22,31 +22,27 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
     }).then(function(clickedItem) {
       $mdBottomSheet.hide(clickedItem);
       $mdToast.show(
-            $mdToast.simple()
-              .textContent(clickedItem['name'] + ' clicked!')
-              .position('top right')
-              .hideDelay(1500)
-          );
+        $mdToast.simple()
+          .textContent(clickedItem['name'] + ' clicked!')
+          .position('top right')
+          .hideDelay(1500)
+      );
     }).catch(function(error) {
       // User clicked outside or hit escape
     });
   };
 
   // Bottom sheet shows on ride request
-  function showRiderInfo() {
+  function showRiderInfo(ev) {
     // dc.alert = '';
-    $mdBottomSheet.show({
+    $mdDialog.show({
       templateUrl: 'views/partials/rider-info.html',
       controller: 'DefaultViewController as dc',
-      clickOutsideToClose: false
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true
     }).then(function(clickedItem) {
-      $mdBottomSheet.hide(clickedItem);
-      $mdToast.show(
-            $mdToast.simple()
-              .textContent(clickedItem['name'] + ' clicked!')
-              .position('top right')
-              .hideDelay(1500)
-          );
+      $mdDialog.hide(clickedItem);
     }).catch(function(error) {
       // User clicked outside or hit escape
     });
@@ -74,37 +70,37 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
 
     // Dialog shows on driver arriving; triggered by driver
     function showDriverArrived(ev) {
-        $mdDialog.show({
-          controller: 'RiderNotificationController as rc',
-          templateUrl: 'views/partials/driver-arrive.dialog.html',
-          parent: angular.element(document.body),
-          targetEvent: ev,
-          clickOutsideToClose:false,
-          // fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-        })
-        .then(function(answer) {
-          // $scope.status = answer;
-        }, function() {
+      $mdDialog.show({
+        controller: 'RiderNotificationController as rc',
+        templateUrl: 'views/partials/driver-arrive.dialog.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:false,
+        // fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+      })
+      .then(function(answer) {
+        // $scope.status = answer;
+      }, function() {
 
-        });
-      };
-      // Bottom sheet shows rider fare info on ride completion
-      function showRiderFare() {
-        $mdBottomSheet.show({
-          templateUrl: 'views/partials/rider-arrival.html',
-          controller: 'RiderNotificationController as rc',
-          clickOutsideToClose: false
-        }).then(function(clickedItem) {
-          $mdToast.show(
-                $mdToast.simple()
-                  .textContent(clickedItem['name'] + ' clicked!')
-                  .position('top right')
-                  .hideDelay(1500)
-              );
-        }).catch(function(error) {
-          // User clicked outside or hit escape
-        });
-      };
+      });
+    };
+    // Bottom sheet shows rider fare info on ride completion
+    function showRiderFare() {
+      $mdBottomSheet.show({
+        templateUrl: 'views/partials/rider-arrival.html',
+        controller: 'RiderNotificationController as rc',
+        clickOutsideToClose: false
+      }).then(function(clickedItem) {
+        $mdToast.show(
+              $mdToast.simple()
+                .textContent(clickedItem['name'] + ' clicked!')
+                .position('top right')
+                .hideDelay(1500)
+            );
+      }).catch(function(error) {
+        // User clicked outside or hit escape
+      });
+    };
 
   return {
     rideObject: rideObject,
@@ -171,15 +167,16 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
         console.log('error accepting arrived', err);
       })
     },
+    // Handles driver arriving for rider
+    arriveForRider: function() {
+      showRiderInfo();
+      console.log('driver has tapped arrive for rider');
+      socket.emit('driver-arrive', rideObject);
+    },
     // Handles driver completing ride
     completeRide: function() {
       console.log('completing ride');
       socket.emit('complete-ride', rideObject);
-    },
-    // Handles driver arriving for rider
-    arriveForRider: function() {
-      console.log('driver has tapped arrive for rider');
-      socket.emit('driver-arrive', rideObject);
     },
     // Disconnect rider from socket
     disconnectRider: function() {
