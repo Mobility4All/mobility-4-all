@@ -141,6 +141,12 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       $mdBottomSheet.hide();
       // STOP THE MATCHING LOOP
       socket.emit('matched-dr', rideObject);
+      // Marks trip accepted in database
+      $http.put('/trip/accept', rideObject).then(function(response) {
+        console.log('accepted and updated', response);
+      }).catch(function(err) {
+        console.log('error accepting arrived', err);
+      })
     },
     // Handles driver completing ride
     completeRide: function() {
