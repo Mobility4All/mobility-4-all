@@ -23,7 +23,7 @@ router.get('/match', function(req, res, next) {
         console.log("Error connecting: ", err);
         next(err);
       }
-      client.query(queryText, [req.user.id], function (err, result) {
+      client.query(queryText, [req.user.id], function(err, result) {
         done();
 
         if(err) {
@@ -32,11 +32,26 @@ router.get('/match', function(req, res, next) {
         } else {
           req.io.to(result.rows[0].driver_socket).emit('find-driver', req.user);
           res.send({drivers: result.rows});
-        }
+          // send info to [0].driver via socket, if they don't accept ride in 60 seconds, then loop through array
+          // until a driver does accept
+          // so we need to send the info to the first driver
+          // if they accept call function inside socket.on('driver-accept') that closes this matching logic
+          // else if timer gets to 60 seconds, repeat process with next driver in array
+          // for(var i = 0, i < result.rows.length, i++) {
+            //  function(i) {
+          //     req.io.to(result.rows[i].driver_socket).emit('find-driver', req.user);
+          //        if(response=accepted) {return: driver-rider matched}
+          //         else {}
+          // }
+          //}
+          // if we reach end of array with no accepted drivers then encourage rider to try their ride request again
+
+
+          }
+        });
       });
-    });
+    }
   }
-}
 
 ); // end of match route
 
@@ -55,20 +70,20 @@ var googleMapsClient = require('@google/maps').createClient({
 
 //this is a distance matrix test case//
 
-    googleMapsClient.distanceMatrix({
-      origins: [
-        'Perth, Australia', 'Sydney, Australia', 'Melbourne, Australia',
-        'Adelaide, Australia', 'Brisbane, Australia', 'Darwin, Australia',
-        'Hobart, Australia', 'Canberra, Australia'
-      ],
-      destinations: [
-        'Uluru, Australia'
-      ]
-    })
-    .asPromise()
-    .then(function(response) {
-      // console.log('matrix test response from the router', response.json.rows);
-    })
+googleMapsClient.distanceMatrix({
+  origins: [
+    'Perth, Australia', 'Sydney, Australia', 'Melbourne, Australia',
+    'Adelaide, Australia', 'Brisbane, Australia', 'Darwin, Australia',
+    'Hobart, Australia', 'Canberra, Australia'
+  ],
+  destinations: [
+    'Uluru, Australia'
+  ]
+})
+.asPromise()
+.then(function(response) {
+  // console.log('matrix test response from the router', response.json.rows);
+})
 
 
 

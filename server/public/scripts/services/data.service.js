@@ -112,6 +112,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       console.log('accepting ride');
       socket.emit('driver-accept', rideObject);
       $mdBottomSheet.hide();
+      // STOP THE MATCHING LOOP
     },
     // Handles driver arriving for rider
     arriveForRider: function() {
