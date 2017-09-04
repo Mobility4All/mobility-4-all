@@ -67,6 +67,85 @@ router.get('/match', function(req, res, next) {
 
 ); // end of match route
 
+// Updates 'accept' value of trip
+router.put('/accept', function(req, res, next) {
+  var rider = req.body.rider;
+  console.log('updating trip accept', rider);
+  if(req.isAuthenticated()) {
+    pool.connect(function(err, client, done) {
+      if(err) {
+        console.log("Error connecting: ", err);
+        next(err);
+      }
+      client.query("UPDATE trips SET accept = true WHERE rider_id = $1",
+      [rider.id],
+      function (err, result) {
+        done();
+
+        if(err) {
+          console.log("Error inserting data: ", err);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+      });
+    });
+  }
+});
+
+// Updates 'pickup' value of trip
+router.put('/pickup', function(req, res, next) {
+  var rider = req.body;
+  console.log('updating trip pickup', rider);
+  if(req.isAuthenticated()) {
+    pool.connect(function(err, client, done) {
+      if(err) {
+        console.log("Error connecting: ", err);
+        next(err);
+      }
+      client.query("UPDATE trips SET pickup = true WHERE rider_id = $1",
+      [rider.id],
+      function (err, result) {
+        done();
+
+        if(err) {
+          console.log("Error inserting data: ", err);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+      });
+    });
+  }
+});
+
+// Updates 'complete' value of trip
+router.put('/complete', function(req, res, next) {
+  var rider = req.body;
+  console.log('updating trip complete', rider);
+  if(req.isAuthenticated()) {
+    pool.connect(function(err, client, done) {
+      if(err) {
+        console.log("Error connecting: ", err);
+        next(err);
+      }
+      client.query("UPDATE trips SET complete = true WHERE rider_id = $1",
+      [rider.id],
+      function (err, result) {
+        done();
+
+        if(err) {
+          console.log("Error inserting data: ", err);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+      });
+    });
+  }
+});
+
+
 
 //Cat is Sandboxing Google Maps Distance Matrix here//
 var distanceMatrixKey = process.env.DISTANCE_MATRIX_KEY || require('../modules/key.config.js').distanceMatrixKey;
