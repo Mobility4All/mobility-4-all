@@ -8,33 +8,20 @@
     <md-progress-circular md-mode="indeterminate"></md-progress-circular>
   </div>
 </div>
-<button ng-click="dc.navigationService.geoLocate(); dc.navigationService.callInterval()">Current Coordinates: {{dc.navigationService.message}}</button>
+<!-- <button ng-click="dc.navigationService.geoLocate(); dc.navigationService.callInterval()">Current Coordinates: {{dc.navigationService.message}}</button> -->
 <!-- <md-button ng-click="dc.acceptRide()" class="md-raised md-primary">Accept Ride</md-button> -->
 
 
-<!-- THIS IS LIVE google maps directons -->
-<div id="floating-panel">
-  <b>Start: </b>
-  <input type="text" ng-model="dc.navigationService.startAndEnd.start">
-  <b>End: </b>
-  <input type="text" ng-model="dc.navigationService.startAndEnd.end" value="">
-  <button type="button" ng-click="dc.navigationService.startNavigation()">Find Directions</button>
-</div>
-<div id="map"></div>
-<!-- ng-if="dc.dataService.buttonShow" -->
+
+<div ng-if="dc.dataService.buttonShow" id="map"></div>
 
 
-
-<!-- <div ng-hide="dc.accept"id="map"></div> -->
 
 <!-- ^^ end google maps directions ^^ -->
 
-<!-- <div ng-if="dc.accept" id="right-panel"></div> -->
-
-
 
 <!-- THIS IS THE DEFAULT VIEW MAP -->
-<div ng-hide="dc.dataService.buttonShow">
+<div ng-if="!dc.dataService.buttonShow">
   <ng-map  zoom="14" center="[0,0]">
     <shape id="circle" name="circle" centered="true"
       stroke-color='SkyBlue' stroke-opacity="0.8" stroke-weight="2"

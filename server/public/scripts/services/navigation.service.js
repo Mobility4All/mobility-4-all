@@ -20,21 +20,7 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
     lng: ''
   };
 
-  // var driverOffline = true;
 
-  // //toggle function to show driver online and golive
-  // function toggleOnline() {
-  //   if(driverOffline) {
-  //     $http.put('/driver/live/');
-  //     DataService.connectDriver();
-  //   }
-  //   if(!driverOffline) {
-  //     $http.put('/driver/unlive/');
-  //     DataService.disconnectDriver();
-  //   }
-  //   driverOffline = !driverOffline;
-  //   console.log(driverOffline);
-  // };
 
   // create new GeoCoder to reverser geolocation
   var geocoder = new google.maps.Geocoder;
@@ -58,8 +44,9 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
     DataService.buttonShow = !DataService.buttonShow;
     console.log('who\'s the rider?', DataService.rideObject);
     geoLocate();
-    startAndEnd.start = coords.lat + coords.lng;
-    startAndEnd.end = "DataService.rideObject.rider.coord.latA" + "DataService.rideObject.rider.coord.lngA";
+
+    startAndEnd.end = DataService.rideObject.rider.coord.latA + " " +  DataService.rideObject.rider.coord.lngA;
+    console.log('start and end end point', startAndEnd.end);
     setTimeout(initMap, 10000);
     //  initMap();
   };
@@ -134,6 +121,8 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
       coords.lat = position.coords.latitude;
       coords.lng = position.coords.longitude;
       console.log('dc.coords', coords);
+      startAndEnd.start = coords.lat + " " + coords.lng;
+      console.log('start and end start point', startAndEnd.start);
       updateDriverLocation();
     } // end show position function
 
