@@ -127,13 +127,20 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       socket.on('receive-note', function(ride) {
         rideObject.note = ride.note;
         console.log('receiving note', ride.note);
-      })
+      });
+      // Hides the bottom sheet from driver because exceeded time limit to accept ride
+      socket.on('remove-accept', function(ride) {
+        $mdBottomSheet.hide();
+        console.log('remove accept called');
+      });
     },
     // Handles driver accepting ride
     acceptRide: function() {
       console.log('accepting ride');
       socket.emit('driver-accept', rideObject);
       $mdBottomSheet.hide();
+      // STOP THE MATCHING LOOP
+      socket.emit('matched-dr', rideObject);
     },
     // Handles driver completing ride
     completeRide: function() {
