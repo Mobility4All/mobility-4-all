@@ -52,7 +52,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
     // Dialog shows on driver arriving; triggered by driver
     function showDriverArrived(ev) {
         $mdDialog.show({
-          controller: 'RiderNotificationController',
+          controller: 'RiderNotificationController as rc',
           templateUrl: 'views/partials/driver-arrive.dialog.html',
           parent: angular.element(document.body),
           targetEvent: ev,
@@ -88,6 +88,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
     buttonShow: buttonShow,
     socket: socket,
     showDriverMatched: showDriverMatched,
+    showDriverArrived: showDriverArrived,
     // Connects rider to socket
     connectRider: function() {
       socket = io();

@@ -11,13 +11,11 @@
 
     <md-dialog-content>
       <div class="md-dialog-content">
-        <h2>Your driver is here!</h2>
-        <p>
-          Driver Photo
-        </p>
-        <p>
-          Driver Vehicle Photo
-        </p>
+        <h2>{{rc.rideObject.driver.first_name}} is here!</h2>
+        <div layout="row">
+        <img style="height:150px;" ng-src="{{rc.rideObject.driver.driver_photo_url}}"/>
+        <img style="height:150px;" ng-src="{{rc.rideObject.driver.vehicle_photo_url}}"/>
+      </div>
       </div>
     </md-dialog-content>
 
