@@ -14,19 +14,27 @@ var tripRouter = require('./routes/trip.router');
 
 var driverRouter = require('./routes/driver.router');
 
-
+var config = require('./modules/twilio.config');
+var client = require('twilio')(config.accountSid, config.authToken);
 
 var port = process.env.PORT || 5000;
 
 
 
-
-
-
-
-
-
-
+function notifyCargiver(to, message) {
+  // console.log(client.api.messages.create())
+  return client.api.messages
+    .create({
+      body: message,
+      to: user.,
+      from: config.sendingNumber,
+    }).then(function(data) {
+      console.log('Administrator notified');
+    }).catch(function(err) {
+      console.error('Could not notify administrator');
+      console.error(err);
+    });
+};
 
 
 
