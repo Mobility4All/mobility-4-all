@@ -136,6 +136,9 @@ li a:hover {
   height: 50px;
 }
 
+.addressPartial {
+  height: 100px;
+}
 
 /* AUTCOMPLETE INPUT STYLING  */
 

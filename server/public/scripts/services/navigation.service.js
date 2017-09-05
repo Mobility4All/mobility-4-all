@@ -22,6 +22,7 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
 
 
   var reverseGeoInput = '44.9780310,-93.2635010';
+  var toAddress;
   // create new GeoCoder to reverser geolocation
   var geocoder = new google.maps.Geocoder;
   var infowindow = new google.maps.InfoWindow;
@@ -56,6 +57,9 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
     console.log('start', startAndEnd.start);
     console.log('end', startAndEnd.end);
     initMap();
+    reverseGeoInput = DataService.rideObject.rider.coord.latB + "," +  DataService.rideObject.rider.coord.lngB;
+    console.log(reverseGeoInput);
+    geocodeLatLng(geocoder, infowindow);
   };
 
   //this google maps function gets directions and displays on a map and with text
@@ -152,6 +156,7 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
           infowindow.setContent(results[0].formatted_address);
           // infowindow.open(map, marker);
           console.log('hopefully this is the right address', results[0].formatted_address);
+          toAddress = results[0].formatted_address;
         } else {
           console.log('No results found');
         }
@@ -170,9 +175,8 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
       callInterval: callInterval,
       geoLocate: geoLocate,
       acceptRide: acceptRide,
-      geocodeLatLng: geocodeLatLng
-      // driverOffline: driverOffline,
-      // toggleOnline: toggleOnline
+      geocodeLatLng: geocodeLatLng,
+      toAddress: toAddress
     };
 
 }); //end of nav service.

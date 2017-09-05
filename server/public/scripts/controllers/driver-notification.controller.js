@@ -6,6 +6,8 @@ myApp.controller('DriverNotificationController', function(UserService, DataServi
     dc.dataService = DataService;
     dc.navigationService = NavigationService;
 
+    var panelEl = angular.element( document.querySelector( '#right-panel' ) );
+
     dc.arrive = function() {
       console.log('arriving for', DataService.rideObject.rider.rider_first);
       riderIdObject = {
@@ -14,6 +16,7 @@ myApp.controller('DriverNotificationController', function(UserService, DataServi
       if(dc.tripMessage === 'Arrive for ') {
         DataService.arriveForRider();
         dc.tripMessage = 'Pick up ';
+        panelEl.empty();
         //also send rider pickup dialog
         // route here to mark trip arrived
       } else if (dc.tripMessage === 'Pick up '){
