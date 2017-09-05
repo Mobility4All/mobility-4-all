@@ -1,4 +1,4 @@
-myApp.controller('DriverNotificationController', function(UserService, DataService, $http) {
+myApp.controller('DriverNotificationController', function(UserService, DataService, $http, $mdDialog) {
     console.log('DriverNotificationController created');
     var dc = this;
 
@@ -34,5 +34,18 @@ myApp.controller('DriverNotificationController', function(UserService, DataServi
         DataService.buttonShow = false;
       }
     };
+
+    dc.hide = function() {
+      $mdDialog.hide();
+    };
+
+    dc.cancel = function() {
+      $mdDialog.cancel();
+    };
+
+    dc.answer = function(answer) {
+      $mdDialog.hide(answer);
+    };
+
 
 });
