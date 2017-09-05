@@ -27,24 +27,29 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
       /** @type {!HTMLInputElement} */(document.getElementById('autocomplete2')),
       {types: ['geocode']});
 
-      function fillInAddress() {
-        var geocoder = new google.maps.Geocoder();
-        destA = autocomplete.getPlace();
-        destB = autocomplete2.getPlace();
+    function fillInAddress() {
+      var geocoder = new google.maps.Geocoder();
+      destA = autocomplete.getPlace();
+      destB = autocomplete2.getPlace();
 
 
-        // check on order of lng/lat AND Geog vs Geom
+      // check on order of lng/lat AND Geog vs Geom
+      if(destA) {
         rc.ride.latA = destA.geometry.location.lat();
         rc.ride.lngA = destA.geometry.location.lng();
-        rc.ride.latB = destB.geometry.location.lat();
-        rc.ride.lngB = destB.geometry.location.lng();
-
-        // Adds location data to ride object on data service
         DataService.rideObject.latA = destA.geometry.location.lat();
         DataService.rideObject.lngA = destA.geometry.location.lng();
+
+      }
+      if(destB) {
+        rc.ride.latB = destB.geometry.location.lat();
+        rc.ride.lngB = destB.geometry.location.lng();
         DataService.rideObject.latB = destB.geometry.location.lat();
         DataService.rideObject.lngB = destB.geometry.location.lng();
       }
+
+      // Adds location data to ride object on data service
+    }
 
 
 
@@ -81,18 +86,24 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
       DataService.connectRider();
       console.log("destA lat/lan are:", rc.ride.latA, rc.ride.lngA);
       console.log("destB lat/lng are:", rc.ride.latB, rc.ride.lngB);
-      $http.post('/rider/destAB', rc.ride).then(function(response) {
-        console.log('destAB put to db', response);
-
-        $http.get('/trip/match').then(function(res) {
-          console.log('response from match', res.data.drivers);
-        })
-        $location.path('/trip-view');
-      }).catch(function(response) {
-        console.log('destAB put error', response);
-        // IMPROVE THIS ALERT VALIDATION
-        alert("Oh no! There was an error getting your ride");
-      });
+      // Delete rider's incomplete trips prior to requesting new
+      $http.delete('/trip/delete-incomplete').then(function(response) {
+        console.log('deleted previous trips.');
+        $http.post('/rider/destAB', rc.ride).then(function(response) {
+          console.log('destAB put to db', response);
+          // Requests rid, matching with drivers
+          $http.get('/trip/match').then(function(res) {
+            console.log('response from match', res.data.drivers);
+          })
+          $location.path('/trip-view');
+        }).catch(function(response) {
+          console.log('destAB put error', response);
+          // IMPROVE THIS ALERT VALIDATION
+          alert("Oh no! There was an error getting your ride");
+        });
+      }).catch(function(err) {
+        console.log('error deleting previous trips', err);
+      })
     };
 
 
