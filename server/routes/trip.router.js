@@ -17,7 +17,7 @@ router.matched = function() {
 router.get('/match', function(req, res, next) {
   console.log('matching ride', req.user);
   // console.log('req.socket', req.socket);
-  var queryText = ['WITH rider_lng AS (SELECT ST_X(start_location::geometry) AS rlng FROM trips WHERE complete = FALSE AND rider_id = $1), rider_lat AS (SELECT ST_Y(start_location::geometry) AS rlat FROM trips WHERE complete = FALSE AND rider_id = $1) SELECT *, id FROM drivers WHERE live = true'];
+  var queryText = ['WITH rider_lng AS (SELECT ST_X(start_location::geometry) AS rlng FROM trips WHERE complete = FALSE AND rider_id = $1), rider_lat AS (SELECT ST_Y(start_location::geometry) AS rlat FROM trips WHERE complete = FALSE AND rider_id = $1) SELECT ST_AsText(location), id FROM drivers WHERE live = true'];
   if(req.user.elec_wheelchair) queryText.push(' AND elec_wheelchair = true');
   if(req.user.col_wheelchair) queryText.push(' AND col_wheelchair = true');
   if(req.user.service_animal) queryText.push(' AND service_animal = true');
@@ -27,6 +27,8 @@ router.get('/match', function(req, res, next) {
   console.log('query text', queryText);
   req.user.socket_id = req.socket.id;
   req.user.coord = req.coord;
+  // store the matched driver-rider ETA in a variable that both rider and driver can access
+  // req.user.eta = value;
   if(req.isAuthenticated()) {
     pool.connect(function(err, client, done) {
       if(err) {
@@ -40,6 +42,7 @@ router.get('/match', function(req, res, next) {
         function offerDriverRide(){
           console.log("Offering ride to driver:", driver);
           if((result.rows[driver])) {
+            console.log("drivers location:", result.rows[driver].location);
             req.io.to(result.rows[driver].driver_socket).emit('find-driver', req.user);
             // emit socket request that hides the bottom sheet so that driver can no longer accept
               if((driver - 1) >= 0) {req.io.to(result.rows[driver - 1].driver_socket).emit('remove-accept', req.user);}
@@ -51,10 +54,20 @@ router.get('/match', function(req, res, next) {
         }
       }
 
+      googleMapsClient.distanceMatrix({
+        origins: [ {lat: 55.93, lng: -3.118}, 'Perth, Australia'],  // drivers location NEED TO CONVERT WKB to lat/lng
+        destinations: [{lat: req.user.coord.latA, lng: req.user.coord.lngA}]  // riders location
+      })
+      .asPromise()
+      .then(function(response) {
+        console.log('matrix test response from the router', response.json.rows);
+      });
+
       if(err) {
         console.log("Error inserting data: ", err);
         res.sendStatus(500);
       } else {
+        console.log('query results', result.rows);
         // show "accept ride" option to first driver in results array, then progress down the list
         console.log("Offering ride to [0].driver and starting matching setInterval");
         req.io.to(result.rows[0].driver_socket).emit('find-driver', req.user);
@@ -157,25 +170,6 @@ var googleMapsClient = require('@google/maps').createClient({
   Promise: Promise
 });
 
-
-
-
-//this is a distance matrix test case//
-
-googleMapsClient.distanceMatrix({
-  origins: [
-    'Perth, Australia', 'Sydney, Australia', 'Melbourne, Australia',
-    'Adelaide, Australia', 'Brisbane, Australia', 'Darwin, Australia',
-    'Hobart, Australia', 'Canberra, Australia'
-  ],
-  destinations: [
-    'Uluru, Australia'
-  ]
-})
-.asPromise()
-.then(function(response) {
-  // console.log('matrix test response from the router', response.json.rows);
-})
 
 
 
