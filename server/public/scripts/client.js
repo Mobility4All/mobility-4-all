@@ -27,6 +27,15 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
         }
       }
     })
+    .when('/contact', {
+      templateUrl: '/views/templates/contact_us.html',
+      controller: 'AboutController as ac',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
     .when('/register', {
       templateUrl: '/views/templates/register.html',
       controller: 'RiderLoginController as rc',
