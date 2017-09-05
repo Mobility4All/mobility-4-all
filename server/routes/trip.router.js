@@ -171,6 +171,31 @@ router.put('/complete', function(req, res, next) {
   }
 });
 
+// Deletes user's incomplete trips
+router.delete('/delete-incomplete', function(req, res, next) {
+  console.log('deleting incomplete trips');
+  if(req.isAuthenticated()) {
+    pool.connect(function(err, client, done) {
+      if(err) {
+        console.log("Error connecting: ", err);
+        next(err);
+      }
+      client.query("DELETE FROM trips WHERE rider_id = $1 AND complete = false",
+      [req.user.id],
+      function (err, result) {
+        done();
+
+        if(err) {
+          console.log("Error inserting data: ", err);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+      });
+    });
+  }
+});
+
 
 
 //Cat is Sandboxing Google Maps Distance Matrix here//

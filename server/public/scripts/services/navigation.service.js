@@ -21,7 +21,8 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
   };
 
 
-
+  var reverseGeoInput = '44.9780310,-93.2635010';
+  var toAddress;
   // create new GeoCoder to reverser geolocation
   var geocoder = new google.maps.Geocoder;
   var infowindow = new google.maps.InfoWindow;
@@ -32,11 +33,14 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
     // dc.buttonVisible = true;
     DataService.buttonShow = !DataService.buttonShow;
     console.log('who\'s the rider?', DataService.rideObject);
-    geoLocate();
-
+    startAndEnd.start = coords.lat + " " + coords.lng;
     startAndEnd.end = DataService.rideObject.rider.coord.latA + " " +  DataService.rideObject.rider.coord.lngA;
     console.log('start and end end point', startAndEnd.end);
-    setTimeout(initMap, 10000);
+    console.log('start and end start point', startAndEnd.start);
+    setTimeout(initMap, 1000);
+    reverseGeoInput = DataService.rideObject.rider.coord.latA + "," +  DataService.rideObject.rider.coord.lngA;
+    console.log(reverseGeoInput);
+    geocodeLatLng(geocoder, infowindow);
     //  initMap();
   };
 
@@ -45,12 +49,17 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
   // These functions take in user input for start and end destinations, and returns
   //a google map with polyline route and with text driving directions
   //on click, old req is cleared, new request is called with initMap() to get and show new directions
-  function startNavigation() {
+  function startDestNavigation() {
     panelEl.empty();
-    initMap();
-    geocodeLatLng(geocoder, infowindow);  //REMOVED map param (this does reverse geocode)
+    startAndEnd.start = DataService.rideObject.rider.coord.latA + " " +  DataService.rideObject.rider.coord.lngA;
+    startAndEnd.end = DataService.rideObject.rider.coord.latB + " " +  DataService.rideObject.rider.coord.lngB;
+    // geocodeLatLng(geocoder, infowindow);  //REMOVED map param (this does reverse geocode)
     console.log('start', startAndEnd.start);
     console.log('end', startAndEnd.end);
+    initMap();
+    reverseGeoInput = DataService.rideObject.rider.coord.latB + "," +  DataService.rideObject.rider.coord.lngB;
+    console.log(reverseGeoInput);
+    geocodeLatLng(geocoder, infowindow);
   };
 
   //this google maps function gets directions and displays on a map and with text
@@ -118,8 +127,7 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
       coords.lat = position.coords.latitude;
       coords.lng = position.coords.longitude;
       console.log('dc.coords', coords);
-      startAndEnd.start = coords.lat + " " + coords.lng;
-      console.log('start and end start point', startAndEnd.start);
+      // startAndEnd.start = coords.lat + " " + coords.lng;
       //updateDriver makes put request
       updateDriverLocation();
     } // end show position function
@@ -139,18 +147,16 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
   //i removed the maps param from the function below
   function geocodeLatLng(geocoder, infowindow) {
 
-
-    var input = '44.9780310,-93.2635010';
-    // can test with other input, it works: 40.714224,-73.961452
-
-    var latlngStr = input.split(',', 2);
+    // takes in variable called reverseGeoInput
+    var latlngStr = reverseGeoInput.split(',', 2);
     var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
     geocoder.geocode({'location': latlng}, function(results, status) {
       if (status === 'OK') {
         if (results[0]) {
           infowindow.setContent(results[0].formatted_address);
           // infowindow.open(map, marker);
-          console.log('hopefully this is primes address', results[0].formatted_address);
+          console.log('hopefully this is the right address', results[0].formatted_address);
+          toAddress = results[0].formatted_address;
         } else {
           console.log('No results found');
         }
@@ -165,12 +171,12 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
   //EVERYTHING BELOW THIS LINE SHOULD BE RETURNED
     return {
       rideObject: rideObject,
-      startNavigation: startNavigation,
+      startDestNavigation: startDestNavigation,
       callInterval: callInterval,
       geoLocate: geoLocate,
-      acceptRide: acceptRide
-      // driverOffline: driverOffline,
-      // toggleOnline: toggleOnline
+      acceptRide: acceptRide,
+      geocodeLatLng: geocodeLatLng,
+      toAddress: toAddress
     };
 
 }); //end of nav service.
