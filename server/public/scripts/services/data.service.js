@@ -9,7 +9,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
   // Arrive/pickup partial shows based on this boolean
   var buttonShow = false;
 
-
+  var specialNeeds = [];
 
 
   // Bottom sheet shows on ride request
@@ -17,16 +17,32 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
     // dc.alert = '';
     $mdBottomSheet.show({
       templateUrl: 'views/partials/driver-ride-notification.html',
-      controller: 'ArrivalController',
+      controller: 'DefaultViewController as dc',
       clickOutsideToClose: false
     }).then(function(clickedItem) {
       $mdBottomSheet.hide(clickedItem);
       $mdToast.show(
-            $mdToast.simple()
-              .textContent(clickedItem['name'] + ' clicked!')
-              .position('top right')
-              .hideDelay(1500)
-          );
+        $mdToast.simple()
+          .textContent(clickedItem['name'] + ' clicked!')
+          .position('top right')
+          .hideDelay(1500)
+      );
+    }).catch(function(error) {
+      // User clicked outside or hit escape
+    });
+  };
+
+  // Bottom sheet shows on ride request
+  function showRiderInfo(ev) {
+    // dc.alert = '';
+    $mdDialog.show({
+      templateUrl: 'views/partials/rider-info.html',
+      controller: 'DriverNotificationController as dc',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true
+    }).then(function(clickedItem) {
+      $mdDialog.hide(clickedItem);
     }).catch(function(error) {
       // User clicked outside or hit escape
     });
@@ -54,37 +70,37 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
 
     // Dialog shows on driver arriving; triggered by driver
     function showDriverArrived(ev) {
-        $mdDialog.show({
-          controller: 'RiderNotificationController as rc',
-          templateUrl: 'views/partials/driver-arrive.dialog.html',
-          parent: angular.element(document.body),
-          targetEvent: ev,
-          clickOutsideToClose:false,
-          // fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-        })
-        .then(function(answer) {
-          // $scope.status = answer;
-        }, function() {
+      $mdDialog.show({
+        controller: 'RiderNotificationController as rc',
+        templateUrl: 'views/partials/driver-arrive.dialog.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:false,
+        // fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+      })
+      .then(function(answer) {
+        // $scope.status = answer;
+      }, function() {
 
-        });
-      };
-      // Bottom sheet shows rider fare info on ride completion
-      function showRiderFare() {
-        $mdBottomSheet.show({
-          templateUrl: 'views/partials/rider-arrival.html',
-          controller: 'ArrivalController',
-          clickOutsideToClose: false
-        }).then(function(clickedItem) {
-          $mdToast.show(
-                $mdToast.simple()
-                  .textContent(clickedItem['name'] + ' clicked!')
-                  .position('top right')
-                  .hideDelay(1500)
-              );
-        }).catch(function(error) {
-          // User clicked outside or hit escape
-        });
-      };
+      });
+    };
+    // Bottom sheet shows rider fare info on ride completion
+    function showRiderFare() {
+      $mdBottomSheet.show({
+        templateUrl: 'views/partials/rider-arrival.html',
+        controller: 'RiderNotificationController as rc',
+        clickOutsideToClose: false
+      }).then(function(clickedItem) {
+        $mdToast.show(
+              $mdToast.simple()
+                .textContent(clickedItem['name'] + ' clicked!')
+                .position('top right')
+                .hideDelay(1500)
+            );
+      }).catch(function(error) {
+        // User clicked outside or hit escape
+      });
+    };
 
   return {
     rideObject: rideObject,
@@ -92,6 +108,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
     socket: socket,
     showDriverMatched: showDriverMatched,
     showDriverArrived: showDriverArrived,
+    specialNeeds: specialNeeds,
     // Connects rider to socket
     connectRider: function() {
       socket = io();
@@ -123,6 +140,10 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       socket.on('find-driver', function(rider) {
         rideObject.rider = rider;
         rideObject.driver = UserService.userObject; // tbd if this is important
+        if (rider.elec_wheelchair) specialNeeds.push('Electric Wheelchair');
+        if (rider.col_wheelchair) specialNeeds.push('Collapsible Wheelchair');
+        if (rider.service_animal_wheelchair) specialNeeds.push('Service Animal');
+        if (rider.oxygen) specialNeeds.push('Oxygen Tank or other Special Equipment');
         console.log('rider info', rider);
         showRideRequest();
       });
@@ -151,15 +172,17 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
         console.log('error accepting arrived', err);
       })
     },
+    // Handles driver arriving for rider
+    arriveForRider: function() {
+      showRiderInfo();
+      console.log('driver has tapped arrive for rider');
+      console.log('special needs', specialNeeds);
+      socket.emit('driver-arrive', rideObject);
+    },
     // Handles driver completing ride
     completeRide: function() {
       console.log('completing ride');
       socket.emit('complete-ride', rideObject);
-    },
-    // Handles driver arriving for rider
-    arriveForRider: function() {
-      console.log('driver has tapped arrive for rider');
-      socket.emit('driver-arrive', rideObject);
     },
     // Disconnect rider from socket
     disconnectRider: function() {
