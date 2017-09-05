@@ -18,8 +18,17 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
         }
       }
     })
-    .when('/about', {
-      templateUrl: '/views/templates/about.html',
+    .when('/aboutrider', {
+      templateUrl: '/views/templates/aboutrider.html',
+      controller: 'AboutController as ac',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
+    .when('/aboutdriver', {
+      templateUrl: '/views/templates/aboutdriver.html',
       controller: 'AboutController as ac',
       resolve: {
         getuser : function(UserService){
