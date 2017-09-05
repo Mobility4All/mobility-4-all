@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" layout="column" layout-padding>
   <h1 class="lead">Sign Up</h1>
   <md-radio-group ng-model="rc.user.selection">
 
@@ -20,9 +20,11 @@
         <input type="password" ng-model="rc.user.password" />
       </md-input-container>
     </div>
-    <md-button class="md-raised md-primary" ng-click="rc.registerUser()">Register</md-button>
-    <!-- <md-button class="md-raised md-warn" ng-click="">Logout</md-button> -->
-    <a href="#home">Cancel</a>
+    <div layout="row" layout-align="space-around center">
+      <md-button class="md-raised md-primary" ng-click="rc.registerUser()">Register</md-button>
+      <!-- <md-button class="md-raised md-warn" ng-click="">Logout</md-button> -->
+      <a href="#home">Cancel</a>
+    </div>
   </form>
 
 </div>

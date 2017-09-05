@@ -200,8 +200,45 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
     ]
   });
 
+  $mdThemingProvider.definePalette('moAccentPalette', {
+  '50': 'e3e7ff',
+  '100': 'b9c2ff',
+  '200': '8a9aff',
+  '300': '5b71ff',
+  '400': '3852ff',
+  '500': '1534ff',
+  '600': '122fff',
+  '700': '0f27ff',
+  '800': '0c21ff',
+  '900': '0615ff',
+  'A100': 'ffffff',
+  'A200': 'f3f4ff',
+  'A400': 'c0c2ff',
+  'A700': 'a7aaff',
+  'contrastDefaultColor': 'light',
+  'contrastDarkColors': [
+    '50',
+    '100',
+    '200',
+    'A100',
+    'A200',
+    'A400',
+    'A700'
+  ],
+  'contrastLightColors': [
+    '300',
+    '400',
+    '500',
+    '600',
+    '700',
+    '800',
+    '900'
+  ]
+});
+
   $mdThemingProvider.theme('default')
     .primaryPalette('mobilityPalette')
+    .accentPalette('moAccentPalette')
     .warnPalette('logoutPalette');
 
 });

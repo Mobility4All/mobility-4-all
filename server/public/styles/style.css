@@ -2,12 +2,16 @@
   light green: rgb(137, 197, 87);
   gray: rgb(98, 89, 80);
 */
+html {
+  /*background-color: rgb(230, 249, 255);*/
+}
 
 body {
   margin: 0;
   padding: 0;
   font-family: Lato, sans-serif;
   font-size: 18px;
+  background-color: inherit;
 }
 
 h2 {
@@ -24,6 +28,18 @@ h3{
   font-family: Lato, sans-serif;
   text-transform: uppercase;
   color: red;
+}
+
+main {
+  height: 100%;
+}
+
+.welcome {
+  height: inherit;
+}
+
+.on-demand {
+  height: inherit;
 }
 
 .md-button.secondary {
@@ -183,3 +199,11 @@ li a:hover {
    overflow: auto;
    font-size: 15px;
  }
+
+.home-button {
+  width: 230px;
+}
+
+.request-button {
+  width: 230px;
+}
