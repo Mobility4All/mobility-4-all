@@ -6,6 +6,7 @@ myApp.controller('DefaultViewController', function(UserService, DataService, Nav
   dc.dataService = DataService;
   dc.navigationService = NavigationService;
 
+
   dc.currentlyOffline = true;
   //toggle function to show driver online and golive
   dc.toggleOnline = function() {

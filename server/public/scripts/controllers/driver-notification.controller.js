@@ -1,4 +1,4 @@
-myApp.controller('DriverNotificationController', function(UserService, DataService, $http) {
+myApp.controller('DriverNotificationController', function(UserService, DataService, $http, $mdDialog) {
     console.log('DriverNotificationController created');
     var dc = this;
 

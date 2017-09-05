@@ -9,7 +9,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
   // Arrive/pickup partial shows based on this boolean
   var buttonShow = false;
 
-
+  var specialNeeds = [];
 
 
   // Bottom sheet shows on ride request
@@ -37,7 +37,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
     // dc.alert = '';
     $mdDialog.show({
       templateUrl: 'views/partials/rider-info.html',
-      controller: 'DefaultViewController as dc',
+      controller: 'DriverNotificationController as dc',
       parent: angular.element(document.body),
       targetEvent: ev,
       clickOutsideToClose: true
@@ -108,6 +108,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
     socket: socket,
     showDriverMatched: showDriverMatched,
     showDriverArrived: showDriverArrived,
+    specialNeeds: specialNeeds,
     // Connects rider to socket
     connectRider: function() {
       socket = io();
@@ -139,6 +140,10 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       socket.on('find-driver', function(rider) {
         rideObject.rider = rider;
         rideObject.driver = UserService.userObject; // tbd if this is important
+        if (rider.elec_wheelchair) specialNeeds.push('Electric Wheelchair');
+        if (rider.col_wheelchair) specialNeeds.push('Collapsible Wheelchair');
+        if (rider.service_animal_wheelchair) specialNeeds.push('Service Animal');
+        if (rider.oxygen) specialNeeds.push('Oxygen Tank or other Special Equipment');
         console.log('rider info', rider);
         showRideRequest();
       });
@@ -171,6 +176,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
     arriveForRider: function() {
       showRiderInfo();
       console.log('driver has tapped arrive for rider');
+      console.log('special needs', specialNeeds);
       socket.emit('driver-arrive', rideObject);
     },
     // Handles driver completing ride
