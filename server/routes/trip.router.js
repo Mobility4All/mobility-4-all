@@ -3,7 +3,8 @@ var router = express.Router();
 var passport = require('passport'); // probably unnecessary but moving this over from eta.router.js
 var path = require('path');
 var pool = require('../modules/pool.js');
-var matchCountdown;
+var matchCountdown, eta;
+var driversCoord = {};
 var driver = 1;
 
 
@@ -12,12 +13,25 @@ router.matched = function() {
   clearInterval(matchCountdown);
 };
 
+var calculateETA = function (latA, lngA, driver) {
+  googleMapsClient.distanceMatrix({
+    origins: [ {lat: driver.st_x, lng: driver.st_y}],  // drivers location NEED TO CONVERT WKB to lat/lng
+    destinations: [{lat: latA, lng: lngA}]  // riders location
+  })
+  .asPromise()
+  .then(function(response) {
+    eta = response;
+    console.log('componenets of distanceMatrix:', latA, lngA, driver);
+    console.log('matrix test response from the router', response.json.rows[0].elements);
+  });
+};
+
 
 // match rider to driver based on (1) driver being live, (2) specific needs, (3) 5 drivers closest to rider
 router.get('/match', function(req, res, next) {
   console.log('matching ride', req.user);
   // console.log('req.socket', req.socket);
-  var queryText = ['WITH rider_lng AS (SELECT ST_X(start_location::geometry) AS rlng FROM trips WHERE complete = FALSE AND rider_id = $1), rider_lat AS (SELECT ST_Y(start_location::geometry) AS rlat FROM trips WHERE complete = FALSE AND rider_id = $1) SELECT ST_AsText(location), id FROM drivers WHERE live = true'];
+  var queryText = ['WITH rider_lng AS (SELECT ST_X(start_location::geometry) AS rlng FROM trips WHERE complete = FALSE AND rider_id = $1), rider_lat AS (SELECT ST_Y(start_location::geometry) AS rlat FROM trips WHERE complete = FALSE AND rider_id = $1) SELECT ST_X(location::geometry), ST_Y(location::geometry), id FROM drivers WHERE live = true'];
   if(req.user.elec_wheelchair) queryText.push(' AND elec_wheelchair = true');
   if(req.user.col_wheelchair) queryText.push(' AND col_wheelchair = true');
   if(req.user.service_animal) queryText.push(' AND service_animal = true');
@@ -42,7 +56,9 @@ router.get('/match', function(req, res, next) {
         function offerDriverRide(){
           console.log("Offering ride to driver:", driver);
           if((result.rows[driver])) {
-            console.log("drivers location:", result.rows[driver].location);
+            calculateETA(req.user.coord.latA, req.user.coord.lngA, result.rows[driver]);
+            driversCoord.lat = result.rows[driver].st_x;
+            driversCoord.lng = result.rows[driver].st_y;
             req.io.to(result.rows[driver].driver_socket).emit('find-driver', req.user);
             // emit socket request that hides the bottom sheet so that driver can no longer accept
               if((driver - 1) >= 0) {req.io.to(result.rows[driver - 1].driver_socket).emit('remove-accept', req.user);}
@@ -54,15 +70,6 @@ router.get('/match', function(req, res, next) {
         }
       }
 
-      googleMapsClient.distanceMatrix({
-        origins: [ {lat: 55.93, lng: -3.118}, 'Perth, Australia'],  // drivers location NEED TO CONVERT WKB to lat/lng
-        destinations: [{lat: req.user.coord.latA, lng: req.user.coord.lngA}]  // riders location
-      })
-      .asPromise()
-      .then(function(response) {
-        console.log('matrix test response from the router', response.json.rows);
-      });
-
       if(err) {
         console.log("Error inserting data: ", err);
         res.sendStatus(500);
@@ -72,7 +79,9 @@ router.get('/match', function(req, res, next) {
         console.log("Offering ride to [0].driver and starting matching setInterval");
         req.io.to(result.rows[0].driver_socket).emit('find-driver', req.user);
         matchCountdown = setInterval(offerDriverRide, 5000);
-        res.send({drivers: result.rows});
+        res.send({drivers: result.rows,
+                  eta: eta
+        });
       }
     });
   });

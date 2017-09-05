@@ -85,7 +85,7 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
         console.log('destAB put to db', response);
 
         $http.get('/trip/match').then(function(res) {
-          console.log('response from match', res.data.drivers);
+          console.log('response from match', res.data);
         })
         $location.path('/trip-view');
       }).catch(function(response) {
