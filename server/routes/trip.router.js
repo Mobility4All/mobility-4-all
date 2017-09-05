@@ -15,14 +15,16 @@ router.matched = function() {
 
 var calculateETA = function (latA, lngA, driver) {
   googleMapsClient.distanceMatrix({
-    origins: [ {lat: driver.st_x, lng: driver.st_y}],  // drivers location NEED TO CONVERT WKB to lat/lng
+    origins: [ {lat: driver.st_y, lng: driver.st_x}],  // drivers location NEED TO CONVERT WKB to lat/lng
     destinations: [{lat: latA, lng: lngA}]  // riders location
   })
   .asPromise()
   .then(function(response) {
-    eta = response;
+    // WHY IS ETA NOT TRANSMITTING CORRECTLY 
+    eta = response.json.rows[0].elements.duration;
     console.log('componenets of distanceMatrix:', latA, lngA, driver);
-    console.log('matrix test response from the router', response.json.rows[0].elements);
+    console.log('matrix test response from the router', response.json.rows[0].elements.duration);
+    return eta;
   });
 };
 
@@ -56,7 +58,8 @@ router.get('/match', function(req, res, next) {
         function offerDriverRide(){
           console.log("Offering ride to driver:", driver);
           if((result.rows[driver])) {
-            calculateETA(req.user.coord.latA, req.user.coord.lngA, result.rows[driver]);
+            req.user.eta = calculateETA(req.user.coord.latA, req.user.coord.lngA, result.rows[driver]);
+            console.log("checking req.user before sending to client", req.user);
             driversCoord.lat = result.rows[driver].st_x;
             driversCoord.lng = result.rows[driver].st_y;
             req.io.to(result.rows[driver].driver_socket).emit('find-driver', req.user);
@@ -79,8 +82,7 @@ router.get('/match', function(req, res, next) {
         console.log("Offering ride to [0].driver and starting matching setInterval");
         req.io.to(result.rows[0].driver_socket).emit('find-driver', req.user);
         matchCountdown = setInterval(offerDriverRide, 5000);
-        res.send({drivers: result.rows,
-                  eta: eta
+        res.send({drivers: result.rows
         });
       }
     });
