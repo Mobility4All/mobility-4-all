@@ -39,15 +39,16 @@ router.get('/match', function(req, res, next) {
         // send info to [0].driver via socket, if they don't accept ride in 60 seconds, then loop through array
         function offerDriverRide(){
           console.log("Offering ride to driver:", driver);
-          if(result.rows[driver]) {
+          console.log("Is if statement working...:", result.rows[driver]);
+          if((result.rows[driver])) {
             req.io.to(result.rows[driver].driver_socket).emit('find-driver', req.user);
             // emit socket request that hides the bottom sheet so that driver can no longer accept
               if((driver - 1) >= 0) {req.io.to(result.rows[driver - 1].driver_socket).emit('remove-accept', req.user);}
+              driver += 1;
                 // update this console log to be an alert to show rider no drivers available
         } else {console.log("No drivers matched");
           clearInterval(matchCountdown);
         }
-        driver += 1;
       }
 
       if(err) {
