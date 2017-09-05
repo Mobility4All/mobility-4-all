@@ -78,15 +78,18 @@ io.on('connection', function(socket){
   socket.on('driver-arrive', function(data) {
     console.log('driver arrive socket listening', data);
     io.to(data.rider.socket_id).emit('rider-pickup', data);
+    if (data.rider.cg_cell && data.rider.cg_notifications){
+      notifyCaregiverPickup(data.rider.cg_cell, data.rider.rider_first);
+      }
   });
   // Listening for ride to completeRide
   socket.on('complete-ride', function(data) {
     console.log('completing ride', data);
     io.to(data.rider.socket_id).emit('fare-dialog', data);
     if (data.rider.cg_cell && data.rider.cg_notifications){
-      notifyCaregiver(data.rider.cg_cell, data.rider.rider_first);
+      notifyCaregiverDropoff(data.rider.cg_cell, data.rider.rider_first);
       }
-  })
+  });
 });
 
 // Assigns properties to req object to make available to routers
@@ -105,8 +108,23 @@ app.use('/driver', driverRouter);
 app.use('/trip', tripRouter);
 // tripRouter(app, io);
 
-function notifyCaregiver(to, rider) {
-  console.log(to, rider, config.sendingNumber + " care giver notified");
+function notifyCaregiverPickup(to, rider) {
+  //console.log(to, rider, config.sendingNumber + " care giver notified");
+  return client.api.messages
+    .create({
+      body: rider + " has been picked up.",
+      to: to,
+      from: config.sendingNumber,
+    }).then(function(data) {
+      console.log('Administrator notified');
+    }).catch(function(err) {
+      console.error('Could not notify administrator');
+      console.error(err);
+    });
+};
+
+function notifyCaregiverDropoff(to, rider) {
+  //console.log(to, rider, config.sendingNumber + " care giver notified");
   return client.api.messages
     .create({
       body: rider + " has arrived at their destination.",
@@ -123,17 +141,3 @@ function notifyCaregiver(to, rider) {
 
 // Catch all bucket, must be last!
 app.use('/', indexRouter);
-
-// var client = require('twilio')('AC49334531148f62d5745a66859dd83168', 'dba9b29a8f173b3f20b3fe184b1a629a');
-//
-// app.get('/testtwilio', function(req, res){
-//   client.messages.create({
-//     to: '+16129864532',
-//     from: '+17634029974',
-//     body: 'You just got a message from your sweet app'
-//   }, function(err, data){
-//     if(err)
-//       console.log(err);
-//     console.log(data);
-//   });
-// });
