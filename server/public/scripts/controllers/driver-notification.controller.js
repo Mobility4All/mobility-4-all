@@ -1,9 +1,10 @@
-myApp.controller('DriverNotificationController', function(UserService, DataService, $http, $mdDialog) {
+myApp.controller('DriverNotificationController', function(UserService, DataService, NavigationService, $http, $mdDialog) {
     console.log('DriverNotificationController created');
     var dc = this;
 
     dc.tripMessage = 'Arrive for ';
     dc.dataService = DataService;
+    dc.navigationService = NavigationService;
 
     dc.arrive = function() {
       console.log('arriving for', DataService.rideObject.rider.rider_first);
@@ -23,6 +24,9 @@ myApp.controller('DriverNotificationController', function(UserService, DataServi
           console.log('error updating picked up', err);
         })
         //also starts destination routing
+        NavigationService.startDestNavigation();
+
+
       } else if (dc.tripMessage === 'Drop off '){
         //also calls rider fare dialog
         $http.put('/trip/complete', riderIdObject).then(function(response) {
