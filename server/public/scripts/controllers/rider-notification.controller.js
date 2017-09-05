@@ -7,6 +7,7 @@ myApp.controller('RiderNotificationController', function(DataService, $timeout, 
     var eta = "10";
     rc.rideObject = DataService.rideObject;
 
+    // *** Is this redundant? It's also in data.service
     $scope.showDriverArrived = function(ev) {
         $mdDialog.show({
           controller: 'RiderNotificationController',
