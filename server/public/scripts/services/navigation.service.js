@@ -27,17 +27,6 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
   var infowindow = new google.maps.InfoWindow;
 
 
-  // makes req to update driver location in DB
-  function updateDriverLocation() {
-    $http.put('/driver/geolocation', coords).then(function(response) {
-      console.log('update location -- success', response);
-    })
-  } //end put req
-
-
-
-
-
   function acceptRide() {
     DataService.acceptRide();
     // dc.buttonVisible = true;
@@ -50,12 +39,6 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
     setTimeout(initMap, 10000);
     //  initMap();
   };
-
-
-  // //what is this connected to??
-  // dc.toggleShow = function() {
-  //   DataService.buttonShow = !DataService.buttonShow;
-  // }
 
 
 
@@ -102,17 +85,31 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
   } //end of google map direction function
 
 
-
-
+//interval to update driver location on interval when driver is live
+  var callInterval = function() {
+    console.log('call interval for geolocation');
+    geoLocate();
+    //Show current seconds value 5 times after every 1000 ms
+    $interval(geoLocate, 60000);
+  };
 
   //HTML 5 geolocation code begins here
   // geoLocate called on click. getLocation checks for browser compatability (user must approve to enable),
   //then getLocation calls showPosition(), which gets coords. Then showPosition() calls updateDriverLocation()
   //to make a put request to database with the driver location.
-  geoLocate = function() {
+  function geoLocate() {
     console.log('update location function called');
 
     getLocation();
+
+    function getLocation () {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        message = "Geolocation is not supported by this browser.";
+      }
+    } //end of getLocation fn
+
 
     function showPosition(position) {
       message = "Latitude:  " + position.coords.latitude + "  Longitude: " + position.coords.longitude + "";
@@ -123,24 +120,19 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
       console.log('dc.coords', coords);
       startAndEnd.start = coords.lat + " " + coords.lng;
       console.log('start and end start point', startAndEnd.start);
+      //updateDriver makes put request
       updateDriverLocation();
     } // end show position function
-
-    function getLocation () {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-      } else {
-        message = "Geolocation is not supported by this browser.";
-      }
-    } //end of getLocation fn
   }; //end geolocat
   //end of html5 geo
 
+  // makes req to update driver location in DB
+  function updateDriverLocation() {
+    $http.put('/driver/geolocation', coords).then(function(response) {
+      console.log('update location -- success', response);
+    })
+  } //end put req
 
-  callInterval = function() {
-    //Show current seconds value 5 times after every 1000 ms
-    $interval(geoLocate, 60000);
-  };
 
 
   //REVERSE GEOCODE CODE
