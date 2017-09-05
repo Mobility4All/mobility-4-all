@@ -20,7 +20,7 @@ var calculateETA = function (latA, lngA, driver) {
   })
   .asPromise()
   .then(function(response) {
-    // WHY IS ETA NOT TRANSMITTING CORRECTLY 
+    // WHY IS ETA NOT TRANSMITTING CORRECTLY
     eta = response.json.rows[0].elements.duration;
     console.log('componenets of distanceMatrix:', latA, lngA, driver);
     console.log('matrix test response from the router', response.json.rows[0].elements.duration);
@@ -59,6 +59,7 @@ router.get('/match', function(req, res, next) {
           console.log("Offering ride to driver:", driver);
           if((result.rows[driver])) {
             req.user.eta = calculateETA(req.user.coord.latA, req.user.coord.lngA, result.rows[driver]);
+            console.log("checking req.user.eta before sending to client", req.user);
             console.log("checking req.user before sending to client", req.user);
             driversCoord.lat = result.rows[driver].st_x;
             driversCoord.lng = result.rows[driver].st_y;
