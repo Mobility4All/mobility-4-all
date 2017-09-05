@@ -28,7 +28,7 @@ router.get('/', function(req, res) {
       userInfo.oxygen = req.user.oxygen;
     } else {
       userInfo.id = req.user.id;
-      userInfo.id = req.user.driver_socket;
+      userInfo.location = req.user.location;
       userInfo.userName = req.user.username;
       userInfo.first_name = req.user.first_name;
       userInfo.last_name = req.user.last_name;
@@ -39,6 +39,8 @@ router.get('/', function(req, res) {
       userInfo.oxygen = req.user.oxygen;
       userInfo.driver_photo_url = req.user.driver_photo_url;
       userInfo.vehicle_photo_url = req.user.vehicle_photo_url;
+      userInfo.make = req.user.make;
+      userInfo.model = req.user.model;
       userInfo.complete = req.user.complete;
     }
     res.send(userInfo);

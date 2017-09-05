@@ -1,5 +1,7 @@
-<md-bottom-sheet class="md-grid" layout="column" ng-controller="ArrivalController as ac">
+<md-bottom-sheet class="md-grid" layout="column">
   <div layout="row" layout-align="center center" ng-cloak>
-    <p class="text">Ride Request: {{ac.riderInfo.rider_first}}</p>
+    <img ng-src="dc.riderInfo.rider_photo_url">
+    <p class="text">Ride Request: {{dc.riderInfo.rider_first}}</p>
+    <md-button ng-click="dc.navigationService.acceptRide()" class="md-raised md-primary">Accept Ride</md-button>
   </div>
 </md-bottom-sheet>

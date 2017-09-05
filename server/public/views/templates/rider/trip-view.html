@@ -1,7 +1,7 @@
 <div ng-include="'views/partials/sidenavrider.html'"></div>
 
 
-<md-button class="md-primary md-raised" ng-click="showDriverMatched($event)">
+<md-button class="md-primary md-raised" ng-click="rc.DataService.showDriverMatched($event)">
   Driver Matched
 </md-button>
 
@@ -11,15 +11,19 @@
   </b>
 </div>
 
-<md-button class="md-primary md-raised" ng-click="showDriverArrived($event)">
+<!-- <md-button class="md-primary md-raised" ng-click="showDriverArrived($event)">
   Driver Arrived
-</md-button>
-
+</md-button> -->
+<!-- <ng-map  zoom="14" center="[0,0]">
+  <shape id="circle" name="circle" centered="true"
+    stroke-color='SkyBlue' stroke-opacity="0.8" stroke-weight="2"
+    center="current-position" radius="200" editable="false" ></shape>
+</ng-map> -->
 
 
 <div class="bottom-sheet-demo inset" layout="row" layout-sm="column" layout-align="center" >
     <md-button class="md-raised md-warn" href="#/input-ride">Back</md-button>
-    <md-button flex="50" class="md-primary md-raised" ng-click="rc.showGridBottomSheet()">Drop Off Rider</md-button>
+    <!-- <md-button flex="50" class="md-primary md-raised" ng-click="rc.showGridBottomSheet()">Drop Off Rider</md-button> -->
 </div>
 
 <div  ng-if="alert">
