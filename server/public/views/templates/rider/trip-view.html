@@ -1,9 +1,9 @@
 <div ng-include="'views/partials/sidenavrider.html'"></div>
 
 
-<md-button class="md-primary md-raised" ng-click="rc.DataService.showDriverMatched($event)">
+<!-- <md-button class="md-primary md-raised" ng-click="rc.DataService.showDriverMatched($event)">
   Driver Matched
-</md-button>
+</md-button> -->
 
 <div ng-if="status" id="status">
   <b layout="row" layout-align="center center" class="md-padding">
@@ -14,11 +14,11 @@
 <!-- <md-button class="md-primary md-raised" ng-click="showDriverArrived($event)">
   Driver Arrived
 </md-button> -->
-<!-- <ng-map  zoom="14" center="[0,0]">
+<ng-map  zoom="14" center="[0,0]">
   <shape id="circle" name="circle" centered="true"
     stroke-color='SkyBlue' stroke-opacity="0.8" stroke-weight="2"
     center="current-position" radius="200" editable="false" ></shape>
-</ng-map> -->
+</ng-map>
 
 
 <div class="bottom-sheet-demo inset" layout="row" layout-sm="column" layout-align="center" >
