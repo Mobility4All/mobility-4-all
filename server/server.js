@@ -12,7 +12,11 @@ var riderRouter = require('./routes/rider.router');
 var tripRouter = require('./routes/trip.router');
 var driverRouter = require('./routes/driver.router');
 
+var config = require('./modules/twilio.config');
+var client = require('twilio')(config.accountSid, config.authToken);
+
 var port = process.env.PORT || 5000;
+
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -79,6 +83,9 @@ io.on('connection', function(socket){
   socket.on('complete-ride', function(data) {
     console.log('completing ride', data);
     io.to(data.rider.socket_id).emit('fare-dialog', data);
+    if (data.rider.cg_cell && data.rider.cg_notifications){
+      notifyCaregiver(data.rider.cg_cell, data.rider.rider_first);
+      }
   })
 });
 
@@ -97,6 +104,21 @@ app.use('/rider', riderRouter);
 app.use('/driver', driverRouter);
 app.use('/trip', tripRouter);
 // tripRouter(app, io);
+
+function notifyCaregiver(to, rider) {
+  console.log(to, rider, config.sendingNumber + " care giver notified");
+  return client.api.messages
+    .create({
+      body: rider + " has arrived at their destination.",
+      to: to,
+      from: config.sendingNumber,
+    }).then(function(data) {
+      console.log('Administrator notified');
+    }).catch(function(err) {
+      console.error('Could not notify administrator');
+      console.error(err);
+    });
+};
 
 
 // Catch all bucket, must be last!
