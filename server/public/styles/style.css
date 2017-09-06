@@ -3,7 +3,7 @@
   gray: rgb(98, 89, 80);
 */
 html {
-  background-color: rgb(233, 243, 254);
+  /*background-color: rgb(233, 243, 254);*/
 }
 
 body {
@@ -19,7 +19,8 @@ h2 {
   padding: 0;
   font-family: Lato, sans-serif;
   text-transform: uppercase;
-  color: rgb(137, 197, 87);
+  /*color: rgb(137, 197, 87);*/
+  color: rgb(20,126,237);
 }
 
 h3{
@@ -45,6 +46,11 @@ a {
 
 p {
   font-size: 1.1em;
+}
+
+input {
+  font-size: 1.5em;
+  font-family: inherit;
 }
 
 .welcome {
@@ -273,10 +279,16 @@ md-sidenav {
 }
 
 .md-button.md-accent.md-raised {
-  background-color: rgb(20, 126, 237);
+  background-color: rgb(141, 1, 207);
+  color: white;
 }
-
 
 md-dialog {
   width: 95%;
+}
+
+#autocomplete, #autocomplete2 {
+  border: 2px solid rgb(20,126,237);
+  padding-left: 10px;
+  font-family: inherit;
 }
