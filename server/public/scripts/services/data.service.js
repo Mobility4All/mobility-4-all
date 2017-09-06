@@ -111,7 +111,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
           targetEvent: ev,
           clickOutsideToClose:false,
           // fullscreen: rc.customFullscreen // Only for -xs, -sm breakpoints.
-        })
+        });
         // .then(function(message) {
         //   // $scope.status = answer;
         //   rideObject.note = message;
@@ -120,7 +120,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
         // }, function() {
         //   // $scope.status = 'You cancelled the dialog.';
         // });
-      };
+      }
 
 
 
@@ -164,6 +164,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       console.log('connected driver to socket', socket);
       // Handles ride match
       socket.on('find-driver', function(rider) {
+        console.log("Initially received rider info from server", rider);
         rideObject.rider = rider;
         rideObject.driver = UserService.userObject; // tbd if this is important
         if (rider.elec_wheelchair) specialNeeds.push('Electric Wheelchair');

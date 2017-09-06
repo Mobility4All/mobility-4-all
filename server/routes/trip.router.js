@@ -18,25 +18,24 @@ router.matched = function(riderId) {
 };
 
 
-var calculateETA = function (rider, driver) {
+var calculateETA = function (rider, driver, callback) {
+  console.log('componenets of distanceMatrix:', rider, driver);
   googleMapsClient.distanceMatrix({
-    origins: [ {lat: driver.st_y, lng: driver.st_x}],  // drivers location NEED TO CONVERT WKB to lat/lng
-    destinations: [{lat: rider.latA, lng: rider.lngA}]  // riders location
+    origins: [{lat: driver.st_y, lng: driver.st_x}],  // drivers location NEED TO CONVERT WKB to lat/lng
+    destinations: [{lat: rider.coord.latA, lng: rider.coord.lngA}]  // riders location
   })
   .asPromise()
   .then(function(response) {
-    // WHY IS ETA NOT TRANSMITTING CORRECTLY
-    eta = response.json.rows[0].elements.duration;
-    console.log('componenets of distanceMatrix:', latA, lngA, driver);
-    console.log('matrix test response from the router', response.json.rows[0].elements.duration);
-    return eta;
+    eta = response.json.rows[0].elements;
+    console.log('matrix test response from the router', response.json.rows);
+    callback(eta);
   });
 };
 
 
 // match rider to driver based on (1) driver being live, (2) specific needs, (3) 5 drivers closest to rider
 router.get('/match', function(req, res, next) {
-  console.log('matching ride', req.user);
+  // console.log('matching ride', req.user);
   // console.log('req.socket', req.socket);
   var queryText = ['WITH rider_lng AS (SELECT ST_X(start_location::geometry) AS rlng FROM trips WHERE complete = FALSE AND rider_id = $1), rider_lat AS (SELECT ST_Y(start_location::geometry) AS rlat FROM trips WHERE complete = FALSE AND rider_id = $1) SELECT ST_X(location::geometry), ST_Y(location::geometry), id, driver_socket FROM drivers WHERE live = true'];
   if(req.user.elec_wheelchair) queryText.push(' AND elec_wheelchair = true');
@@ -45,7 +44,7 @@ router.get('/match', function(req, res, next) {
   if(req.user.oxygen) queryText.push(' AND oxygen = true');
   queryText.push('ORDER BY location <-> st_setsrid(st_makepoint((SELECT rlng FROM rider_lng), (SELECT rlat FROM rider_lat)),4326) LIMIT 5');
   queryText = queryText.join(' ');
-  console.log('query text', queryText);
+  // console.log('query text', queryText);
   req.user.socket_id = req.socket.id;
   req.user.coord = req.coord;
   // store the matched driver-rider ETA in a variable that both rider and driver can access
@@ -63,11 +62,10 @@ router.get('/match', function(req, res, next) {
           console.log("Error inserting data: ", err);
           res.sendStatus(500);
         } else {
-          calculateETA(req.coord, result.rows);
           riderQueue.push(req.user.id);
           console.log('query results', result.rows);
           matchWithDriver(result.rows, req.user);
-          res.send({drivers: result.rows});
+          res.sendStatus(200);
         }
       });
     });
@@ -77,7 +75,7 @@ router.get('/match', function(req, res, next) {
 
 // Rider (req.user) and drivers (Array) that match criteria by distance
 function matchWithDriver(drivers, rider, previousDriver) {
-  console.log("In match with driver", drivers, rider, previousDriver);
+  // console.log("In match with driver", drivers, rider, previousDriver);
   if(riderQueue.indexOf(rider.id) >= 0) {
     if(previousDriver) {
       io.to(previousDriver.driver_socket).emit('remove-accept', rider);
@@ -86,9 +84,12 @@ function matchWithDriver(drivers, rider, previousDriver) {
       var driver = drivers.shift();
       //rider.eta =
       console.log("Offering ride to driver:", driver);
-
-      io.to(driver.driver_socket).emit('find-driver', rider);
-      setTimeout(matchWithDriver, 5000, drivers, rider, driver);
+      calculateETA(rider, driver, function(eta) {
+        console.log("inside matchWithDriver eta is:", eta);
+        rider.eta = eta;
+        io.to(driver.driver_socket).emit('find-driver', rider);
+        setTimeout(matchWithDriver, 5000, drivers, rider, driver);
+      });
     } else {
       io.to(rider.socket_id).emit('try-again', rider);
     }
