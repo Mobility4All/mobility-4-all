@@ -1,1 +1,137 @@
-# mobility-4-all
+# Mobility-4-All
+
+Mobility 4 All (MO) is a mobile web application ride service built to meet the needs of people with disabilities and other special needs. A rider can share accessibility needs with their driver and drivers are trained to provide a high touch service that creates comfort, trust, and a true door-to-door service. It is intended to serve those that are normally served by Metro Mobility services while using an on demand Uber or Lyft-like model, tailored to the individual user. This new service will also link to other transport options to assist MO users with their various transport needs around the Twin Cities.
+
+## Built With
+
+SEAN Stack Postgresql, Express, Angular 1, Node.js
+
+Angular Materials
+Google Maps API
+
+
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+
+## Prerequisites
+
+technologies used to create Mobility-4-All:
+
+
+
+## Steps to get the development environment running.
+
+-- Create database first with below command
+
+CREATE DATABASE "mobility_4_all";
+
+-- Install PostGIS to make db friendlier for geolocation
+brew install postgis
+--(for reference PostGIS download http://postgis.net/install/)
+--then run this in Postico--
+
+CREATE EXTENSION postgis;
+
+-- Navigate into database and use the below data to create tables
+
+CREATE TABLE "drivers" (
+  "id" serial PRIMARY KEY,
+  "driver_socket" VARCHAR(30),
+  "first_name" VARCHAR(30),
+  "last_name" VARCHAR(30),
+  "email" VARCHAR(30),
+  "phone" VARCHAR(15),
+  "username" VARCHAR(80) NOT NULL UNIQUE,
+  "password" VARCHAR(240) NOT NULL,
+  "street" VARCHAR(50),
+  "city" VARCHAR(25),
+  "state" VARCHAR(2),
+  "make" VARCHAR(20),
+  "model" VARCHAR(30),
+  "license_num" VARCHAR(10),
+  "driver_photo_url" VARCHAR(100),
+  "vehicle_photo_url" VARCHAR(100),
+  "live" BOOLEAN DEFAULT FALSE,
+  "location" geography(Point,4326),
+  "elec_wheelchair" BOOLEAN DEFAULT FALSE,
+  "col_wheelchair" BOOLEAN DEFAULT FALSE,
+  "service_animal" BOOLEAN DEFAULT FALSE,
+  "oxygen" BOOLEAN DEFAULT FALSE,
+  "cpr" BOOLEAN DEFAULT FALSE,
+  "complete" BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE "riders" (
+  "id" serial PRIMARY KEY,
+  "username" VARCHAR(80) NOT NULL UNIQUE,
+  "password" VARCHAR(240) NOT NULL,
+  "rider_first" VARCHAR(20),
+  "rider_last" VARCHAR(20),
+  "rider_photo_url" VARCHAR(200),
+  "rider_cell" VARCHAR(15),
+  "rider_email" VARCHAR(50),
+  "rider_street" VARCHAR(50),
+  "rider_city" VARCHAR(30),
+  "rider_state" VARCHAR(2),
+  "rider_addtl_info" VARCHAR(500),
+  "cg_first" VARCHAR(20),
+  "cg_last" VARCHAR(20),
+  "cg_cell" VARCHAR(15),
+  "cg_email" VARCHAR(50),
+  "cg_relationship" VARCHAR(20),
+  "cg_orders_rides" BOOLEAN,
+  "cg_notifications" BOOLEAN,
+  "credit_card_num" VARCHAR(15),
+  "credit_cvc" VARCHAR(15),
+  "credit_expdate" VARCHAR(10),
+  "med_id" VARCHAR(15),
+  "metmo_id" VARCHAR(15),
+  "elec_wheelchair" BOOLEAN DEFAULT FALSE,
+  "col_wheelchair" BOOLEAN DEFAULT FALSE,
+  "service_animal" BOOLEAN DEFAULT FALSE,
+  "oxygen" BOOLEAN DEFAULT FALSE,
+  "complete" BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE "trips" (
+  "id" serial PRIMARY KEY,
+  "driver_id" INT,
+  "rider_id" INT,
+  "purpose" VARCHAR(10),
+  "start_location" geography(Point,4326) NOT NULL,
+  "end_location" geography(Point,4326) NOT NULL,
+  "rider_note" VARCHAR(200),
+  "accept" BOOLEAN default false,
+  "pickup" BOOLEAN default false,
+  "complete" BOOLEAN default false,
+  "fare_amt" VARCHAR(10)
+);
+
+## Documentation
+
+## Scope Documentation
+
+https://docs.google.com/a/blueraven.digital/document/d/1AbO3lkl4REHFTjR3A7ODtleKVPRqGV6_8psrfLbrPhM/edit?usp=sharing
+
+##Completed Features
+
+ High level list of items completed.
+
+ Select a Workout feature Pick a workout saved in the database, fill out amount of weight used during exercise and save amounts to completed workouts table
+ Create Exercise Feature Create a unique exercise with a class to search on when adding to a workout. Also ability to edit created exercises or delete them.
+ Create new workout Feature Add six created exercises and save them as a workout with assigned amount of reps.
+ View Completed workouts View and search through completed workouts and ability to delete old workouts.
+ Random motivation quote On page load shows a random quote to get user motivation to workout right from the start.
+## Next Steps
+
+
+
+
+## Authors
+
+James P. Leary III
+Catherine Yanish
+David Krueger
+Peter Prentiss
+Tom Brossart
