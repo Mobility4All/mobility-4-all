@@ -1,4 +1,4 @@
-myApp.controller('DefaultViewController', function(UserService, DataService, NavigationService, $http, $timeout, $mdBottomSheet,$mdSidenav, $mdToast, DataService, $scope, $interval) {
+myApp.controller('DefaultViewController', function(UserService, DataService, NavigationService, $http, $timeout, $mdBottomSheet,$mdSidenav,$mdDialog, $mdToast, DataService, $scope, $interval) {
 
   console.log('DefaultViewController created');
   var dc = this;
@@ -23,7 +23,19 @@ myApp.controller('DefaultViewController', function(UserService, DataService, Nav
     console.log(dc.currentlyOffline);
   };
 
-
+  $scope.showProgress = function(ev) {
+     $mdDialog.show({
+       controller: 'DefaultViewController',
+       templateUrl: 'views/partials/progress-bar.html',
+       parent: angular.element(document.body),
+       targetEvent: ev,
+       clickOutsideToClose:false,
+       fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+     });
+   };
+   $scope.cancel = function() {
+     $mdDialog.cancel();
+   };
   function buildToggler(componentId) {
     return function() {
       $mdSidenav(componentId).toggle();
