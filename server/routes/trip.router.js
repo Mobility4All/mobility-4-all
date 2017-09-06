@@ -37,7 +37,7 @@ var calculateETA = function (latA, lngA, driver) {
 router.get('/match', function(req, res, next) {
   console.log('matching ride', req.user);
   // console.log('req.socket', req.socket);
-  var queryText = ['WITH rider_lng AS (SELECT ST_X(start_location::geometry) AS rlng FROM trips WHERE complete = FALSE AND rider_id = $1), rider_lat AS (SELECT ST_Y(start_location::geometry) AS rlat FROM trips WHERE complete = FALSE AND rider_id = $1) SELECT ST_X(location::geometry), ST_Y(location::geometry), id FROM drivers WHERE live = true'];
+  var queryText = ['WITH rider_lng AS (SELECT ST_X(start_location::geometry) AS rlng FROM trips WHERE complete = FALSE AND rider_id = $1), rider_lat AS (SELECT ST_Y(start_location::geometry) AS rlat FROM trips WHERE complete = FALSE AND rider_id = $1) SELECT ST_X(location::geometry), ST_Y(location::geometry), id, driver_socket FROM drivers WHERE live = true'];
   if(req.user.elec_wheelchair) queryText.push(' AND elec_wheelchair = true');
   if(req.user.col_wheelchair) queryText.push(' AND col_wheelchair = true');
   if(req.user.service_animal) queryText.push(' AND service_animal = true');
@@ -85,10 +85,10 @@ router.get('/match', function(req, res, next) {
         riderQueue.push(req.user.id);
         console.log('query results', result.rows);
         // show "accept ride" option to first driver in results array, then progress down the list
-        console.log("Offering ride to [0].driver and starting matching setInterval");
+        // console.log("Offering ride to [0].driver and starting matching setInterval");
         // req.io.to(result.rows[0].driver_socket).emit('find-driver', req.user);
         // matchCountdown = setInterval(offerDriverRide, 5000);
-        matchWithDriver(result.rows, req.user);
+        matchWithDriver(req, result.rows, req.user);
         res.send({drivers: result.rows
         });
       }
@@ -100,7 +100,8 @@ router.get('/match', function(req, res, next) {
 ); // end of match route
 
 // Rider (req.user) and drivers (Array) that match criteria by distance
-function matchWithDriver(drivers, rider, previousDriver) {
+function matchWithDriver(req, drivers, rider, previousDriver) {
+  console.log("In match with driver", drivers, rider, previousDriver);
   if(riderQueue.indexOf(rider.id) >= 0) {
     if(previousDriver) {
       req.io.to(previousDriver.driver_socket).emit('remove-accept', rider);
@@ -108,6 +109,8 @@ function matchWithDriver(drivers, rider, previousDriver) {
     if(drivers.length > 0) {
       var driver = drivers.pop();
       //rider.eta =
+      console.log("Offering ride to driver:", driver);
+      // I think we lost driver_socket in transit -- PICK UP WORK HERE
       req.io.to(driver.driver_socket).emit('find-driver', rider);
       setTimeout(matchWithDriver, 5000, drivers, rider, driver);
     } else {
