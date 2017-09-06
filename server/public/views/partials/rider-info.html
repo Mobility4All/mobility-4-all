@@ -16,16 +16,17 @@
         <p ng-repeat="need in dc.dataService.specialNeeds">{{need}}</p>
         <h4>Additional Info:</h4>
         <p>{{dc.dataService.rideObject.rider.rider_addtl_info}}</p>
-        <div layout="row">
+        <div ng-if="dc.dataService.rideObject.rider.rider_photo_url" layout="row">
           <img style="height:150px;" ng-src="{{dc.dataService.rideObject.rider.rider_photo_url}}"/>
         </div>
         <h4>Note from Rider:</h4>
         <p>{{dc.dataService.rideObject.note}}</p>
+        <h4>Call Rider</h4>
+        <md-button class="md-icon-button md-primary" ng-click="dc.cancel()">
+          <md-icon aria-label="Call Rider">call</md-icon>
+        </md-button>
+
       </div>
-      <h4>Call Rider</h4>
-      <md-button class="md-icon-button md-primary" ng-click="dc.cancel()">
-        <md-icon aria-label="Call Rider">call</md-icon>
-      </md-button>
 
     </md-dialog-content>
 
