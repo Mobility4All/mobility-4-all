@@ -107,7 +107,7 @@ function matchWithDriver(io, drivers, rider, previousDriver) {
       io.to(previousDriver.driver_socket).emit('remove-accept', rider);
     }
     if(drivers.length > 0) {
-      var driver = drivers.pop();
+      var driver = drivers.shift();
       //rider.eta =
       console.log("Offering ride to driver:", driver);
       // I think we lost driver_socket in transit -- PICK UP WORK HERE
