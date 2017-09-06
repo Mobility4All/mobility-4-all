@@ -37,6 +37,7 @@ myApp.controller('DriverNotificationController', function(UserService, DataServi
         }).catch(function(err) {
           console.log('error updating complete', err);
         })
+        panelEl.empty();
         DataService.completeRide();
         DataService.buttonShow = false;
       }
