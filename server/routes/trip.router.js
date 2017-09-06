@@ -6,6 +6,7 @@ var pool = require('../modules/pool.js');
 var driversCoord = {};
 var driver = 1;
 var riderQueue = [];
+var io;
 
 
 router.matched = function(riderId) {
@@ -58,49 +59,23 @@ router.get('/match', function(req, res, next) {
       client.query(queryText, [req.user.id], function(err, result) {
         done();
 
-        // send info to [0].driver via socket, if they don't accept ride in 60 seconds, then loop through array
-      //   function offerDriverRide(){
-      //     console.log("Offering ride to driver:", driver);
-      //     if((result.rows[driver])) {
-      //       // this is not a desireable way to do this, going to change it with Chris
-      //       console.log("checking req.user.eta before sending to client", req.user);
-      //       console.log("checking req.user before sending to client", req.user);
-      //       driversCoord.lat = result.rows[driver].st_x;
-      //       driversCoord.lng = result.rows[driver].st_y;
-      //       req.io.to(result.rows[driver].driver_socket).emit('find-driver', req.user);
-      //       // emit socket request that hides the bottom sheet so that driver can no longer accept
-      //         if((driver - 1) >= 0) {req.io.to(result.rows[driver - 1].driver_socket).emit('remove-accept', req.user);}
-      //         driver += 1;
-      //           // update this console log to be an alert to show rider no drivers available
-      //   } else {console.log("No drivers matched, alert rider to try again");
-      //     req.io.to(req.user.socket_id).emit('try-again', req.user);
-      //     clearInterval(matchCountdown);
-      //   }
-      // }
-
-      if(err) {
-        console.log("Error inserting data: ", err);
-        res.sendStatus(500);
-      } else {
-        riderQueue.push(req.user.id);
-        console.log('query results', result.rows);
-        // show "accept ride" option to first driver in results array, then progress down the list
-        // console.log("Offering ride to [0].driver and starting matching setInterval");
-        // req.io.to(result.rows[0].driver_socket).emit('find-driver', req.user);
-        // matchCountdown = setInterval(offerDriverRide, 5000);
-        matchWithDriver(req.io, result.rows, req.user);
-        res.send({drivers: result.rows
-        });
-      }
+        if(err) {
+          console.log("Error inserting data: ", err);
+          res.sendStatus(500);
+        } else {
+          riderQueue.push(req.user.id);
+          console.log('query results', result.rows);
+          matchWithDriver(result.rows, req.user);
+          res.send({drivers: result.rows});
+        }
+      });
     });
-  });
+  }
 }
-}
-
 ); // end of match route
 
 // Rider (req.user) and drivers (Array) that match criteria by distance
-function matchWithDriver(io, drivers, rider, previousDriver) {
+function matchWithDriver(drivers, rider, previousDriver) {
   console.log("In match with driver", drivers, rider, previousDriver);
   if(riderQueue.indexOf(rider.id) >= 0) {
     if(previousDriver) {
@@ -112,7 +87,7 @@ function matchWithDriver(io, drivers, rider, previousDriver) {
       console.log("Offering ride to driver:", driver);
       // I think we lost driver_socket in transit -- PICK UP WORK HERE
       io.to(driver.driver_socket).emit('find-driver', rider);
-      setTimeout(matchWithDriver, 5000, io, drivers, rider, driver);
+      setTimeout(matchWithDriver, 5000, drivers, rider, driver);
     } else {
       io.to(rider.socket_id).emit('try-again', rider);
     }
@@ -239,5 +214,7 @@ var googleMapsClient = require('@google/maps').createClient({
 
 
 
-
-module.exports = router;
+module.exports = function(ioIn) {
+  io = ioIn;
+  return router;
+};

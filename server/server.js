@@ -9,7 +9,6 @@ var indexRouter = require('./routes/index.router');
 var userRouter = require('./routes/user.router');
 var registerRouter = require('./routes/register.router');
 var riderRouter = require('./routes/rider.router');
-var tripRouter = require('./routes/trip.router');
 var driverRouter = require('./routes/driver.router');
 
 var config = require('./modules/twilio.config');
@@ -39,6 +38,7 @@ var server = app.listen(port, function(){
 });
 
 var io = require('socket.io')(server);
+var tripRouter = require('./routes/trip.router')(io);
 var userSocket;
 var coord;
 // Handles socket requests
