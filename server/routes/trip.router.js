@@ -18,10 +18,10 @@ router.matched = function(riderId) {
 };
 
 
-var calculateETA = function (latA, lngA, driver) {
+var calculateETA = function (rider, driver) {
   googleMapsClient.distanceMatrix({
     origins: [ {lat: driver.st_y, lng: driver.st_x}],  // drivers location NEED TO CONVERT WKB to lat/lng
-    destinations: [{lat: latA, lng: lngA}]  // riders location
+    destinations: [{lat: rider.latA, lng: rider.lngA}]  // riders location
   })
   .asPromise()
   .then(function(response) {
@@ -63,6 +63,7 @@ router.get('/match', function(req, res, next) {
           console.log("Error inserting data: ", err);
           res.sendStatus(500);
         } else {
+          calculateETA(req.coord, result.rows);
           riderQueue.push(req.user.id);
           console.log('query results', result.rows);
           matchWithDriver(result.rows, req.user);
@@ -85,7 +86,7 @@ function matchWithDriver(drivers, rider, previousDriver) {
       var driver = drivers.shift();
       //rider.eta =
       console.log("Offering ride to driver:", driver);
-      // I think we lost driver_socket in transit -- PICK UP WORK HERE
+
       io.to(driver.driver_socket).emit('find-driver', rider);
       setTimeout(matchWithDriver, 5000, drivers, rider, driver);
     } else {
