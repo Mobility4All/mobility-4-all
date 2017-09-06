@@ -58,6 +58,7 @@ router.get('/match', function(req, res, next) {
         function offerDriverRide(){
           console.log("Offering ride to driver:", driver);
           if((result.rows[driver])) {
+            // this is not a desireable way to do this, going to change it with Chris
             req.user.eta = calculateETA(req.user.coord.latA, req.user.coord.lngA, result.rows[driver]);
             console.log("checking req.user.eta before sending to client", req.user);
             console.log("checking req.user before sending to client", req.user);
