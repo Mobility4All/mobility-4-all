@@ -1,5 +1,8 @@
-<div class="container">
+<header>
   <h1 class="lead">Driver Login</h1>
+</header>
+
+<div class="container" layout-padding>
     <h1 class="lead alert alert-danger" role="alert" ng-if="dc.message != ''">{{dc.message}}</h2>
     <form >
       <div>
@@ -15,7 +18,7 @@
           <input type="password" ng-model="dc.user.password" />
         </md-input-container>
       </div>
-      <div>
+      <div layout="row" layout-align="space-around center">
         <md-button class="md-raised md-primary" ng-click="dc.login()">Log In</md-button>
 
           <a href="#home">Cancel</a>

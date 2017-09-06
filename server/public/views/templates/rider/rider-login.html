@@ -1,5 +1,7 @@
-<div class="container">
+<header>
   <h1 class="lead">Rider/Caregiver Login</h1>
+</header>
+<div class="container" layout-padding>
     <h2 class="lead alert alert-danger" role="alert" ng-if="rc.message != ''">{{rc.message}}</h2>
     <form >
       <div>
@@ -15,7 +17,7 @@
           <input type="password" ng-model="rc.user.password" />
         </md-input-container>
       </div>
-      <div>
+      <div layout="row" layout-align="space-around center">
         <md-button class="md-raised md-primary" ng-click="rc.login()">Log In</md-button>
           <!-- <input class="btn btn-default" type="submit" name="submit" value="Log In" /> -->
           <a href="#home">Cancel</a>

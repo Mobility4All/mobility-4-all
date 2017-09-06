@@ -2,12 +2,16 @@
   light green: rgb(137, 197, 87);
   gray: rgb(98, 89, 80);
 */
+html {
+  /*background-color: rgb(233, 243, 254);*/
+}
 
 body {
   margin: 0;
   padding: 0;
   font-family: Lato, sans-serif;
   font-size: 18px;
+  background-color: inherit;
 }
 
 h2 {
@@ -15,7 +19,8 @@ h2 {
   padding: 0;
   font-family: Lato, sans-serif;
   text-transform: uppercase;
-  color: rgb(137, 197, 87);
+  /*color: rgb(137, 197, 87);*/
+  color: rgb(20,126,237);
 }
 
 h3{
@@ -26,8 +31,61 @@ h3{
   color: red;
 }
 
+main {
+  height: 100%;
+}
+
+header {
+  background-color: rgb(20, 126, 237);
+  margin-bottom: 15px;
+}
+
+a {
+  font-size: 1.2em;
+}
+
+p {
+  font-size: 1.1em;
+}
+
+input {
+  font-size: 1.5em;
+  font-family: inherit;
+}
+
+.welcome {
+  height: inherit;
+}
+
+.on-demand {
+  height: inherit;
+}
+
+.md-button {
+  font-size: 1.25em;
+  padding: 15px;
+  border-radius: 10px;
+}
+
 .md-button.secondary {
   background-color: #E8E8E8;
+}
+
+label {
+  font-size: 1.5em;
+}
+
+.md-label {
+  font-size: 1.5em;
+}
+
+.location {
+  font-family: 'Comfortaa', cursive;
+  color: black;
+}
+
+.rider-map {
+  height: 75%;
 }
 
 .text {
@@ -39,6 +97,23 @@ h3{
 .header .container h1 {
   font-size: 32px;
   font-weight: 600;
+}
+
+.lead {
+  font-family: 'Comfortaa', cursive;
+  text-transform: uppercase;
+  font-weight: normal;
+  color: white;
+  text-shadow: 1px 1px black;
+  padding: 30px 0 15px 15px;;
+  margin: 0;
+}
+
+.purpose {
+  font-family: 'Comfortaa', cursive;
+  font-weight: normal;
+  margin-bottom: 0;
+  font-variant: small-caps;
 }
 
 .header {
@@ -55,7 +130,7 @@ h3{
   margin-top: 10px;
 }
 
-.container p{
+.container p {
   margin-top : 14px;
 }
 
@@ -120,6 +195,17 @@ li a:hover {
   height: 50px;
 }
 
+.addressPartial {
+  height: 100px;
+}
+
+md-sidenav {
+  height: 100%;
+}
+
+.md-sidenav-right {
+  z-index: 100;
+}
 
 /* AUTCOMPLETE INPUT STYLING  */
 
@@ -154,16 +240,16 @@ li a:hover {
 }
 
 #right-panel {
-         float: none;
-         width: auto;
-       }
+  float: none;
+  width: auto;
+}
 
 
 #right-panel {
-   font-family: 'Roboto','sans-serif';
-   line-height: 30px;
-   padding-left: 10px;
- }
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+  padding-left: 10px;
+}
 
  #right-panel select, #right-panel input {
    font-size: 15px;
@@ -183,3 +269,27 @@ li a:hover {
    overflow: auto;
    font-size: 15px;
  }
+
+.home-button {
+  width: 100%;
+}
+
+.request-button {
+  width: 95%;
+}
+
+.md-button.md-accent.md-raised {
+  background-color: rgb(38, 185, 57);
+  /*background-color: rgb(137, 197, 87);*/
+  color: white;
+}
+
+md-dialog {
+  width: 95%;
+}
+
+#autocomplete, #autocomplete2 {
+  border: 2px solid rgb(20,126,237);
+  padding-left: 10px;
+  font-family: inherit;
+}

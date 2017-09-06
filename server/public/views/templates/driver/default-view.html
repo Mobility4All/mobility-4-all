@@ -1,13 +1,14 @@
 <div ng-include="'views/partials/sidenavdriver.html'"></div>
 <div ng-hide="dc.dataService.buttonShow" layout="row" layout-align="center center">
-  <md-button style="width:50%; height:40px; margin:10px" ng-show="dc.currentlyOffline" ng-click="dc.toggleOnline()" class="secondary md-raised">Go Live</md-button>
-  <md-button style="width:50%; height:40px; margin:10px" ng-hide="dc.currentlyOffline" ng-click="dc.toggleOnline()" class="md-raised md-primary">Online</md-button>
+  <md-button style="width:50%; height:60px; margin:10px" ng-show="dc.currentlyOffline" ng-click="dc.toggleOnline(); showProgress();" class="secondary md-raised">Go Live</md-button>
+  <md-button style="width:50%; height:60px; margin:10px" ng-hide="dc.currentlyOffline" ng-click="dc.toggleOnline()" class="md-raised md-primary">Online</md-button>
 </div>
 <div ng-hide="dc.dataService.buttonShow">
   <div ng-hide="dc.currentlyOffline" layout="row" layout-sm="column" layout-align="space-around">
-    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+
   </div>
 </div>
+<div ng-show="dc.dataService.buttonShow" ng-include="'views/partials/address.html'"></div>
 <!-- <button ng-click="dc.navigationService.geoLocate(); dc.navigationService.callInterval()">Current Coordinates: {{dc.navigationService.message}}</button> -->
 <!-- <md-button ng-click="dc.acceptRide()" class="md-raised md-primary">Accept Ride</md-button> -->
 
@@ -22,14 +23,15 @@
 
 <!-- THIS IS THE DEFAULT VIEW MAP -->
 <div ng-if="!dc.dataService.buttonShow">
-  <ng-map  zoom="14" center="[0,0]">
+  <ng-map style="height:550px;" zoom="14" center="[0,0]">
     <shape id="circle" name="circle" centered="true"
       stroke-color='SkyBlue' stroke-opacity="0.8" stroke-weight="2"
       center="current-position" radius="200" editable="false" ></shape>
   </ng-map>
 </div>
 
-<div ng-include="'views/partials/directions.sidenav.html'"></div>
+<div ng-if="dc.dataService.buttonShow" ng-include="'views/partials/directions.sidenav.html'"></div>
+
 
 <div  ng-if="alert">
   <br/>

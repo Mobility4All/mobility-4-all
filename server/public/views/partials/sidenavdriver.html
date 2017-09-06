@@ -1,33 +1,28 @@
 <md-toolbar  class="md-hue-4" ng-controller="NavBarController as nb">
-       <div class="md-toolbar-tools" layout="row">
-         <div flex layout="row" layout-align="end center">
-           <img class="horizontal-logo" src="../../images/mo4all-horizontal.svg" alt="Mobility 4 All Logo">
-           <md-button aria-label="Logo" ng-click="nb.userService.toggleLeft()" class="md-icon-button" ng-disabled="false">
-             <md-icon class="material-icons">menu</md-icon>
-           </md-button>
-         </div>
-         <div layout="column" ng-cloak>
-           <section layout="row" flex>
-             <md-sidenav style="height:500px;"class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-disable-backdrop md-whiteframe="4">
-             <md-content layout-margin layout-align="center">
-
-
-          <md-card-actions flex layout="column" layout-align="space around center">
-            <md-button style="width:100%; height:40px; margin:10px;" class="md-primary md-raised" ng-click="nb.userService.toggleLeft(); nb.navToDefault();"> Find a Fare</md-button>
-          <md-button style="width:100%; height:40px; margin:10px;" class="md-primary md-raised" ng-click="nb.userService.toggleLeft(); nb.navToContact();"> Contact MO</md-button>
-          <md-button style="width:100%; height:40px; margin:10px;" class="md-primary md-raised" ng-click="nb.userService.toggleLeft(); nb.navToAboutDriver();">About MO</md-button>
-          <md-button style="width:100%; height:40px; margin:10px;" class="md-warn md-raised" ng-click="nb.userService.toggleLeft(); nb.userService.logout()">Log Out</md-button>
-                     <md-button style="width:100%; height:40px; margin:10px;"layout-align="end bottom" ng-click="nb.userService.toggleLeft()" class="secondary md-raised">
-                       <md-icon class="material-icons">close</md-icon>close
-                      </md-button>
-                      <img class="logosidenav" src="/../images/MO_logo.png" alt="">
-                   </md-card-actions>
-
-
-             </md-content>
-           </md-sidenav>
-           </section>
-           </div>
-         </div>
-
+  <div class="md-toolbar-tools" layout="row">
+    <div flex layout="row" layout-align="end center">
+      <img class="horizontal-logo" src="../../images/mo4all-horizontal-white.svg" alt="Mobility 4 All Logo">
+      <md-button aria-label="Logo" ng-click="nb.userService.toggleLeft()" class="md-icon-button" ng-disabled="false">
+        <md-icon class="material-icons">menu</md-icon>
+      </md-button>
+    </div>
+    <div layout="column" ng-cloak>
+      <section layout="row" flex>
+         <md-sidenav style="height:600px;"class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-disable-backdrop md-whiteframe="4">
+           <md-content layout-margin layout-align="center">
+             <md-card-actions flex layout="column" layout-align="space around center">
+               <md-button style="width:100%; height:60px; margin:10px;" class="md-accent md-raised" ng-click="nb.userService.toggleLeft(); nb.navToDefault();"> Find a Fare</md-button>
+               <md-button style="width:100%; height:60px; margin:10px;" class="md-primary md-raised" ng-click="nb.userService.toggleLeft(); nb.navToContact();"> Contact MO</md-button>
+               <md-button style="width:100%; height:60px; margin:10px;" class="md-primary md-raised" ng-click="nb.userService.toggleLeft(); nb.navToAboutDriver();">About MO</md-button>
+               <md-button style="width:100%; height:60px; margin:10px;" class="md-warn md-raised" ng-click="nb.userService.toggleLeft(); nb.userService.logout()">Log Out</md-button>
+               <img class="logosidenav" src="/../images/MO_logo.png" alt="">
+               <md-button style="width:100%; height:60px; margin:10px;"layout-align="end bottom" ng-click="nb.userService.toggleLeft()" class="secondary md-raised">
+                <md-icon class="material-icons">close</md-icon>close
+               </md-button>
+             </md-card-actions>
+           </md-content>
+        </md-sidenav>
+      </section>
+    </div>
+  </div>
 </md-toolbar>
