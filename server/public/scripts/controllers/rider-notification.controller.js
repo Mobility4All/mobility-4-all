@@ -7,31 +7,20 @@ myApp.controller('RiderNotificationController', function(DataService, $timeout, 
     var eta = "10";
     rc.rideObject = DataService.rideObject;
 
-    $scope.showDriverArrived = function(ev) {
-        $mdDialog.show({
-          controller: 'RiderNotificationController',
-          templateUrl: 'views/partials/driver-arrive.dialog.html',
-          parent: angular.element(document.body),
-          targetEvent: ev,
-          clickOutsideToClose:false,
-          fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-        })
-        .then(function(answer) {
-          $scope.status = answer;
-        }, function() {
 
-        });
-      };
-
-    $scope.hide = function() {
+    rc.hide = function() {
       $mdDialog.hide();
     };
 
-    $scope.cancel = function() {
+    rc.cancel = function() {
       $mdDialog.cancel();
     };
 
-    $scope.answer = function(answer) {
+    rc.answer = function(answer) {
       $mdDialog.hide(answer);
     };
+
+    rc.hideFare = function() {
+      $mdBottomSheet.hide();
+    }
 });

@@ -279,7 +279,8 @@ md-sidenav {
 }
 
 .md-button.md-accent.md-raised {
-  background-color: rgb(141, 1, 207);
+  background-color: rgb(38, 185, 57);
+  /*background-color: rgb(137, 197, 87);*/
   color: white;
 }
 
