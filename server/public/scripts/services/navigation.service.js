@@ -22,7 +22,9 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
 
 
   var reverseGeoInput = '44.9780310,-93.2635010';
-  var toAddress;
+  var toAddress = {
+
+  };
   // create new GeoCoder to reverser geolocation
   var geocoder = new google.maps.Geocoder;
   var infowindow = new google.maps.InfoWindow;
@@ -51,15 +53,16 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
   //on click, old req is cleared, new request is called with initMap() to get and show new directions
   function startDestNavigation() {
     panelEl.empty();
+    toAddress.address = " ";
+    reverseGeoInput = DataService.rideObject.rider.coord.latB + "," +  DataService.rideObject.rider.coord.lngB;
+    console.log(reverseGeoInput);
+    geocodeLatLng(geocoder, infowindow);
     startAndEnd.start = DataService.rideObject.rider.coord.latA + " " +  DataService.rideObject.rider.coord.lngA;
     startAndEnd.end = DataService.rideObject.rider.coord.latB + " " +  DataService.rideObject.rider.coord.lngB;
     // geocodeLatLng(geocoder, infowindow);  //REMOVED map param (this does reverse geocode)
     console.log('start', startAndEnd.start);
     console.log('end', startAndEnd.end);
     initMap();
-    reverseGeoInput = DataService.rideObject.rider.coord.latB + "," +  DataService.rideObject.rider.coord.lngB;
-    console.log(reverseGeoInput);
-    geocodeLatLng(geocoder, infowindow);
   };
 
   //this google maps function gets directions and displays on a map and with text
@@ -156,7 +159,7 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
           infowindow.setContent(results[0].formatted_address);
           // infowindow.open(map, marker);
           console.log('hopefully this is the right address', results[0].formatted_address);
-          toAddress = results[0].formatted_address;
+          toAddress.address = results[0].formatted_address;
         } else {
           console.log('No results found');
         }
