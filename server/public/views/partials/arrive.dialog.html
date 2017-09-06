@@ -3,7 +3,7 @@
     <md-toolbar>
       <div class="md-toolbar-tools">
         <span flex></span>
-        <md-button class="md-icon-button" ng-click="cancel()">
+        <md-button class="md-icon-button" ng-click="rc.cancel()">
           <md-icon aria-label="Close dialog">close</md-icon>
         </md-button>
       </div>
@@ -29,10 +29,10 @@
 
     <md-dialog-actions layout="row">
       <span flex></span>
-      <md-button ng-click="answer()">
+      <md-button ng-click="rc.cancel()">
        No Thanks
       </md-button>
-      <md-button ng-click="answer(message)">
+      <md-button ng-click="rc.answer(message)">
         Send
       </md-button>
     </md-dialog-actions>

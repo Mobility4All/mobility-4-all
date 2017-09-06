@@ -1,6 +1,6 @@
 <div ng-include="'views/partials/sidenavdriver.html'"></div>
 <div ng-hide="dc.dataService.buttonShow" layout="row" layout-align="center center">
-  <md-button style="width:50%; height:60px; margin:10px" ng-show="dc.currentlyOffline" ng-click="dc.toggleOnline() showProgress();" class="secondary md-raised">Go Live</md-button>
+  <md-button style="width:50%; height:60px; margin:10px" ng-show="dc.currentlyOffline" ng-click="dc.toggleOnline(); showProgress();" class="secondary md-raised">Go Live</md-button>
   <md-button style="width:50%; height:60px; margin:10px" ng-hide="dc.currentlyOffline" ng-click="dc.toggleOnline()" class="md-raised md-primary">Online</md-button>
 </div>
 <div ng-hide="dc.dataService.buttonShow">
@@ -28,9 +28,9 @@
       stroke-color='SkyBlue' stroke-opacity="0.8" stroke-weight="2"
       center="current-position" radius="200" editable="false" ></shape>
   </ng-map>
-  <div ng-include="'views/partials/directions.sidenav.html'"></div>
 </div>
 
+<div ng-if="dc.dataService.buttonShow" ng-include="'views/partials/directions.sidenav.html'"></div>
 
 
 <div  ng-if="alert">
