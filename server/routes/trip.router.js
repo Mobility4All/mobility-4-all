@@ -88,7 +88,7 @@ router.get('/match', function(req, res, next) {
         // console.log("Offering ride to [0].driver and starting matching setInterval");
         // req.io.to(result.rows[0].driver_socket).emit('find-driver', req.user);
         // matchCountdown = setInterval(offerDriverRide, 5000);
-        matchWithDriver(req, result.rows, req.user);
+        matchWithDriver(req.io, result.rows, req.user);
         res.send({drivers: result.rows
         });
       }
@@ -100,21 +100,21 @@ router.get('/match', function(req, res, next) {
 ); // end of match route
 
 // Rider (req.user) and drivers (Array) that match criteria by distance
-function matchWithDriver(req, drivers, rider, previousDriver) {
+function matchWithDriver(io, drivers, rider, previousDriver) {
   console.log("In match with driver", drivers, rider, previousDriver);
   if(riderQueue.indexOf(rider.id) >= 0) {
     if(previousDriver) {
-      req.io.to(previousDriver.driver_socket).emit('remove-accept', rider);
+      io.to(previousDriver.driver_socket).emit('remove-accept', rider);
     }
     if(drivers.length > 0) {
       var driver = drivers.pop();
       //rider.eta =
       console.log("Offering ride to driver:", driver);
       // I think we lost driver_socket in transit -- PICK UP WORK HERE
-      req.io.to(driver.driver_socket).emit('find-driver', rider);
-      setTimeout(matchWithDriver, 5000, drivers, rider, driver);
+      io.to(driver.driver_socket).emit('find-driver', rider);
+      setTimeout(matchWithDriver, 5000, io, drivers, rider, driver);
     } else {
-      req.io.to(rider.socket_id).emit('try-again', rider);
+      io.to(rider.socket_id).emit('try-again', rider);
     }
   } else {
     // Create a queue of cancelations?
