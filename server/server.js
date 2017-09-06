@@ -69,10 +69,11 @@ io.on('connection', function(socket){
   // Sends driver info to rider
   socket.on('driver-accept', function(data) {
     data.driver.driver_socket = socket.id;
+    // data.eta = router.calculateETA
     console.log('ride acceptance data', data);
     io.to(data.rider.socket_id).emit('rider-accepted', data);
     // terminate matching loop in trip.router.js
-    tripRouter.matched();
+    tripRouter.matched(data.rider.id);
   });
   // listening for arriveForRider
   socket.on('driver-arrive', function(data) {

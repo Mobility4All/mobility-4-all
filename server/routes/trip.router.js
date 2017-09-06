@@ -3,15 +3,19 @@ var router = express.Router();
 var passport = require('passport'); // probably unnecessary but moving this over from eta.router.js
 var path = require('path');
 var pool = require('../modules/pool.js');
-var matchCountdown, eta;
 var driversCoord = {};
 var driver = 1;
+var riderQueue = [];
 
 
-router.matched = function() {
+router.matched = function(riderId) {
   console.log("driver and rider matched, terminate the loop");
-  clearInterval(matchCountdown);
+  // remove from the rider queue
+  if(riderQueue.indexOf(riderId) >= 0) {
+    riderQueue.splice(riderQueue.indexOf(riderId), 1);
+  }
 };
+
 
 var calculateETA = function (latA, lngA, driver) {
   googleMapsClient.distanceMatrix({
@@ -55,35 +59,36 @@ router.get('/match', function(req, res, next) {
         done();
 
         // send info to [0].driver via socket, if they don't accept ride in 60 seconds, then loop through array
-        function offerDriverRide(){
-          console.log("Offering ride to driver:", driver);
-          if((result.rows[driver])) {
-            // this is not a desireable way to do this, going to change it with Chris
-            req.user.eta = calculateETA(req.user.coord.latA, req.user.coord.lngA, result.rows[driver]);
-            console.log("checking req.user.eta before sending to client", req.user);
-            console.log("checking req.user before sending to client", req.user);
-            driversCoord.lat = result.rows[driver].st_x;
-            driversCoord.lng = result.rows[driver].st_y;
-            req.io.to(result.rows[driver].driver_socket).emit('find-driver', req.user);
-            // emit socket request that hides the bottom sheet so that driver can no longer accept
-              if((driver - 1) >= 0) {req.io.to(result.rows[driver - 1].driver_socket).emit('remove-accept', req.user);}
-              driver += 1;
-                // update this console log to be an alert to show rider no drivers available
-        } else {console.log("No drivers matched, alert rider to try again");
-          req.io.to(req.user.socket_id).emit('try-again', req.user);
-          clearInterval(matchCountdown);
-        }
-      }
+      //   function offerDriverRide(){
+      //     console.log("Offering ride to driver:", driver);
+      //     if((result.rows[driver])) {
+      //       // this is not a desireable way to do this, going to change it with Chris
+      //       console.log("checking req.user.eta before sending to client", req.user);
+      //       console.log("checking req.user before sending to client", req.user);
+      //       driversCoord.lat = result.rows[driver].st_x;
+      //       driversCoord.lng = result.rows[driver].st_y;
+      //       req.io.to(result.rows[driver].driver_socket).emit('find-driver', req.user);
+      //       // emit socket request that hides the bottom sheet so that driver can no longer accept
+      //         if((driver - 1) >= 0) {req.io.to(result.rows[driver - 1].driver_socket).emit('remove-accept', req.user);}
+      //         driver += 1;
+      //           // update this console log to be an alert to show rider no drivers available
+      //   } else {console.log("No drivers matched, alert rider to try again");
+      //     req.io.to(req.user.socket_id).emit('try-again', req.user);
+      //     clearInterval(matchCountdown);
+      //   }
+      // }
 
       if(err) {
         console.log("Error inserting data: ", err);
         res.sendStatus(500);
       } else {
+        riderQueue.push(req.user.id);
         console.log('query results', result.rows);
         // show "accept ride" option to first driver in results array, then progress down the list
         console.log("Offering ride to [0].driver and starting matching setInterval");
-        req.io.to(result.rows[0].driver_socket).emit('find-driver', req.user);
-        matchCountdown = setInterval(offerDriverRide, 5000);
+        // req.io.to(result.rows[0].driver_socket).emit('find-driver', req.user);
+        // matchCountdown = setInterval(offerDriverRide, 5000);
+        matchWithDriver(result.rows, req.user);
         res.send({drivers: result.rows
         });
       }
@@ -93,6 +98,27 @@ router.get('/match', function(req, res, next) {
 }
 
 ); // end of match route
+
+// Rider (req.user) and drivers (Array) that match criteria by distance
+function matchWithDriver(drivers, rider, previousDriver) {
+  if(riderQueue.indexOf(rider.id) >= 0) {
+    if(previousDriver) {
+      req.io.to(previousDriver.driver_socket).emit('remove-accept', rider);
+    }
+    if(drivers.length > 0) {
+      var driver = drivers.pop();
+      //rider.eta =
+      req.io.to(driver.driver_socket).emit('find-driver', rider);
+      setTimeout(matchWithDriver, 5000, drivers, rider, driver);
+    } else {
+      req.io.to(rider.socket_id).emit('try-again', rider);
+    }
+  } else {
+    // Create a queue of cancelations?
+  }
+}
+
+
 
 // Updates 'accept' value of trip
 router.put('/accept', function(req, res, next) {
