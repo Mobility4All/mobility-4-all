@@ -88,7 +88,8 @@ function matchWithDriver(drivers, rider, previousDriver) {
         console.log("inside matchWithDriver eta is:", eta);
         rider.eta = eta;
         io.to(driver.driver_socket).emit('find-driver', rider);
-        setTimeout(matchWithDriver, 5000, drivers, rider, driver);
+        // This interval is set to 7secs for testing purposes, in production UPDATE INTERVAL
+        setTimeout(matchWithDriver, 7000, drivers, rider, driver);
       });
     } else {
       io.to(rider.socket_id).emit('try-again', rider);

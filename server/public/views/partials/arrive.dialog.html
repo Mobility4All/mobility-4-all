@@ -17,7 +17,7 @@
         <img style="height:150px;" ng-src="{{rc.rideObject.driver.vehicle_photo_url}}"/>
       </div>
         <p>
-          ETA data here
+          ETA: {{rc.rideObject.rider.eta[0].duration.text}}
         </p>
         <p>Would you like to send your driver an additional message?</p>
         <md-input-container>
