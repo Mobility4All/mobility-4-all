@@ -1,4 +1,4 @@
-myApp.controller('RiderProfileController', function($http, $mdDialog, $location, $window) {
+myApp.controller('RiderProfileController', function($http, $mdDialog, $location, $window, $animate) {
     console.log('RiderProfileController created');
     var rc = this;
 
