@@ -42,7 +42,7 @@ myApp.controller('RiderLoginController', function($http, $location, UserService,
       console.log('LoginController -- registerUser');
 
       if(vm.user.username === '' || vm.user.password === '') {
-        vm.message = "Choose a username and password!";
+        vm.message = "Choose a username and password";
       } else {
         if (vm.user.selection == 'rider') {
         console.log('LoginController -- registerRider -- sending to server...', vm.user);

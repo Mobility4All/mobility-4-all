@@ -11,29 +11,19 @@
 
     <md-dialog-content>
       <div class="md-dialog-content">
-        <h2>Your driver, {{rc.rideObject.driver.first_name}} is on the way!</h2>
+        <h2>No Drivers Available! Please try your request again!</h2>
         <div layout="row">
         <img style="height:150px;" ng-src="{{rc.rideObject.driver.driver_photo_url}}"/>
         <img style="height:150px;" ng-src="{{rc.rideObject.driver.vehicle_photo_url}}"/>
       </div>
-        <p>
-          ETA: {{rc.rideObject.rider.eta[0].duration.text}}
-        </p>
-        <p>Would you like to send your driver an additional message?</p>
-        <md-input-container>
-          <label for="message">Message:</label>
-          <input type="text" ng-model="message" />
-        </md-input-container>
       </div>
     </md-dialog-content>
 
     <md-dialog-actions layout="row">
       <span flex></span>
-      <md-button ng-click="rc.cancel()">
-       No Thanks
-      </md-button>
-      <md-button ng-click="rc.answer(message)">
-        Send
+
+      <md-button ng-click="rc.cancel()" >
+        Okay!
       </md-button>
     </md-dialog-actions>
   </form>

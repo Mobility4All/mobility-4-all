@@ -3,30 +3,52 @@ var router = express.Router();
 var passport = require('passport'); // probably unnecessary but moving this over from eta.router.js
 var path = require('path');
 var pool = require('../modules/pool.js');
-var matchCountdown;
+var driversCoord = {};
 var driver = 1;
+var riderQueue = [];
+var io;
 
 
-router.matched = function() {
+router.matched = function(riderId) {
   console.log("driver and rider matched, terminate the loop");
-  clearInterval(matchCountdown);
+  // remove from the rider queue
+  if(riderQueue.indexOf(riderId) >= 0) {
+    riderQueue.splice(riderQueue.indexOf(riderId), 1);
+  }
+};
+
+
+var calculateETA = function (rider, driver, callback) {
+  console.log('componenets of distanceMatrix:', rider, driver);
+  googleMapsClient.distanceMatrix({
+    origins: [{lat: driver.st_y, lng: driver.st_x}],  // drivers location NEED TO CONVERT WKB to lat/lng
+    destinations: [{lat: rider.coord.latA, lng: rider.coord.lngA}]  // riders location
+  })
+  .asPromise()
+  .then(function(response) {
+    eta = response.json.rows[0].elements;
+    console.log('matrix test response from the router', response.json.rows);
+    callback(eta);
+  });
 };
 
 
 // match rider to driver based on (1) driver being live, (2) specific needs, (3) 5 drivers closest to rider
 router.get('/match', function(req, res, next) {
-  console.log('matching ride', req.user);
+  // console.log('matching ride', req.user);
   // console.log('req.socket', req.socket);
-  var queryText = ['WITH rider_lng AS (SELECT ST_X(start_location::geometry) AS rlng FROM trips WHERE complete = FALSE AND rider_id = $1), rider_lat AS (SELECT ST_Y(start_location::geometry) AS rlat FROM trips WHERE complete = FALSE AND rider_id = $1) SELECT *, id FROM drivers WHERE live = true'];
+  var queryText = ['WITH rider_lng AS (SELECT ST_X(start_location::geometry) AS rlng FROM trips WHERE complete = FALSE AND rider_id = $1), rider_lat AS (SELECT ST_Y(start_location::geometry) AS rlat FROM trips WHERE complete = FALSE AND rider_id = $1) SELECT ST_X(location::geometry), ST_Y(location::geometry), id, driver_socket FROM drivers WHERE live = true'];
   if(req.user.elec_wheelchair) queryText.push(' AND elec_wheelchair = true');
   if(req.user.col_wheelchair) queryText.push(' AND col_wheelchair = true');
   if(req.user.service_animal) queryText.push(' AND service_animal = true');
   if(req.user.oxygen) queryText.push(' AND oxygen = true');
   queryText.push('ORDER BY location <-> st_setsrid(st_makepoint((SELECT rlng FROM rider_lng), (SELECT rlat FROM rider_lat)),4326) LIMIT 5');
   queryText = queryText.join(' ');
-  console.log('query text', queryText);
+  // console.log('query text', queryText);
   req.user.socket_id = req.socket.id;
   req.user.coord = req.coord;
+  // store the matched driver-rider ETA in a variable that both rider and driver can access
+  // req.user.eta = value;
   if(req.isAuthenticated()) {
     pool.connect(function(err, client, done) {
       if(err) {
@@ -36,36 +58,48 @@ router.get('/match', function(req, res, next) {
       client.query(queryText, [req.user.id], function(err, result) {
         done();
 
-        // send info to [0].driver via socket, if they don't accept ride in 60 seconds, then loop through array
-        function offerDriverRide(){
-          console.log("Offering ride to driver:", driver);
-          if(result.rows[driver]) {
-            req.io.to(result.rows[driver].driver_socket).emit('find-driver', req.user);
-            // emit socket request that hides the bottom sheet so that driver can no longer accept
-              if((driver - 1) >= 0) {req.io.to(result.rows[driver - 1].driver_socket).emit('remove-accept', req.user);}
-                // update this console log to be an alert to show rider no drivers available
-        } else {console.log("No drivers matched");
-          clearInterval(matchCountdown);
+        if(err) {
+          console.log("Error inserting data: ", err);
+          res.sendStatus(500);
+        } else {
+          riderQueue.push(req.user.id);
+          console.log('query results', result.rows);
+          matchWithDriver(result.rows, req.user);
+          res.sendStatus(200);
         }
-        driver += 1;
-      }
-
-      if(err) {
-        console.log("Error inserting data: ", err);
-        res.sendStatus(500);
-      } else {
-        // show "accept ride" option to first driver in results array, then progress down the list
-        console.log("Offering ride to [0].driver and starting matching setInterval");
-        req.io.to(result.rows[0].driver_socket).emit('find-driver', req.user);
-        matchCountdown = setInterval(offerDriverRide, 5000);
-        res.send({drivers: result.rows});
-      }
+      });
     });
-  });
+  }
 }
+); // end of match route
+
+// Rider (req.user) and drivers (Array) that match criteria by distance
+function matchWithDriver(drivers, rider, previousDriver) {
+  // console.log("In match with driver", drivers, rider, previousDriver);
+  if(riderQueue.indexOf(rider.id) >= 0) {
+    if(previousDriver) {
+      io.to(previousDriver.driver_socket).emit('remove-accept', rider);
+    }
+    if(drivers.length > 0) {
+      var driver = drivers.shift();
+      //rider.eta =
+      console.log("Offering ride to driver:", driver);
+      calculateETA(rider, driver, function(eta) {
+        console.log("inside matchWithDriver eta is:", eta);
+        rider.eta = eta;
+        io.to(driver.driver_socket).emit('find-driver', rider);
+        // This interval is set to 7secs for testing purposes, in production UPDATE INTERVAL
+        setTimeout(matchWithDriver, 7000, drivers, rider, driver);
+      });
+    } else {
+      io.to(rider.socket_id).emit('try-again', rider);
+    }
+  } else {
+    // Create a queue of cancelations?
+  }
 }
 
-); // end of match route
+
 
 // Updates 'accept' value of trip
 router.put('/accept', function(req, res, next) {
@@ -183,24 +217,7 @@ var googleMapsClient = require('@google/maps').createClient({
 
 
 
-
-//this is a distance matrix test case//
-
-googleMapsClient.distanceMatrix({
-  origins: [
-    'Perth, Australia', 'Sydney, Australia', 'Melbourne, Australia',
-    'Adelaide, Australia', 'Brisbane, Australia', 'Darwin, Australia',
-    'Hobart, Australia', 'Canberra, Australia'
-  ],
-  destinations: [
-    'Uluru, Australia'
-  ]
-})
-.asPromise()
-.then(function(response) {
-  // console.log('matrix test response from the router', response.json.rows);
-})
-
-
-
-module.exports = router;
+module.exports = function(ioIn) {
+  io = ioIn;
+  return router;
+};

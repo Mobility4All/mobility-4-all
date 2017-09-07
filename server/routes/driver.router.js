@@ -3,6 +3,13 @@ var router = express.Router();
 var path = require('path');
 var pool = require('../modules/pool.js');
 
+
+
+/**
+* @api{put}/driver Update Driver Profile
+* @apiName DriverUpdate
+* @apiGroup Driver
+*/
 // Handles driver profile setup request
 router.put('/update', function(req, res, next) {
   var driver = req.body;

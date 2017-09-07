@@ -1,19 +1,18 @@
 
 
-<md-toolbar class="md-hue-4" ng-controller="NavBarController as nb">
-  <div class="md-toolbar-tools" layout="row">
+<div  ng-controller="NavBarController as nb">
+  <div class="sidenavHeader" layout-padding layout="row">
     <div flex layout="row" layout-align="space-between center">
       <md-button aria-label="Logo" ng-click="nb.userService.toggleLeft()" class="md-icon-button" ng-disabled="false">
         <md-icon class="material-icons">menu</md-icon>
       </md-button>
       <img class="horizontal-logo" src="../../images/mo4all-horizontal-white.svg" alt="Mobility 4 All Logo">
-      <!-- <h1>Mobility 4 All</h1> -->
     </div>
     <div layout="column" ng-cloak>
       <section layout="row" flex>
-        <!-- this style is the height of the sidenav when you click to open -->
-        <md-sidenav style="height:600px;"class="md-sidenav-left md-whiteframe-z2" md-component-id="left"
-        md-disable-backdrop md-whiteframe="4">
+        <!-- this style is  the height of the sidenav when you click to open -->
+        <md-sidenav style="height:600px;"class="md-sidenav-left" md-component-id="left"
+         md-whiteframe="4" >
         <md-content layout-margin layout-align="center">
           <md-card-actions flex layout="column" layout-align="space around center">
             <md-button style="width:100%; height:60px; margin:10px;" class="md-primary md-raised" ng-click="nb.userService.toggleLeft(); nb.navRiderProfile();">View Profile</md-button>
@@ -29,4 +28,5 @@
       </md-sidenav>
     </section>
   </div>
+</div>
 </div>

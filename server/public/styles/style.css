@@ -31,6 +31,14 @@ h3{
   color: red;
 }
 
+h4{
+  font-size: 30px;
+}
+
+h5{
+  font-size: 27px;
+}
+
 main {
   height: 100%;
 }
@@ -38,6 +46,9 @@ main {
 header {
   background-color: rgb(20, 126, 237);
   margin-bottom: 15px;
+}
+.sidenavHeader{
+  background-color: rgb(20, 126, 237);
 }
 
 a {

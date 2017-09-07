@@ -83,7 +83,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       }, function() {
 
       });
-    };
+    }
     // Bottom sheet shows rider fare info on ride completion
     function showRiderFare() {
       $mdBottomSheet.show({
@@ -100,7 +100,29 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       }).catch(function(error) {
         // User clicked outside or hit escape
       });
-    };
+    }
+
+    // dialog shows rider they need to try request again
+    function tryRequestAgain(ev) {
+        $mdDialog.show({
+          controller: 'RiderNotificationController as rc',
+          templateUrl: 'views/partials/tryagain.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose:false,
+          // fullscreen: rc.customFullscreen // Only for -xs, -sm breakpoints.
+        });
+        // .then(function(message) {
+        //   // $scope.status = answer;
+        //   rideObject.note = message;
+        //   console.log('sending driver note', message);
+        //   socket.emit('driver-note', rideObject);
+        // }, function() {
+        //   // $scope.status = 'You cancelled the dialog.';
+        // });
+      }
+
+
 
   return {
     rideObject: rideObject,
@@ -121,7 +143,12 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       socket.on('rider-accepted', function(ride) {
         console.log('accepted ride', ride);
         rideObject.driver = ride.driver;
+        rideObject.rider = ride.rider;
         showDriverMatched();
+      });
+      socket.on('try-again', function(ride) {
+        console.log('rider needs to try request again, no drivers accepted', ride);
+        tryRequestAgain();
       });
       socket.on('rider-pickup', function(driver) {
         console.log('rider getting picked up', driver);
@@ -130,7 +157,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       socket.on('fare-dialog', function(ride) {
         console.log('show me the money', ride);
         showRiderFare();
-      })
+      });
     },
     // Connects driver to socket
     connectDriver: function() {
@@ -138,6 +165,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       console.log('connected driver to socket', socket);
       // Handles ride match
       socket.on('find-driver', function(rider) {
+        console.log("Initially received rider info from server", rider);
         rideObject.rider = rider;
         rideObject.driver = UserService.userObject; // tbd if this is important
         if (rider.elec_wheelchair) specialNeeds.push('Electric Wheelchair');

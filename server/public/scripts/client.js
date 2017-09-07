@@ -195,6 +195,7 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
   //   '800',
   //   '900'
   // ]
+
   '50': 'e3f0fd',
  '100': 'b9d8fa',
  '200': '8abff6',
@@ -300,20 +301,20 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
   });
 
   $mdThemingProvider.definePalette('moAccentPalette', {
-  '50': 'e3e7ff',
-  '100': 'b9c2ff',
-  '200': '8a9aff',
-  '300': '5b71ff',
-  '400': '3852ff',
-  '500': '1534ff',
-  '600': '122fff',
-  '700': '0f27ff',
-  '800': '0c21ff',
-  '900': '0615ff',
-  'A100': 'ffffff',
-  'A200': 'f3f4ff',
-  'A400': 'c0c2ff',
-  'A700': 'a7aaff',
+  '50': 'E5F7E7',
+  '100': 'BEEAC4',
+  '200': '93DC9C',
+  '300': '67CE74',
+  '400': '47C457',
+  '500': '26B939',
+  '600': '22B233',
+  '700': '1CAA2C',
+  '800': '17A224',
+  '900': '0D9317',
+  'A100': 'C3FFC6',
+  'A200': '90FF96',
+  'A400': '5DFF65',
+  'A700': '43FF4D',
   'contrastDefaultColor': 'light',
   'contrastDarkColors': [
     '50',

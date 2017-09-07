@@ -9,7 +9,6 @@ var indexRouter = require('./routes/index.router');
 var userRouter = require('./routes/user.router');
 var registerRouter = require('./routes/register.router');
 var riderRouter = require('./routes/rider.router');
-var tripRouter = require('./routes/trip.router');
 var driverRouter = require('./routes/driver.router');
 
 var config = require('./modules/twilio.config');
@@ -39,6 +38,7 @@ var server = app.listen(port, function(){
 });
 
 var io = require('socket.io')(server);
+var tripRouter = require('./routes/trip.router')(io);
 var userSocket;
 var coord;
 // Handles socket requests
@@ -69,10 +69,11 @@ io.on('connection', function(socket){
   // Sends driver info to rider
   socket.on('driver-accept', function(data) {
     data.driver.driver_socket = socket.id;
+    // data.eta = router.calculateETA
     console.log('ride acceptance data', data);
     io.to(data.rider.socket_id).emit('rider-accepted', data);
     // terminate matching loop in trip.router.js
-    tripRouter.matched();
+    tripRouter.matched(data.rider.id);
   });
   // listening for arriveForRider
   socket.on('driver-arrive', function(data) {
