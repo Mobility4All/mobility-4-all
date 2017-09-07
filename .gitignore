@@ -3,3 +3,6 @@ node_modules/
 .idea/
 *.log
 *.logs
+
+key.config.js
+twiliokeys.config.js
