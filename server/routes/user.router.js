@@ -50,6 +50,8 @@ router.get('/', function(req, res) {
       userInfo.model = req.user.model;
       userInfo.complete = req.user.complete;
     }
+    // trying to figure out how the location is being stored and transmitted
+    console.log("req.user.location is:", req.user.location);
     res.send(userInfo);
   } else {
     // failure best handled on the server. do redirect here.

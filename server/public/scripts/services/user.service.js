@@ -6,8 +6,11 @@ myApp.factory('UserService', function($http, $location, $mdSidenav){
   function buildToggler(componentId) {
     return function() {
       $mdSidenav(componentId).toggle();
+    
     };
+
   }
+
 
   return {
     userObject : userObject,

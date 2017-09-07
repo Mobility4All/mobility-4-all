@@ -27,28 +27,28 @@ These instructions will get you a copy of the project up and running on your loc
 
 Dependencies used to create Mobility-4-All:
 
-"@google/maps": "^0.4.3",
-"angular": "^1.6.4",
-"angular-animate": "^1.6.6",
-"angular-aria": "^1.6.6",
-"angular-material": "^1.1.4",
-"angular-material-icons": "^0.7.1",
-"angular-messages": "^1.6.6",
-"angular-route": "^1.6.4",
-"bcrypt": "^1.0.2",
-"body-parser": "^1.13.3",
-"bootstrap": "^3.3.5",
-"express": "^4.13.1",
-"express-session": "^1.13.0",
-"jquery": "^2.1.4",
-"material-design-icons": "^3.0.1",
-"ngmap": "^1.18.4",
-"passport": "^0.2.2",
-"passport-local": "^1.0.0",
-"path": "^0.11.14",
-"pg": "^7.1.0",
-"socket.io": "^2.0.3",
-"twilio": "^3.6.4"
+--"@google/maps": "^0.4.3",
+--"angular": "^1.6.4",
+--"angular-animate": "^1.6.6",
+--"angular-aria": "^1.6.6",
+--"angular-material": "^1.1.4",
+--"angular-material-icons": "^0.7.1",
+--"angular-messages": "^1.6.6",
+--"angular-route": "^1.6.4",
+--"bcrypt": "^1.0.2",
+--"body-parser": "^1.13.3",
+--"bootstrap": "^3.3.5",
+--"express": "^4.13.1",
+--"express-session": "^1.13.0",
+--"jquery": "^2.1.4",
+--"material-design-icons": "^3.0.1",
+--"ngmap": "^1.18.4",
+--"passport": "^0.2.2",
+--"passport-local": "^1.0.0",
+--"path": "^0.11.14",
+--"pg": "^7.1.0",
+--"socket.io": "^2.0.3",
+--"twilio": "^3.6.4"
 
 ## Steps to get the development environment running.
 
@@ -138,54 +138,56 @@ CREATE TABLE "trips" (
   "fare_amt" VARCHAR(10)
 );
 
-## Documentation
-
 ## Scope Documentation
 
 https://docs.google.com/a/blueraven.digital/document/d/1AbO3lkl4REHFTjR3A7ODtleKVPRqGV6_8psrfLbrPhM/edit?usp=sharing
 
-##Completed Features
+## Completed Features
 
 High level list of items completed.
 
-[x] Create two separate views: Rider/Caregiver and Driver
-[x] Create a register Rider/Caregiver path that includes checkboxes to match rider disabilities with drivers that
+-[x] Create two separate views: Rider/Caregiver and Driver
+
+-[x] Create a register Rider/Caregiver path that includes checkboxes to match rider disabilities with drivers that
 can accommodate those needs.
-[x] Create a register Driver path includes same checkboxes to match with Riders that they are able to accommodate for.
+
+-[x] Create a register Driver path includes same checkboxes to match with Riders that they are able to accommodate for.
 Includes a picture of the driver and driver's vehicle.
-Rider View:
-[x] Create On demand or Scheduled pickup (Scheduled pickups are a stretch goal)
-[x] Create a view for Rider purpose of trip.
-[x] Create a view to input starting and ending location and ability to call for a ride.
-[x] Create dialog boxes to alert rider when a driver has matched with them, the driver has arrived, and the
+
+### Rider View: ###
+
+-[x] Create On demand or Scheduled pickup (Scheduled pickups are a stretch goal)
+-[x] Create a view for Rider purpose of trip.
+-[x] Create a view to input starting and ending location and ability to call for a ride.
+-[x] Create dialog boxes to alert rider when a driver has matched with them, the driver has arrived, and the
 driver has dropped them off.
-[x] Create a twillio alert to text the Caregiver that the rider has been picked up and has been dropped off
+-[x] Create a twillio alert to text the Caregiver that the rider has been picked up and has been dropped off
 at their location.
-Driver View:
-[x] Create a default landing page for Driver.
-[x] Create a matching query when a driver comes online searching for fares and only matches with riders that
+### Driver View: ###
+-[x] Create a default landing page for Driver.
+-[x] Create a matching query when a driver comes online searching for fares and only matches with riders that
 they can accommodate.
-[x] Add show/hide buttons that the driver will push when they accept a ride, arrive for rider, pickup rider, and
+-[x] Add show/hide buttons that the driver will push when they accept a ride, arrive for rider, pickup rider, and
 drop off rider.
-[x] Add feature for navigation for driver to get directions from their current location to the location of the
+-[x] Add feature for navigation for driver to get directions from their current location to the location of the
 rider.  After pickup add feature to navigate driver from pickup to rider's final destination.
 
 
 ## Next Steps
-[] Adding a brokerage feature
-[] Adding an admin register feature to approve drivers before allowing them to use the app.
-[] Scheduled ride request
-[] Incorporating Metro Transit API data for price comparison
-[] Adding a driver to a your favorite list in your profile
-[] 5 star rating system after ride is completed
+-[] Adding a brokerage feature
+-[] Adding an admin register feature to approve drivers before allowing them to use the app.
+-[] Scheduled ride request
+-[] Incorporating Metro Transit API data for price comparison
+-[] Adding a driver to a your favorite list in your profile
+-[] 5 star rating system after ride is completed
 
 
 
 
 ## Authors
 
-James P. Leary III
-Catherine Yanish
-David Krueger
-Peter Prentiss
-Tom Brossart
+*James P. Leary III
+*Catherine Yanish
+*David Krueger
+*Peter Prentiss
+*Tom Brossart

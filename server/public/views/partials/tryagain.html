@@ -1,0 +1,30 @@
+<md-dialog aria-label="driver arrival">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <h2>No Drivers Available! Please try your request again!</h2>
+        <div layout="row">
+        <img style="height:150px;" ng-src="{{rc.rideObject.driver.driver_photo_url}}"/>
+        <img style="height:150px;" ng-src="{{rc.rideObject.driver.vehicle_photo_url}}"/>
+      </div>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+
+      <md-button ng-click="cancel()" >
+        Okay!
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
