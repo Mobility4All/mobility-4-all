@@ -11,7 +11,8 @@
 
     <md-dialog-content>
       <div class="md-dialog-content">
-        <h2>No Drivers Available! Please try your request again!</h2>
+        <!-- <h2>No Drivers Available! Please try your request again!</h2> -->
+        <h2>There are no Mobility 4 All drivers available at the moment. Please try your request again momentarily.</h2>
         <div layout="row">
         <img style="height:150px;" ng-src="{{rc.rideObject.driver.driver_photo_url}}"/>
         <img style="height:150px;" ng-src="{{rc.rideObject.driver.vehicle_photo_url}}"/>
@@ -23,7 +24,7 @@
       <span flex></span>
 
       <md-button ng-click="rc.cancel()" >
-        Okay!
+        Okay
       </md-button>
     </md-dialog-actions>
   </form>

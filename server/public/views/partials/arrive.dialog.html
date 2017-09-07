@@ -17,7 +17,7 @@
         <img style="height:150px;" ng-src="{{rc.rideObject.driver.vehicle_photo_url}}"/>
       </div>
         <p>
-          ETA: {{rc.rideObject.rider.eta[0].duration.text}}
+          <b>ETA: {{rc.rideObject.rider.eta[0].duration.text}}</b>
         </p>
         <p>Would you like to send your driver an additional message?</p>
         <md-input-container>
@@ -29,11 +29,11 @@
 
     <md-dialog-actions layout="row">
       <span flex></span>
-      <md-button ng-click="rc.cancel()">
-       No Thanks
+      <md-button class="md-raised" ng-click="rc.cancel()">
+       Close
       </md-button>
-      <md-button ng-click="rc.answer(message)">
-        Send
+      <md-button class="md-raised md-primary" ng-click="rc.answer(message)">
+        Send Message
       </md-button>
     </md-dialog-actions>
   </form>

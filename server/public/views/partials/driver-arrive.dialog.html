@@ -13,16 +13,20 @@
       <div class="md-dialog-content">
         <h2>{{rc.rideObject.driver.first_name}} is here!</h2>
         <div layout="row">
-        <img style="height:150px;" ng-src="{{rc.rideObject.driver.driver_photo_url}}"/>
-        <img style="height:150px;" ng-src="{{rc.rideObject.driver.vehicle_photo_url}}"/>
+          <img style="height:150px;" ng-src="{{rc.rideObject.driver.driver_photo_url}}"/>
+          <img style="height:150px;" ng-src="{{rc.rideObject.driver.vehicle_photo_url}}"/>
+        </div>
       </div>
-      </div>
+      <!-- <md-button class="md-primary" ng-click="">
+        <md-icon aria-label="Call driver">call</md-icon>
+      </md-button> -->
+
     </md-dialog-content>
 
     <md-dialog-actions layout="row">
       <span flex></span>
 
-      <md-button ng-click="rc.cancel()" >
+      <md-button class="md-raised md-primary" ng-click="rc.cancel()" >
         Okay!
       </md-button>
     </md-dialog-actions>

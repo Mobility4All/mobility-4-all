@@ -59,6 +59,7 @@ CREATE TABLE "riders" (
   "cg_email" VARCHAR(50),
   "cg_relationship" VARCHAR(20),
   "cg_orders_rides" BOOLEAN,
+  "cg_financial_auth" BOOLEAN,
   "cg_notifications" BOOLEAN,
   "credit_card_num" VARCHAR(15),
   "credit_cvc" VARCHAR(15),
