@@ -2,12 +2,15 @@
   "name": "express_router_lecture_angular",
   "version": "1.0.0",
   "description": "",
+  "apidoc": {
+  "title": "Mobility4All apiDocumentation"
+  },
   "main": "index.js",
   "scripts": {
     "test": "nodemon server/server.js",
     "start": "node server/server.js"
   },
-  "author": "Scott Bromander, Kris Szafranski",
+  "author": "James P. Leary III, Catherine Yanish, David Krueger, Peter Prentiss, Tom Brossart",
   "license": "ISC",
   "dependencies": {
     "@google/maps": "^0.4.3",

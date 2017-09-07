@@ -1,0 +1,1 @@
+define({ "api": [  {    "type": "get",    "url": "/user",    "title": "Request User information",    "name": "GetUser",    "group": "User",    "version": "0.0.0",    "filename": "server/routes/user.router.js",    "groupTitle": "User"  }] });

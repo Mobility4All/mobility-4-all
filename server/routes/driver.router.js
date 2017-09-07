@@ -6,9 +6,11 @@ var pool = require('../modules/pool.js');
 
 
 /**
-* @api{put}/driver Update Driver Profile
+* @api{put} /driver/update Update Driver Profile
 * @apiName DriverUpdate
 * @apiGroup Driver
+*
+* @apiSuccess {String}
 */
 // Handles driver profile setup request
 router.put('/update', function(req, res, next) {
