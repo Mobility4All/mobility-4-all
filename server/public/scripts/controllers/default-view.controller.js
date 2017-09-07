@@ -36,13 +36,13 @@ myApp.controller('DefaultViewController', function(UserService, DataService, Nav
    $scope.cancel = function() {
      $mdDialog.cancel();
    };
-  function buildToggler(componentId) {
-    return function() {
-      $mdSidenav(componentId).toggle();
-    };
-  }
-  dc.toggleLeft = buildToggler('left');
-  dc.toggleRight = buildToggler('right');
+  // function buildToggler(componentId) {
+  //   return function() {
+  //     $mdSidenav(componentId).toggle();
+  //   };
+  // }
+  // dc.toggleLeft = buildToggler('left');
+  // dc.toggleRight = buildToggler('right');
 
 
 

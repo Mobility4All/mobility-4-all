@@ -143,6 +143,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       socket.on('rider-accepted', function(ride) {
         console.log('accepted ride', ride);
         rideObject.driver = ride.driver;
+        rideObject.rider = ride.rider;
         showDriverMatched();
       });
       socket.on('try-again', function(ride) {
