@@ -39,6 +39,9 @@ header {
   background-color: rgb(20, 126, 237);
   margin-bottom: 15px;
 }
+.sidenavHeader{
+  background-color: rgb(20, 126, 237);
+}
 
 a {
   font-size: 1.2em;
