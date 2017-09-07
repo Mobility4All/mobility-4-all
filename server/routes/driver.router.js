@@ -67,6 +67,20 @@ router.put('/update', function(req, res, next) {
   }
 });
 
+
+/**
+* @api{put} /driver/profilephoto Update Driver Profile Photo
+* @apiName DriverProfilePhoto
+* @apiGroup Driver
+* @apiVersion 1.0.0
+*
+* @apiPermission user-driver
+*
+* @apiParam {String} driver_photo_url Drivers profile photo.
+* @apiParam {Integer} req.user.id Drivers id.
+*
+* @apiSuccess {String} StatusCode Return status code to client.
+*/
 //Update driver photo url
 router.put('/profilephoto', function(req, res, next) {
   var driver = req.body;
@@ -93,7 +107,20 @@ router.put('/profilephoto', function(req, res, next) {
   }
 });
 
-//Update driver photo url
+/**
+* @api{put} /driver/vehiclephoto Update Driver Vehicle Photo
+* @apiName DriverVehiclePhoto
+* @apiGroup Driver
+* @apiVersion 1.0.0
+*
+* @apiPermission user-driver
+*
+* @apiParam {String} vehicle_photo_url Drivers vehicle photo.
+* @apiParam {Integer} req.user.id Drivers id.
+*
+* @apiSuccess {String} StatusCode Return status code to client.
+*/
+//Update driver vehicle url
 router.put('/vehiclephoto', function(req, res, next) {
   var vehicle = req.body;
   // console.log('updating vehicle photo', vehicle, req.user.id);
@@ -119,7 +146,19 @@ router.put('/vehiclephoto', function(req, res, next) {
   }
 });
 
-
+/**
+* @api{put} /driver/geolocation Update Driver Geolocation
+* @apiName DriverGeolocation
+* @apiGroup Driver
+* @apiVersion 1.0.0
+*
+* @apiPermission user-driver
+*
+* @apiParam {Integer} geolocation Drivers latitude and longitude from HTML5 geolocation request.
+* @apiParam {Integer} req.user.id Drivers id.
+*
+* @apiSuccess {String} StatusCode Return status code to client.
+*/
 router.put('/geolocation', function(req, res, next) {
   console.log('req body coords', req.body);
   var geolocation = req.body;
@@ -147,6 +186,20 @@ router.put('/geolocation', function(req, res, next) {
   }
 });
 
+
+/**
+* @api{put} /driver/live Update Driver Live Status and set Socket Id
+* @apiName DriverLiveStatus
+* @apiGroup Driver
+* @apiVersion 1.0.0
+*
+* @apiPermission user-driver
+*
+* @apiParam {Integer} req.socket.id Drivers socket id, passed through on req.
+* @apiParam {Integer} req.user.id Drivers user id, passed through on req.
+*
+* @apiSuccess {String} StatusCode Return status code to client.
+*/
 router.put('/live', function(req, res, next) {
   var driverId = req.user.id;
   console.log('switching live status', req.user.id, req.socket.id);
@@ -172,6 +225,18 @@ router.put('/live', function(req, res, next) {
   }
 });
 
+/**
+* @api{put} /driver/unlive Update Driver Live Status to Unlive
+* @apiName DriverLiveStatus
+* @apiGroup Driver
+* @apiVersion 1.0.0
+*
+* @apiPermission user-driver
+*
+* @apiParam {Integer} req.user.id Drivers user id, passed through on req.
+*
+* @apiSuccess {String} StatusCode Return status code to client.
+*/
 router.put('/unlive', function(req, res, next) {
   var driverId = req.user.id;
   console.log('switching status to unlive', req.user.id, req.socket.id);
