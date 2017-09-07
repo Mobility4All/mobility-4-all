@@ -1,4 +1,4 @@
-myApp.controller('DirectionController', function(UserService, DataService, NavigationService, $http, $timeout, $mdBottomSheet,$mdSidenav,$mdDialog, $mdToast, DataService, $scope, $interval) {
+myApp.controller('DirectionController', function($mdSidenav) {
 
   console.log('DirectionController created');
   var dc = this;
