@@ -8,7 +8,7 @@
         <md-content class="md-padding">
           <h2 class="md-headline">Rider Info</h2>
           <form>
-            <h4 class="md-subhead">Name:</h4>
+            <h4>Name</h4>
             <div layout="row">
               <md-input-container>
                 <label>First Name</label>
@@ -22,7 +22,7 @@
             <p>{{rc.photoMessage}}</p>
             <md-button class="md-raised md-primary" ng-click="rc.pickPic()">Choose Photo</md-button>
 
-            <h4 class="md-subhead">Contact Info:</h4>
+            <h4>Contact Info</h4>
             <!-- Maybe use google places for address? -->
             <div>
               <md-input-container class="md-block">
@@ -56,23 +56,23 @@
               </md-input-container>
             </div>
 
-            <h4>Accessibility Needs:</h4>
+            <h4>Accessibility Needs</h4>
             <div layout="column">
-              <h5>Wheelchair:</h5>
+              <h5>Wheelchair</h5>
               <div layout="row">
                 <md-checkbox ng-model="rc.user.elec_wheelchair">Electric</md-checkbox>
                 <md-checkbox ng-model="rc.user.col_wheelchair">Collapsible</md-checkbox>
               </div>
-              <h5>Other:</h5>
+              <h5>Other</h5>
               <md-checkbox ng-model="rc.user.service_animal">Service Animal</md-checkbox>
               <md-checkbox ng-model="rc.user.oxygen">Oxygen Tank or Other Special Equipment</md-checkbox>
             </div>
 
-            <h4>Additional Info:</h4>
+            <h4>Additional Info</h4>
             <p>Please include any information you would like to share with your driver</p>
             <div>
               <md-input-container class="md-block">
-                <label>Addtional Info</label>
+                <label>Additional Info</label>
                 <textarea ng-model="rc.user.rider_addtl_info" rows="5"></textarea>
               </md-input-container>
             </div>
@@ -85,12 +85,11 @@
       <md-tab label="step 2">
         <md-content class="md-padding">
           <h2 class="md-headline">Caregiver Info</h2>
-          <md-checkbox ng-model="rc.caregiver" aria-label="caregiver checkbox">
-            I don't have a caregiver
-          </md-checkbox>
-
           <form>
-            <h4 class="md-subhead">Name:</h4>
+            <md-checkbox ng-model="rc.caregiver" aria-label="caregiver checkbox">
+            I don't have a caregiver
+            </md-checkbox>
+            <h4 class="md-subhead">Name</h4>
             <md-input-container>
               <label>First Name</label>
               <input type="text" ng-model="rc.user.cg_first" ng-disabled="rc.caregiver"/>
@@ -104,7 +103,7 @@
               <input type="text" ng-model="rc.user.cg_relationship" ng-disabled="rc.caregiver"/>
             </md-input-container>
 
-            <h4 class="md-subhead">Contact Info:</h4>
+            <h4 class="md-subhead">Contact Info</h4>
             <div>
               <md-input-container>
                 <label>Cell Phone #</label>
@@ -134,7 +133,7 @@
         <md-content class="md-padding">
           <h2 class="md-headline">Eligibility and Payment Info</h2>
 
-          <h4 class="md-subhead">Eligibility:</h4>
+          <h4 class="md-subhead">Eligibility</h4>
           <md-input-container>
             <label>Medical Assistance ID</label>
             <input type="text" ng-model="rc.user.med_id"/>
@@ -144,7 +143,7 @@
             <input type="text" ng-model="rc.user.metmo_id"/>
           </md-input-container>
 
-          <h4 class="md-subhead">Credit Card:</h4>
+          <h4 class="md-subhead">Credit Card</h4>
           <md-input-container>
             <label>Credit Card #</label>
             <input type="text" ng-model="rc.user.credit_card_num"/>
@@ -162,8 +161,8 @@
     </md-tabs>
 
     <div layout="row" layout-align="space-around center">
-      <md-button class="md-raised secondary" ng-click="rc.switchTab('back')" ng-disabled="rc.selectedTab === 0">Back</md-button>
-      <md-button class="md-raised secondary" ng-click="rc.switchTab('next')" ng-hide="rc.selectedTab === 2">Next</md-button>
+      <md-button class="md-raised md-warn" ng-click="rc.switchTab('back')" ng-disabled="rc.selectedTab === 0">Back</md-button>
+      <md-button class="md-raised md-accent" ng-click="rc.switchTab('next')" ng-hide="rc.selectedTab === 2">Next</md-button>
       <md-button class="md-raised md-primary" ng-click="rc.updateUser()" ng-show="rc.selectedTab === 2">Complete Profile</md-button>
     </div>
   </md-content>
