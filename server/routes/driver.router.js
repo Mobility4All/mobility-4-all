@@ -29,7 +29,7 @@ var pool = require('../modules/pool.js');
 * @apiParam {Boolean} oxygen Does driver accomdate riders with: oxygen.
 * @apiParam {Boolean} cpr Does driver accomdate riders with: cpr needs.
 * @apiParam {Boolean} complete Did driver complete the profile build.
-* @apiParam {Number} id Drivers db id.
+* @apiParam {Integer} id Drivers db id.
 *
 *
 * @apiSuccess {String} StatusCode Return status code to client.
