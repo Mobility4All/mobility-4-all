@@ -6,7 +6,8 @@ myApp.controller('DriverNotificationController', function(UserService, DataServi
     dc.dataService = DataService;
     dc.navigationService = NavigationService;
 
-    var panelEl = angular.element( document.querySelector( '#right-panel' ) );
+
+    var panelEl = angular.element(document.querySelector( '#right-panel' ));
 
     dc.arrive = function() {
       console.log('arriving for', DataService.rideObject.rider.rider_first);
@@ -20,6 +21,8 @@ myApp.controller('DriverNotificationController', function(UserService, DataServi
         //also send rider pickup dialog
         // route here to mark trip arrived
       } else if (dc.tripMessage === 'Pick up '){
+        NavigationService.startDestNavigation();
+        panelEl.empty();
         dc.tripMessage = 'Drop off ';
         $http.put('/trip/pickup', riderIdObject).then(function(response) {
           console.log('picked up and updated', response);
@@ -27,7 +30,6 @@ myApp.controller('DriverNotificationController', function(UserService, DataServi
           console.log('error updating picked up', err);
         })
         //also starts destination routing
-        NavigationService.startDestNavigation();
 
 
       } else if (dc.tripMessage === 'Drop off '){

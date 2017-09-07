@@ -12,7 +12,7 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
   }
   //the set panel directions
   //clear and reset the text directions after each new directions request
-  var panelEl = angular.element( document.querySelector( '#right-panel' ) );
+  var panelEl = angular.element(document.querySelector( '#right-panel' ) );
   //message and coords for Geolocation
   var message = '';
   var coords = {
@@ -33,6 +33,7 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
   function acceptRide() {
     DataService.acceptRide();
     // dc.buttonVisible = true;
+
     DataService.buttonShow = !DataService.buttonShow;
     console.log('who\'s the rider?', DataService.rideObject);
     startAndEnd.start = coords.lat + " " + coords.lng;
@@ -74,7 +75,6 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
       center: {lat: 41.85, lng: -87.65} //Might update if we want to change initial view.
     });
     directionsDisplay.setMap(map);
-    //setPanel displays the written driving directions
     directionsDisplay.setPanel(document.getElementById('right-panel'));
     calculateAndDisplayRoute(directionsService, directionsDisplay);
     //calculateAndDisplayRoute shows map and line drawing of route
@@ -96,14 +96,21 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
     }
   } //end of google map direction function
 
+var refreshLocation;
 
 //interval to update driver location on interval when driver is live
   var callInterval = function() {
     console.log('call interval for geolocation');
     geoLocate();
     //Show current seconds value 5 times after every 1000 ms
-    $interval(geoLocate, 60000);
+    var refreshLocation = $interval(geoLocate, 60000);
   };
+
+
+  var stopInterval = function() {
+      console.log('cancel interval attempted');
+     $interval.cancel(refreshLocation);
+  }
 
   //HTML 5 geolocation code begins here
   // geoLocate called on click. getLocation checks for browser compatability (user must approve to enable),
