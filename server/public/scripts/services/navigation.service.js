@@ -1,4 +1,4 @@
-myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserService, DataService, $interval){
+myApp.factory('NavigationService', function($http, $rootScope, $location, $mdSidenav, UserService, DataService, $interval, $mdDialog, $mdBottomSheet, $mdToast){
   console.log('NavigationService Loaded');
 
   // Ride object that is sent with ride request
@@ -12,7 +12,6 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
   }
   //the set panel directions
   //clear and reset the text directions after each new directions request
-  var panelEl = angular.element( document.querySelector( '#right-panel' ) );
   //message and coords for Geolocation
   var message = '';
   var coords = {
@@ -23,16 +22,19 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
 
   var reverseGeoInput = '44.9780310,-93.2635010';
   var toAddress = {
-
+    address: ' '
   };
   // create new GeoCoder to reverser geolocation
   var geocoder = new google.maps.Geocoder;
   var infowindow = new google.maps.InfoWindow;
 
+ //declaring global refresh variable for interval
+  var refreshLocation;
 
   function acceptRide() {
     DataService.acceptRide();
     // dc.buttonVisible = true;
+    stopInterval();
     DataService.buttonShow = !DataService.buttonShow;
     console.log('who\'s the rider?', DataService.rideObject);
     startAndEnd.start = coords.lat + " " + coords.lng;
@@ -52,7 +54,10 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
   //a google map with polyline route and with text driving directions
   //on click, old req is cleared, new request is called with initMap() to get and show new directions
   function startDestNavigation() {
+    var panelEl = angular.element(document.getElementById('right-panel'));
+    console.log('BEFORE', panelEl.html());
     panelEl.empty();
+    console.log('AFTER', panelEl.html());
     toAddress.address = " ";
     reverseGeoInput = DataService.rideObject.rider.coord.latB + "," +  DataService.rideObject.rider.coord.lngB;
     console.log(reverseGeoInput);
@@ -62,7 +67,7 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
     // geocodeLatLng(geocoder, infowindow);  //REMOVED map param (this does reverse geocode)
     console.log('start', startAndEnd.start);
     console.log('end', startAndEnd.end);
-    initMap();
+    setTimeout(initMap, 1000);
   };
 
   //this google maps function gets directions and displays on a map and with text
@@ -74,7 +79,6 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
       center: {lat: 41.85, lng: -87.65} //Might update if we want to change initial view.
     });
     directionsDisplay.setMap(map);
-    //setPanel displays the written driving directions
     directionsDisplay.setPanel(document.getElementById('right-panel'));
     calculateAndDisplayRoute(directionsService, directionsDisplay);
     //calculateAndDisplayRoute shows map and line drawing of route
@@ -97,13 +101,20 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
   } //end of google map direction function
 
 
+
 //interval to update driver location on interval when driver is live
   var callInterval = function() {
     console.log('call interval for geolocation');
     geoLocate();
     //Show current seconds value 5 times after every 1000 ms
-    $interval(geoLocate, 60000);
+    refreshLocation = $interval(geoLocate, 10000);
   };
+
+
+  var stopInterval = function() {
+      console.log('cancel interval attempted');
+     $interval.cancel(refreshLocation);
+  }
 
   //HTML 5 geolocation code begins here
   // geoLocate called on click. getLocation checks for browser compatability (user must approve to enable),
@@ -156,10 +167,14 @@ myApp.factory('NavigationService', function($http, $location, $mdSidenav, UserSe
     geocoder.geocode({'location': latlng}, function(results, status) {
       if (status === 'OK') {
         if (results[0]) {
-          infowindow.setContent(results[0].formatted_address);
+          // infowindow.setContent(results[0].formatted_address);
           // infowindow.open(map, marker);
           console.log('hopefully this is the right address', results[0].formatted_address);
-          toAddress.address = results[0].formatted_address;
+          $rootScope.$apply(function(){
+            toAddress.address = results[0].formatted_address;
+          });
+
+          //$rootScope.$apply();
         } else {
           console.log('No results found');
         }
