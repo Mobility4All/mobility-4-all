@@ -3,6 +3,51 @@ var router = express.Router();
 var path = require('path');
 var pool = require('../modules/pool.js');
 
+
+/**
+* @api{put} /rider/update Update Rider Profile
+* @apiName RiderUpdate
+* @apiGroup Rider
+* @apiVersion 1.0.0
+*
+* @apiParam {String} rider_first Rider's first name.
+* @apiParam {String} rider_last Rider's last name.
+* @apiParam {String} rider_street Rider's street.
+* @apiParam {String} rider_city Rider's city.
+* @apiParam {String} rider_state Rider's state.
+* @apiParam {String} rider_cell Rider's cell.
+* @apiParam {String} rider_email Rider's email.
+* @apiParam {Boolean} elec_wheelchair Does rider have an electric wheelchair.
+* @apiParam {Boolean} col_wheelchair Does rider have a collapsable wheelchair.
+* @apiParam {Boolean} service_animal Does rider have a service animal.
+* @apiParam {Boolean} oxygen Does rider have an oxygen tank.
+* @apiParam {String} rider_addtl_info Rider's additional information for driver.
+* @apiParam {String} cg_first Rider's Caregiver first name.
+* @apiParam {String} cg_last Rider's Caregiver last name.
+* @apiParam {String} cg_relationship Riders Caregiver relationship to rider.
+* @apiParam {String} cg_cell Rider's Caregiver cell number.
+* @apiParam {String} cg_email Rider's Caregiver email.
+* @apiParam {Boolean} cg_orders_rides Gives Caregiver authority to order rides.
+* @apiParam {Boolean} cg_notifications Caregiver gets notifications when rider picked up and dropped off.
+* @apiParam {String} med_id Rider's medical ID
+* @apiParam {String} metmo_id Rider's Metro Mobility ID
+* @apiParam {String} credit_card_num Rider's Credit Card Number
+* @apiParam {String} credit_cvc Rider's Credit Card security number
+* @apiParam {String} credit_expdate Rider's Credit Card Exp Date
+* @apiParam {Boolean} complete Rider's profile complete, If yes Rider will not be prompted to set up profile on first login.
+* @apiParam {Integer} id Rider's db id.
+*
+*
+* @apiSuccessExample Success-Response:
+*    HTTP/200 OK
+*
+*@apiError ErrorInsertingData Invalid form of data entered. Database tables set up incorrectly.
+*    HTTP/500 Error Inserting Data
+*
+*
+*
+*
+*/
 // Handles rider profile setup request
 router.put('/update', function(req, res, next) {
   var rider = req.body;
