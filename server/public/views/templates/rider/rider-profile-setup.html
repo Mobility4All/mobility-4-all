@@ -57,7 +57,7 @@
             </div>
 
             <h4>Accessibility Needs</h4>
-            <div layout="column">
+            <div>
               <h5>Wheelchair</h5>
               <div layout="row">
                 <md-checkbox ng-model="rc.user.elec_wheelchair">Electric</md-checkbox>
@@ -89,7 +89,7 @@
             <md-checkbox ng-model="rc.caregiver" aria-label="caregiver checkbox">
             I don't have a caregiver
             </md-checkbox>
-            <h4 class="md-subhead">Name</h4>
+            <h4>Name</h4>
             <md-input-container>
               <label>First Name</label>
               <input type="text" ng-model="rc.user.cg_first" ng-disabled="rc.caregiver"/>
@@ -103,7 +103,7 @@
               <input type="text" ng-model="rc.user.cg_relationship" ng-disabled="rc.caregiver"/>
             </md-input-container>
 
-            <h4 class="md-subhead">Contact Info</h4>
+            <h4>Contact Info</h4>
             <div>
               <md-input-container>
                 <label>Cell Phone #</label>
@@ -133,7 +133,7 @@
         <md-content class="md-padding">
           <h2 class="md-headline">Eligibility and Payment Info</h2>
 
-          <h4 class="md-subhead">Eligibility</h4>
+          <h4>Eligibility</h4>
           <md-input-container>
             <label>Medical Assistance ID</label>
             <input type="text" ng-model="rc.user.med_id"/>
@@ -143,7 +143,7 @@
             <input type="text" ng-model="rc.user.metmo_id"/>
           </md-input-container>
 
-          <h4 class="md-subhead">Credit Card</h4>
+          <h4>Credit Card</h4>
           <md-input-container>
             <label>Credit Card #</label>
             <input type="text" ng-model="rc.user.credit_card_num"/>

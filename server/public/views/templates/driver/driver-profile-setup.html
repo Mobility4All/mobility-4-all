@@ -1,8 +1,9 @@
 <div ng-include="'views/partials/sidenavdriver.html'"></div>
+<md-content layout-padding>
 <h1>Driver Registration Information</h1>
 <form>
   <h2>Personal Info</h2>
-  <h4>Name:</h4>
+  <h4>Name</h4>
   <div layout="row">
     <md-input-container>
       <label>First Name</label>
@@ -16,7 +17,7 @@
   <p>{{dc.photoMessage}}</p>
   <md-button class="md-raised md-primary" ng-click="dc.pickProfilePic()">Choose Profile Photo</md-button>
 
-  <h4>Contact Info:</h4>
+  <h4>Contact Info</h4>
   <div>
     <md-input-container class="md-block">
       <label>Street Address</label>
@@ -67,14 +68,14 @@
   <p>{{dc.vehicleMessage}}</p>
   <md-button class="md-raised md-primary" ng-click="dc.pickVehiclePic()">Choose Vehicle Photo</md-button>
 
-  <h4>Accessibility Needs you are able to accommodate:</h4>
-  <div layout="column">
-    <h5>Wheelchair:</h5>
+  <h4>Accessibility Needs your vehicle can accommodate</h4>
+  <div>
+    <h5>Wheelchair</h5>
     <div layout="row">
       <md-checkbox ng-model="dc.user.elec_wheelchair">Electric</md-checkbox>
       <md-checkbox ng-model="dc.user.col_wheelchair">Collapsible</md-checkbox>
     </div>
-    <h5>Other:</h5>
+    <h5>Other</h5>
     <md-checkbox ng-model="dc.user.service_animal">Service Animal</md-checkbox>
     <md-checkbox ng-model="dc.user.oxygen">Oxygen Tank or other Special Equipment</md-checkbox>
   </div>
@@ -85,3 +86,4 @@
   <md-button class="md-raised md-primary" ng-click="dc.updateDriver()">Complete Registration</md-button>
 
 </form>
+</md-content>
