@@ -11,16 +11,28 @@ var pool = require('../modules/pool.js');
 * @apiGroup Driver
 * @apiVersion 1.0.0
 *
+* @apiPermission user-driver
+*
 * @apiParam {String} first_name Drivers first name.
 * @apiParam {String} last_name Drivers last name.
+* @apiParam {String} email Drivers email address.
+* @apiParam {String} phone Drivers cell phone.
+* @apiParam {String} street Drivers street.
+* @apiParam {String} city Drivers city.
+* @apiParam {String} state Drivers state.
+* @apiParam {String} make Drivers vehicle make.
+* @apiParam {String} model Drivers vehicle model.
+* @apiParam {String} license num Drivers vehicle license num.
+* @apiParam {Boolean} elec_wheelchair Does driver accomdate riders with: elec_wheelchair.
+* @apiParam {Boolean} col_wheelchair Does driver accomdate riders with: col_wheelchair.
+* @apiParam {Boolean} service_animal Does driver accomdate riders with: service_animal.
+* @apiParam {Boolean} oxygen Does driver accomdate riders with: oxygen.
+* @apiParam {Boolean} cpr Does driver accomdate riders with: cpr needs.
+* @apiParam {Boolean} complete Did driver complete the profile build.
+* @apiParam {Number} id Drivers db id.
 *
 *
-*
-*
-*
-*
-* @apiSuccessExample Success-Response:
-*    HTTP/200 OK
+* @apiSuccess {String} StatusCode Return status code to client.
 */
 // Handles driver profile setup request
 router.put('/update', function(req, res, next) {
