@@ -38,15 +38,7 @@ var pool = require('../modules/pool.js');
 * @apiParam {Integer} id Rider's db id.
 *
 *
-* @apiSuccessExample Success-Response:
-*    HTTP/200 OK
-*
-*@apiError ErrorInsertingData Invalid form of data entered. Database tables set up incorrectly.
-*    HTTP/500 Error Inserting Data
-*
-*
-*
-*
+* @apiSuccess {String} StatusCode Return status code to client.
 */
 // Handles rider profile setup request
 router.put('/update', function(req, res, next) {
@@ -86,7 +78,18 @@ router.put('/update', function(req, res, next) {
 
   }
 });
-
+/**
+* @api{put} /rider/photo Update Rider Profile photo
+* @apiName RiderUpdatePhoto
+* @apiGroup Rider
+* @apiVersion 1.0.0
+*
+* @apiParam {String} rider.rider_photo_url Rider's picture from filestack.
+* @apiParam {Integer} req.user.id Rider's db id.
+*
+*@apiSuccess {String} StatusCode Return status code to client.
+*
+*/
 router.put('/photo', function(req, res, next) {
   var rider = req.body;
   // console.log('updating rider photo', rider, req.user.id);
@@ -111,7 +114,20 @@ router.put('/photo', function(req, res, next) {
     });
   }
 });
-
+/**
+* @api{post} /rider/destAB Send Location data for Rider to the Database.
+* @apiName RiderUpdatePhoto
+* @apiGroup Rider
+* @apiVersion 1.0.0
+*
+* @apiParam {Integer} rider_id Rider's db id.
+* @apiParam {String} start_location Rider's pickup location.
+* @apiParam {String} end_location Rider's dropoff location.
+* @apiParam {String} rider_note Rider's Additional note to driver about the current ride.
+*
+*@apiSuccess {String} StatusCode Return status code to client.
+*
+*/
 router.post('/destAB', function(req, res, next) {
   var ride = req.body;
   console.log('save rider AB geolocations', ride, req.user.id);
