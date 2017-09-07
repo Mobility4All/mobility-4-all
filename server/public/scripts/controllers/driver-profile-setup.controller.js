@@ -30,9 +30,9 @@ myApp.controller('DriverProfileController', function($http, $mdDialog, $location
           .parent(angular.element(document.querySelector('#popupContainer')))
           .clickOutsideToClose(true)
           .title('Registration Complete!')
-          .textContent('Someone will contact you about becoming a MO driver.')
+          .textContent('We will contact you soon about becoming a MO driver.')
           .ariaLabel('Driver Registration Confirmation')
-          .ok('Got it!')
+          .ok('Okay')
           .targetEvent(ev)
       );
     };
@@ -41,7 +41,7 @@ myApp.controller('DriverProfileController', function($http, $mdDialog, $location
     // API key
     dc.client = filestack.init('AX0Uil0hBT3afjt9bxjXXz');
     // Feedback for file upload
-    dc.photoMessage = 'Photo is optional and will be displayed to riders';
+    dc.photoMessage = 'Please upload a photo for your profile. Photo will be displayed to riders when you accept their ride.';
     // Upload image and put file url
     dc.pickProfilePic = function() {
       console.log('adding driver pic');
@@ -65,7 +65,7 @@ myApp.controller('DriverProfileController', function($http, $mdDialog, $location
     }
 
     // Feedback for file upload
-    dc.vehicleMessage = ''
+    dc.vehicleMessage = 'Vehicle photo will be displayed to rider to help identify you on pickup.'
     // Upload image and put file url
     dc.pickVehiclePic = function() {
       console.log('adding vehicle pic');

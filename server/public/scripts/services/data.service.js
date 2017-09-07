@@ -170,10 +170,11 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
         rideObject.driver = UserService.userObject; // tbd if this is important
         if (rider.elec_wheelchair) specialNeeds.push('Electric Wheelchair');
         if (rider.col_wheelchair) specialNeeds.push('Collapsible Wheelchair');
-        if (rider.service_animal_wheelchair) specialNeeds.push('Service Animal');
+        if (rider.service_animal) specialNeeds.push('Service Animal');
         if (rider.oxygen) specialNeeds.push('Oxygen Tank or other Special Equipment');
         console.log('rider info', rider);
         showRideRequest();
+        $mdDialog.cancel();
       });
       // Handles receiving note from rider
       socket.on('receive-note', function(ride) {
