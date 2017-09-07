@@ -7,7 +7,6 @@ myApp.controller('RiderNotificationController', function(DataService, $timeout, 
     var eta = "10";
     rc.rideObject = DataService.rideObject;
 
-
     rc.hide = function() {
       $mdDialog.hide();
     };
