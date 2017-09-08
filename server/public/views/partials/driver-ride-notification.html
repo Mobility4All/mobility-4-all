@@ -5,7 +5,7 @@
       <img style="height:150px;" ng-src="{{dc.riderInfo.rider_photo_url}}">
     </div>
     <h4>Rider Needs:</h4>
-    <p ng-repeat="need in dc.dataService.specialNeeds">{{need}}</p>
+    <p ng-repeat="need in dc.dataService.specialNeeds track by $index">{{need}}</p>
     <!-- <img ng-src="dc.rideObject.rider.rider_photo_url"> -->
     <p>
       ETA: {{dc.riderInfo.eta[0].duration.text}}
