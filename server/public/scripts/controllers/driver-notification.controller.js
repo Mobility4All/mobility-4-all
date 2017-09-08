@@ -24,6 +24,7 @@ myApp.controller('DriverNotificationController', function(UserService, DataServi
         NavigationService.startDestNavigation();
         panelEl.empty();
         dc.tripMessage = 'Drop off ';
+        DataService.pickUpRider();
         $http.put('/trip/pickup', riderIdObject).then(function(response) {
           console.log('picked up and updated', response);
         }).catch(function(err) {

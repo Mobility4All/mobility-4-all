@@ -79,9 +79,12 @@ io.on('connection', function(socket){
   socket.on('driver-arrive', function(data) {
     console.log('driver arrive socket listening', data);
     io.to(data.rider.socket_id).emit('rider-pickup', data);
+  });
+  socket.on('caregiver-pickup', function(data) {
+    console.log('rider picked up socket', data);
     if (data.rider.cg_cell && data.rider.cg_notifications){
       notifyCaregiverPickup(data.rider.cg_cell, data.rider.rider_first);
-      }
+    }
   });
   // Listening for ride to completeRide
   socket.on('complete-ride', function(data) {

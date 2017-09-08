@@ -19,8 +19,8 @@
         <div ng-if="dc.dataService.rideObject.rider.rider_photo_url" layout="row">
           <img style="height:150px;" ng-src="{{dc.dataService.rideObject.rider.rider_photo_url}}"/>
         </div>
-        <h4>Note from Rider:</h4>
-        <p>{{dc.dataService.rideObject.note}}</p>
+        <h4 ng-if="dc.dataService.rideObject.note">Note from Rider:</h4>
+        <p ng-if="dc.dataService.rideObject.note">{{dc.dataService.rideObject.note}}</p>
       </div>
 
     </md-dialog-content>

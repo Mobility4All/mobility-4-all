@@ -169,10 +169,10 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
         rideObject.rider = rider;
         specialNeeds = [];
         rideObject.driver = UserService.userObject; // tbd if this is important
-        if (rider.elec_wheelchair) specialNeeds.push('Electric Wheelchair');
-        if (rider.col_wheelchair) specialNeeds.push('Collapsible Wheelchair');
-        if (rider.service_animal) specialNeeds.push('Service Animal');
-        if (rider.oxygen) specialNeeds.push('Oxygen Tank or other Special Equipment');
+        if (rideObject.rider.elec_wheelchair) specialNeeds.push('Electric Wheelchair');
+        if (rideObject.rider.col_wheelchair) specialNeeds.push('Collapsible Wheelchair');
+        if (rideObject.rider.service_animal) specialNeeds.push('Service Animal');
+        if (rideObject.rider.oxygen) specialNeeds.push('Oxygen Tank or other Special Equipment');
         console.log('rider info', rider, specialNeeds);
         showRideRequest();
         $mdDialog.cancel();
@@ -208,6 +208,11 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
       console.log('driver has tapped arrive for rider');
       console.log('special needs', specialNeeds);
       socket.emit('driver-arrive', rideObject);
+    },
+    // Handles driver picking up rider
+    pickUpRider: function() {
+      console.log('driver has picked up rider');
+      socket.emit('caregiver-pickup', rideObject);
     },
     // Handles driver completing ride
     completeRide: function() {
