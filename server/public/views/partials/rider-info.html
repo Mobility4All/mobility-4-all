@@ -13,7 +13,7 @@
       <div class="md-dialog-content">
         <h2>Your rider: {{dc.dataService.rideObject.rider.rider_first}}</h2>
         <h4>Rider Needs:</h4>
-        <p ng-repeat="need in dc.specialNeeds">{{need}}</p>
+        <p ng-repeat="need in dc.dataService.specialNeeds track by $index">{{need}}</p>
         <h4>Additional Info:</h4>
         <p>{{dc.dataService.rideObject.rider.rider_addtl_info}}</p>
         <div ng-if="dc.dataService.rideObject.rider.rider_photo_url" layout="row">
@@ -21,11 +21,6 @@
         </div>
         <h4>Note from Rider:</h4>
         <p>{{dc.dataService.rideObject.note}}</p>
-        <h4>Call Rider</h4>
-        <md-button class="md-icon-button md-primary" ng-click="dc.cancel()">
-          <md-icon aria-label="Call Rider">call</md-icon>
-        </md-button>
-
       </div>
 
     </md-dialog-content>

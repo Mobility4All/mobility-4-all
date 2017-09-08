@@ -188,7 +188,7 @@ router.put('/geolocation', function(req, res, next) {
 
 
 /**
-* @api{put} /driver/live Update Driver Live Status and set Socket Id
+* @api{put} /driver/live Update Driver Status to Live and set Socket Id
 * @apiName DriverLiveStatus
 * @apiGroup Driver
 * @apiVersion 1.0.0
@@ -226,8 +226,8 @@ router.put('/live', function(req, res, next) {
 });
 
 /**
-* @api{put} /driver/unlive Update Driver Live Status to Unlive
-* @apiName DriverLiveStatus
+* @api{put} /driver/unlive Update Driver Status to Unlive
+* @apiName DriverUnLiveStatus
 * @apiGroup Driver
 * @apiVersion 1.0.0
 *
