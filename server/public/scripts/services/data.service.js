@@ -57,7 +57,7 @@ myApp.factory('DataService', function($http, $interval, $mdDialog, $mdBottomShee
     $scope.acceptCountdown = 100;
     $interval(function() {
       $scope.acceptCountdown--;
-    }, 600);
+    }, 300);
     console.log('items::', $scope.specialNeeds, $scope.rideObject);
     $scope.hide = function() {
       $mdDialog.hide();

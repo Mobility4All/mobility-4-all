@@ -116,7 +116,7 @@ function notifyCaregiverPickup(to, rider) {
   //console.log(to, rider, config.sendingNumber + " care giver notified");
   return client.api.messages
     .create({
-      body: rider + " has been picked up by Mobility 4 All.",
+      body: 'This is a courtesy message from Mobility 4 all to let you know that ' + rider + " has been picked up.",
       to: to,
       from: config.sendingNumber,
     }).then(function(data) {
@@ -131,7 +131,7 @@ function notifyCaregiverDropoff(to, rider) {
   //console.log(to, rider, config.sendingNumber + " care giver notified");
   return client.api.messages
     .create({
-      body: rider + " has arrived at their destination.",
+      body: 'This is a courtesy message from Mobility 4 all to let you know that ' + rider + " has arrived at their destination.",
       to: to,
       from: config.sendingNumber,
     }).then(function(data) {

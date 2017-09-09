@@ -13,7 +13,7 @@
       <div class="md-dialog-content">
         <h2>Your rider: {{rideObject.rider.rider_first}}</h2>
         <h4>Rider Needs:</h4>
-        <p class="need-list" ng-repeat="need in specialNeeds">{{need}}</p>
+        <p ng-repeat="need in specialNeeds">{{need}}</p>
         <h4>Additional Info:</h4>
         <p>{{rideObject.rider.rider_addtl_info}}</p>
         <div ng-if="rideObject.rider.rider_photo_url" layout="row">
