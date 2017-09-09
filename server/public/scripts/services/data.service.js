@@ -1,4 +1,4 @@
-myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast, UserService){
+myApp.factory('DataService', function($http, $interval, $mdDialog, $mdBottomSheet, $mdToast, UserService){
   console.log('DataService Loaded');
   // Ride object that is sent with ride request
   var rideObject = {
@@ -54,6 +54,10 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
   function NotificationController($scope, $mdDialog, items) {
     $scope.specialNeeds = items
     $scope.rideObject = rideObject;
+    $scope.acceptCountdown = 100;
+    $interval(function() {
+      $scope.acceptCountdown--;
+    }, 600);
     console.log('items::', $scope.specialNeeds, $scope.rideObject);
     $scope.hide = function() {
       $mdDialog.hide();

@@ -1,14 +1,15 @@
 <md-bottom-sheet class="md-grid" layout="column">
+  <md-progress-linear md-mode="determinate" value="{{acceptCountdown}}"></md-progress-linear>
   <div layout="column">
-    <h4 class="text">Ride Request: {{rideObject.rider.rider_first}}</h4>
+    <h4>Ride request from: {{rideObject.rider.rider_first}}</h4>
     <div layout="row" layout-align="center center" ng-cloak>
       <img style="height:150px;" ng-src="{{rideObject.rider.rider_photo_url}}">
     </div>
     <h4>Rider Needs:</h4>
-    <p ng-repeat="need in specialNeeds">{{need}}</p>
+    <p class="need-list" ng-repeat="need in specialNeeds">{{need}}</p>
     <!-- <img ng-src="dc.rideObject.rider.rider_photo_url"> -->
     <p>
-      ETA: {{rideObject.rider.eta[0].duration.text}}
+      <b>ETA: {{rideObject.rider.eta[0].duration.text}}</b>
     </p>
     <div ng-controller="DefaultViewController as dc">
       <md-button ng-click="dc.navigationService.acceptRide()" class="md-raised md-primary">Accept Ride</md-button>
