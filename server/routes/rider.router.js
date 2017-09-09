@@ -28,6 +28,7 @@ var pool = require('../modules/pool.js');
 * @apiParam {String} cg_cell Rider's Caregiver cell number.
 * @apiParam {String} cg_email Rider's Caregiver email.
 * @apiParam {Boolean} cg_orders_rides Gives Caregiver authority to order rides.
+* @apiParam {Boolean} cg_financial_auth Gives Caregiver authority over payments and financial information.
 * @apiParam {Boolean} cg_notifications Caregiver gets notifications when rider picked up and dropped off.
 * @apiParam {String} med_id Rider's medical ID
 * @apiParam {String} metmo_id Rider's Metro Mobility ID

@@ -17,8 +17,9 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
     // dc.alert = '';
     $mdBottomSheet.show({
       templateUrl: 'views/partials/driver-ride-notification.html',
-      controller: 'DefaultViewController as dc',
-      clickOutsideToClose: false
+      controller: NotificationController,
+      clickOutsideToClose: false,
+      locals: {items: specialNeeds}
     }).then(function(clickedItem) {
       $mdBottomSheet.hide(clickedItem);
       $mdToast.show(
@@ -34,18 +35,33 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
 
   // Bottom sheet shows on ride request
   function showRiderInfo(ev) {
+    console.log('specialNeeds::', specialNeeds);
     // dc.alert = '';
     $mdDialog.show({
       templateUrl: 'views/partials/rider-info.html',
-      controller: 'DriverNotificationController as dc',
+      controller: NotificationController,
       parent: angular.element(document.body),
       targetEvent: ev,
-      clickOutsideToClose: true
+      clickOutsideToClose: true,
+      locals: {items: specialNeeds}
     }).then(function(clickedItem) {
       $mdDialog.hide(clickedItem);
     }).catch(function(error) {
       // User clicked outside or hit escape
     });
+  };
+
+  function NotificationController($scope, $mdDialog, items) {
+    $scope.specialNeeds = items
+    $scope.rideObject = rideObject;
+    console.log('items::', $scope.specialNeeds, $scope.rideObject);
+    $scope.hide = function() {
+      $mdDialog.hide();
+    };
+
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
   };
 
   // Dialog shows to rider on acceptance from driver
@@ -176,6 +192,7 @@ myApp.factory('DataService', function($http, $mdDialog, $mdBottomSheet, $mdToast
         console.log('rider info', rider, specialNeeds);
         showRideRequest();
         $mdDialog.cancel();
+        // return specialNeeds;
       });
       // Handles receiving note from rider
       socket.on('receive-note', function(ride) {
