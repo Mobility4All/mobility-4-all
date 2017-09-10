@@ -5,7 +5,7 @@ myApp.controller('DefaultViewController', function(UserService, DataService, Nav
   dc.riderInfo = DataService.rideObject.rider;
   dc.dataService = DataService;
   dc.navigationService = NavigationService;
-
+  dc.specialNeeds = DataService.specialNeeds;
 
   dc.currentlyOffline = true;
   //toggle function to show driver online and golive

@@ -1,4 +1,4 @@
-myApp.controller('RiderProfileController', function($http, $mdDialog, $location, $window, $animate) {
+myApp.controller('RiderProfileController', function($http, $mdDialog, $location, $window, $animate, $anchorScroll, $timeout) {
     console.log('RiderProfileController created');
     var rc = this;
 
@@ -8,13 +8,23 @@ myApp.controller('RiderProfileController', function($http, $mdDialog, $location,
       if(direction === 'back') {
         if(rc.selectedTab > 0) {
           rc.selectedTab--;
-          $window.scrollTo(0, 0);
+          $timeout(function(){
+            $anchorScroll();
+          }, 50);
+
+          console.log('current tab', rc.selectedTab);
+          // $window.scrollTo(0, 0);
         }
       }
       if(direction === 'next') {
-        if(rc.selectedTab < 2) {
+        if(rc.selectedTab <= 2) {
           rc.selectedTab++;
-          $window.scrollTo(0, 0);
+          $timeout(function(){
+            $anchorScroll();
+          }, 50);
+          //$anchorScroll();
+          console.log('current tab', rc.selectedTab);
+          // $window.scrollTo(0, 0);
         }
       }
     }
