@@ -4,8 +4,9 @@ var path = require('path');
 var pool = require('../modules/pool.js');
 
 /**
- * @apiDefine defaultError
+ * @apiDefine defaultError Test title
  * @apiError UserNotFound The <code>id</code> of the User was not found.
+ * @apiError (Error 5xx) ServerError The server encountered an unexpected condition which prevented it from fulfilling the request.
  * @apiErrorExample {json} Error-Response:
  *     HTTP/1.1 404 Not Found
  *     {
@@ -92,6 +93,7 @@ router.put('/update', function(req, res, next) {
 * @apiParam {Integer} req.user.id Drivers id.
 *
 * @apiSuccess {String} StatusCode Return status code to client.
+* @apiUse defaultError
 */
 //Update driver photo url
 router.put('/profilephoto', function(req, res, next) {
@@ -131,6 +133,7 @@ router.put('/profilephoto', function(req, res, next) {
 * @apiParam {Integer} req.user.id Drivers id.
 *
 * @apiSuccess {String} StatusCode Return status code to client.
+* @apiUse defaultError
 */
 //Update driver vehicle url
 router.put('/vehiclephoto', function(req, res, next) {
@@ -170,6 +173,7 @@ router.put('/vehiclephoto', function(req, res, next) {
 * @apiParam {Integer} req.user.id Drivers id.
 *
 * @apiSuccess {String} StatusCode Return status code to client.
+* @apiUse defaultError
 */
 router.put('/geolocation', function(req, res, next) {
   console.log('req body coords', req.body);
@@ -211,6 +215,7 @@ router.put('/geolocation', function(req, res, next) {
 * @apiParam {Integer} req.user.id Drivers user id, passed through on req.
 *
 * @apiSuccess {String} StatusCode Return status code to client.
+* @apiUse defaultError
 */
 router.put('/live', function(req, res, next) {
   var driverId = req.user.id;
@@ -248,6 +253,7 @@ router.put('/live', function(req, res, next) {
 * @apiParam {Integer} req.user.id Drivers user id, passed through on req.
 *
 * @apiSuccess {String} StatusCode Return status code to client.
+* @apiUse defaultError
 */
 router.put('/unlive', function(req, res, next) {
   var driverId = req.user.id;
