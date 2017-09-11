@@ -25,7 +25,7 @@ myApp.controller('DriverNotificationController', function(UserService, DataServi
         panelEl.empty();
         dc.tripMessage = 'Navigating For ';
         DataService.pickUpRider();
-        setTimeout(dropOffMessage, 3000);
+        setTimeout(dropOffMessage, 5000);
         //also starts destination routing
         function dropOffMessage() {
             dc.tripMessage = 'Drop off ';
