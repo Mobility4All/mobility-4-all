@@ -1,4 +1,4 @@
-myApp.controller('DefaultViewController', function(UserService, DataService, NavigationService, $http, $timeout, $mdBottomSheet,$mdSidenav,$mdDialog, $mdToast, DataService, $scope, $interval) {
+myApp.controller('DefaultViewController', function($http, $mdDialog, $scope, DataService, NavigationService) {
 
   console.log('DefaultViewController created');
   var dc = this;
@@ -8,21 +8,26 @@ myApp.controller('DefaultViewController', function(UserService, DataService, Nav
   dc.specialNeeds = DataService.specialNeeds;
 
   dc.currentlyOffline = true;
-  //toggle function to show driver online and golive
+  // Toggle function to show driver online and golive
   dc.toggleOnline = function() {
+    // If currently offline, updates status to live in database, connects driver to socket
+    // and update driver location on interval
     if(dc.currentlyOffline) {
       $http.put('/driver/live/');
       DataService.connectDriver();
       NavigationService.callInterval();
     }
+    // If driver currently online, updates status to offline in database and disconnects from socket
     if(!dc.currentlyOffline) {
       $http.put('/driver/unlive/');
       DataService.disconnectDriver();
     }
+    // Toggles live status
     dc.currentlyOffline = !dc.currentlyOffline;
     console.log(dc.currentlyOffline);
   };
 
+  // Handles searching for fare dialog
   $scope.showProgress = function(ev) {
      $mdDialog.show({
        controller: 'DefaultViewController',
@@ -30,28 +35,11 @@ myApp.controller('DefaultViewController', function(UserService, DataService, Nav
        parent: angular.element(document.body),
        targetEvent: ev,
        clickOutsideToClose:false,
-       fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+       fullscreen: $scope.customFullscreen
      });
    };
+   // Closes dialog box
    $scope.cancel = function() {
      $mdDialog.cancel();
    };
-  // function buildToggler(componentId) {
-  //   return function() {
-  //     $mdSidenav(componentId).toggle();
-  //   };
-  // }
-  // dc.toggleLeft = buildToggler('left');
-  // dc.toggleRight = buildToggler('right');
-
-
-
-
-  // //what is this connected to??
-  // dc.toggleShow = function() {
-  //   NavigationService.buttonShow = !NavigationService.buttonShow;
-  // }
-
-
-
 }); //end of controller
