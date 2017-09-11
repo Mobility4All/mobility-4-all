@@ -3,6 +3,15 @@ var router = express.Router();
 var path = require('path');
 var pool = require('../modules/pool.js');
 
+/**
+ * @apiDefine defaultError
+ * @apiError UserNotFound The <code>id</code> of the User was not found.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       "error": "UserNotFound"
+ *     }
+ */
 
 
 /**
@@ -33,6 +42,9 @@ var pool = require('../modules/pool.js');
 *
 *
 * @apiSuccess {String} StatusCode Return status code to client.
+*
+* @apiUse defaultError
+*
 */
 // Handles driver profile setup request
 router.put('/update', function(req, res, next) {
