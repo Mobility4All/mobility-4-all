@@ -40,6 +40,7 @@ var pool = require('../modules/pool.js');
 *
 *
 * @apiSuccess {String} StatusCode Return status code to client.
+* @apiUse defaultError
 */
 // Handles rider profile setup request
 router.put('/update', function(req, res, next) {
@@ -89,6 +90,7 @@ router.put('/update', function(req, res, next) {
 * @apiParam {Integer} req.user.id Rider's db id.
 *
 *@apiSuccess {String} StatusCode Return status code to client.
+* @apiUse defaultError
 *
 */
 router.put('/photo', function(req, res, next) {
@@ -127,6 +129,7 @@ router.put('/photo', function(req, res, next) {
 * @apiParam {String} rider_note Rider's Additional note to driver about the current ride.
 *
 *@apiSuccess {String} StatusCode Return status code to client.
+* @apiUse defaultError
 *
 */
 router.post('/destAB', function(req, res, next) {

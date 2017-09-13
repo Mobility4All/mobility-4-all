@@ -210,6 +210,8 @@ li a:hover {
 
 .addressPartial {
   height: 75px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 md-sidenav {
@@ -233,7 +235,7 @@ md-sidenav {
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
 #map {
-  height: 300px;
+  height: 345px;
 
 }
 /* Optional: Makes the sample page fill the window. */

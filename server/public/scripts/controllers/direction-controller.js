@@ -1,5 +1,5 @@
 // Controller for turn by turn direction sidenav
-myApp.controller('DirectionController', function() {
+myApp.controller('DirectionController', function($mdSidenav) {
 
   console.log('DirectionController created');
   var dc = this;
