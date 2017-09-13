@@ -1,21 +1,21 @@
 myApp.controller('RidePurposeController', function(DataService, $location, $http) {
-    console.log('RidePurposeController created');
-    var rc = this;
-    rc.ride = {};
-    rc.message = '';
+  console.log('RidePurposeController created');
+  var rc = this;
+  rc.ride = {};
+  rc.message = '';
 
-    // This controller includes function for Google Maps JavaScript API with the Places Library
-    //to provide Autocomplete
-    geolocate();
+  // This controller includes function for Google Maps JavaScript API with the Places Library
+  //to provide Autocomplete
+  geolocate();
 
-    var placeSearch, autocomplete, autocomplete2, destA, destB, latA, lngA, latB, lngB;
+  var placeSearch, autocomplete, autocomplete2, destA, destB, latA, lngA, latB, lngB;
 
 
-    // Create the autocomplete object, restricting the search to geographical
-    // location types.
-    autocomplete = new google.maps.places.Autocomplete(
-      /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
-      {types: ['geocode']});
+  // Create the autocomplete object, restricting the search to geographical
+  // location types.
+  autocomplete = new google.maps.places.Autocomplete(
+    /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+    {types: ['geocode']});
 
     // second location
     autocomplete2 = new google.maps.places.Autocomplete(
@@ -48,70 +48,70 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
 
 
 
-    // When the user selects an address from the dropdown, populate the address
-    // fields in the form.
-    autocomplete.addListener('place_changed', fillInAddress);
-    rc.addressA = destA;
+      // When the user selects an address from the dropdown, populate the address
+      // fields in the form.
+      autocomplete.addListener('place_changed', fillInAddress);
+      rc.addressA = destA;
 
-    autocomplete2.addListener('place_changed', fillInAddress);
-    rc.addressB = destB;
+      autocomplete2.addListener('place_changed', fillInAddress);
+      rc.addressB = destB;
 
 
-    // Bias the autocomplete object to the user's geographical location,
-    // as supplied by the browser's 'navigator.geolocation' object.
-    function geolocate() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          console.log(position);
-          var geolocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-          var circle = new google.maps.Circle({
-            center: geolocation,
-            radius: position.coords.accuracy
+      // Bias the autocomplete object to the user's geographical location,
+      // as supplied by the browser's 'navigator.geolocation' object.
+      function geolocate() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            console.log(position);
+            var geolocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            var circle = new google.maps.Circle({
+              center: geolocation,
+              radius: position.coords.accuracy
+            });
+            autocomplete.setBounds(circle.getBounds());
           });
-          autocomplete.setBounds(circle.getBounds());
-        });
+        }
       }
-    }
 
 
-    //post the rider's start and end destination from the autocomplete
-    //removes previous trip data from DB
-    //makes a get request to get all matching drivers.
-    rc.putDestAB = function() {
-      DataService.connectRider();
-      $http.delete('/trip/delete-incomplete').then(function(response) {
-        $http.post('/rider/destAB', rc.ride).then(function(response) {
-          // Requests ride, matching with drivers
-          $http.get('/trip/match').then(function(res) {
-            console.log('response from match', res.data.drivers);
-          })
-          $location.path('/trip-view');
-        }).catch(function(response) {
-          console.log('destAB put error', response);
-          alert("Oh no! There was an error getting your ride");
-        });
-      }).catch(function(err) {
-        console.log('error deleting previous trips', err);
-      })
-    };
+      //post the rider's start and end destination from the autocomplete
+      //removes previous trip data from DB
+      //makes a get request to get all matching drivers.
+      rc.putDestAB = function() {
+        DataService.connectRider();
+        $http.delete('/trip/delete-incomplete').then(function(response) {
+          $http.post('/rider/destAB', rc.ride).then(function(response) {
+            // Requests ride, matching with drivers
+            $http.get('/trip/match').then(function(res) {
+              console.log('response from match', res.data.drivers);
+            })
+            $location.path('/trip-view');
+          }).catch(function(response) {
+            console.log('destAB put error', response);
+            alert("Oh no! There was an error getting your ride");
+          });
+        }).catch(function(err) {
+          console.log('error deleting previous trips', err);
+        })
+      };
 
 
-    // Assigns the purpose of the ride
-    rc.updatePurpose = function(purpose) {
-      rc.ride.purpose = purpose;
-    };
+      // Assigns the purpose of the ride
+      rc.updatePurpose = function(purpose) {
+        rc.ride.purpose = purpose;
+      };
 
 
-    // Confirm and assigns the purpose property of the ride object in data service
-    rc.confirmPurpose = function() {
-      if (rc.ride.purpose) {
-        DataService.rideObject.purpose = rc.ride.purpose;
-        $location.path('/input-ride');
-      } else {
-        rc.message = 'Please select a purpose';
-      }
-    };
-});
+      // Confirm and assigns the purpose property of the ride object in data service
+      rc.confirmPurpose = function() {
+        if (rc.ride.purpose) {
+          DataService.rideObject.purpose = rc.ride.purpose;
+          $location.path('/input-ride');
+        } else {
+          rc.message = 'Please select a purpose';
+        }
+      };
+    });

@@ -22,8 +22,8 @@ myApp.factory('NavigationService', function($http, $rootScope, UserService, Data
     lng: ''
   };
 
-//the coordinates and object used in reverse Geolocation function
-//takes latitute and longitude and returns a human readable address
+  //the coordinates and object used in reverse Geolocation function
+  //takes latitute and longitude and returns a human readable address
   var reverseGeoInput = '';
   var toAddress = {
     address: ' '
@@ -34,17 +34,17 @@ myApp.factory('NavigationService', function($http, $rootScope, UserService, Data
   var geocoder = new google.maps.Geocoder;
   var infowindow = new google.maps.InfoWindow;
 
- //declaring global refresh variable for interval
+  //declaring global refresh variable for interval
   var refreshLocation;
 
 
-//this function is called when the driver selects to accept a ride.
-//After 1 second, calls initMap() to provide a visual map and written turn by turn direcions
-//the map function will take in the drivers current location (coords.lat and coords.lng),
-//and the rider's requested pickup coordinates
-//Buttonshow is toggled to display to the driver that they are online and have accepted a ride
-//geocodeLatLng is called to reverse geolocate and return a human readable address, displayed to the driver
-//(button on driver-ride-notifcation.html calls this function)
+  //this function is called when the driver selects to accept a ride.
+  //After 1 second, calls initMap() to provide a visual map and written turn by turn direcions
+  //the map function will take in the drivers current location (coords.lat and coords.lng),
+  //and the rider's requested pickup coordinates
+  //Buttonshow is toggled to display to the driver that they are online and have accepted a ride
+  //geocodeLatLng is called to reverse geolocate and return a human readable address, displayed to the driver
+  //(button on driver-ride-notifcation.html calls this function)
   function acceptRide() {
     DataService.acceptRide();
     stopUpdateLocationInterval();
@@ -114,16 +114,16 @@ myApp.factory('NavigationService', function($http, $rootScope, UserService, Data
 
 
 
-// when driver is online, use HTML5 geolocation to update their location every 60 seconds
-//geolocate finds the coordinates of the user, and then makes a request to update the DB with most recent location
+  // when driver is online, use HTML5 geolocation to update their location every 60 seconds
+  //geolocate finds the coordinates of the user, and then makes a request to update the DB with most recent location
   var updateLocationInterval = function() {
     geoLocate();
     refreshLocation = $interval(geoLocate, 60000);
   };
 
-//when driver accepts a ride, stop updating location
+  //when driver accepts a ride, stop updating location
   var stopUpdateLocationInterval = function() {
-     $interval.cancel(refreshLocation);
+    $interval.cancel(refreshLocation);
   }
 
   //HTML 5 geolocation captures the current location coordinates of user
@@ -179,15 +179,14 @@ myApp.factory('NavigationService', function($http, $rootScope, UserService, Data
 
 
 
-
-    return {
-      rideObject: rideObject,
-      startDestNavigation: startDestNavigation,
-      updateLocationInterval: updateLocationInterval,
-      geoLocate: geoLocate,
-      acceptRide: acceptRide,
-      reverseGeocodeLatLng: reverseGeocodeLatLng,
-      toAddress: toAddress
-    };
+  return {
+    rideObject: rideObject,
+    startDestNavigation: startDestNavigation,
+    updateLocationInterval: updateLocationInterval,
+    geoLocate: geoLocate,
+    acceptRide: acceptRide,
+    reverseGeocodeLatLng: reverseGeocodeLatLng,
+    toAddress: toAddress
+  };
 
 }); //end of nav service.
