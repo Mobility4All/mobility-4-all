@@ -23,16 +23,18 @@ myApp.controller('DriverNotificationController', function(UserService, DataServi
       } else if (dc.tripMessage === 'Pick up '){
         NavigationService.startDestNavigation();
         panelEl.empty();
-        dc.tripMessage = 'Drop off ';
+        dc.tripMessage = 'Navigating For ';
         DataService.pickUpRider();
+        setTimeout(dropOffMessage, 5000);
+        //also starts destination routing
+        function dropOffMessage() {
+            dc.tripMessage = 'Drop off ';
+          }
         $http.put('/trip/pickup', riderIdObject).then(function(response) {
           console.log('picked up and updated', response);
         }).catch(function(err) {
           console.log('error updating picked up', err);
         })
-        //also starts destination routing
-
-
       } else if (dc.tripMessage === 'Drop off '){
         //also calls rider fare dialog
         $http.put('/trip/complete', riderIdObject).then(function(response) {
@@ -43,6 +45,7 @@ myApp.controller('DriverNotificationController', function(UserService, DataServi
         panelEl.empty();
         DataService.completeRide();
         DataService.buttonShow = false;
+        dc.tripMessage = 'Arrive for ';
       }
     };
 
