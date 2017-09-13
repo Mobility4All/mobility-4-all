@@ -1,5 +1,5 @@
 // var dotenv = require('dotenv');
-var twilioKeys = require('./twiliokeys.config');
+// var twilioKeys = require('./twiliokeys.config');
 var cfg = {};
 
 // if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
@@ -20,9 +20,9 @@ var cfg = {};
 // variables, and load them from there as we are doing below. Alternately,
 // you could hard code these values here as strings.
 
-cfg.accountSid = process.env.TWILIO_ACCOUNT_SID || twilioKeys.TWILIO_ACCOUNT_SID;
-cfg.authToken = process.env.TWILIO_AUTH_TOKEN || twilioKeys.TWILIO_AUTH_TOKEN;
-cfg.sendingNumber = process.env.TWILIO_NUMBER || twilioKeys.TWILIO_NUMBER;
+cfg.accountSid = process.env.TWILIO_ACCOUNT_SID || require('./twiliokeys.config').TWILIO_ACCOUNT_SID;
+cfg.authToken = process.env.TWILIO_AUTH_TOKEN || require('./twiliokeys.config').TWILIO_AUTH_TOKEN;
+cfg.sendingNumber = process.env.TWILIO_NUMBER || require('./twiliokeys.config').TWILIO_NUMBER;
 
 var requiredConfig = [cfg.accountSid, cfg.authToken, cfg.sendingNumber];
 var isConfigured = requiredConfig.every(function(configValue) {
