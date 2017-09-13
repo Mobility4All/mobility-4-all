@@ -1,12 +1,13 @@
+// Controls the driver's default view after login
 myApp.controller('DefaultViewController', function($http, $mdDialog, $scope, DataService, NavigationService) {
-
   console.log('DefaultViewController created');
   var dc = this;
+  // Links to service data
   dc.riderInfo = DataService.rideObject.rider;
   dc.dataService = DataService;
   dc.navigationService = NavigationService;
   dc.specialNeeds = DataService.specialNeeds;
-
+  // Models whether the driver is online or not
   dc.currentlyOffline = true;
   // Toggle function to show driver online and golive
   dc.toggleOnline = function() {
