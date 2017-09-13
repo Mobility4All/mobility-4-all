@@ -9,7 +9,19 @@ router.get('/', function(req, res, next) {
   console.log('get /register route');
   res.sendFile(path.resolve(__dirname, '../public/views/templates/register.html'));
 });
-
+/**
+* @api{post} /register/rider Register rider user and password to db
+* @apiName RiderRegister
+* @apiGroup Registration
+* @apiVersion 1.0.0
+*
+* @apiParam {String} saveUser.username Rider's username
+* @apiParam {String} saveUser.password Rider's password
+*
+*@apiSuccess {String} StatusCode Return status code to client.
+* @apiUse defaultError
+*
+*/
 // Handles POST request with new user data
 router.post('/rider', function(req, res, next) {
   var saveUser = {
@@ -37,6 +49,19 @@ router.post('/rider', function(req, res, next) {
         });
   });
 });
+/**
+* @api{post} /register/driver Register Driver user and password to db
+* @apiName DriverRegister
+* @apiGroup Registration
+* @apiVersion 1.0.0
+*
+* @apiParam {String} saveUser.username Rider's username
+* @apiParam {String} saveUser.password Rider's password
+*
+*@apiSuccess {String} StatusCode Return status code to client.
+* @apiUse defaultError
+*
+*/
 // Handles POST request with new user data
 router.post('/driver', function(req, res, next) {
   var saveUser = {
