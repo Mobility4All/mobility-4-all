@@ -11,6 +11,7 @@ router.post('/',
     })
 );
 
+// Handles driver login
 router.post('/driverlogin',
     passport.authenticate('localdriver', { // local strategy - userStrategy.js
         // request stays within node/express and is routed as a new request

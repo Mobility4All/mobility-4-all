@@ -1,15 +1,17 @@
+<!-- Register page -->
 <header>
   <h1 class="lead">Sign Up</h1>
 </header>
 <div class="container" layout="column" layout-padding>
+  <!-- Radio buttons for selecting role -->
   <md-radio-group ng-model="rc.user.selection">
-
-      <md-radio-button value="rider" class="md-primary">Rider/CareGiver</md-radio-button>
-      <md-radio-button value="driver" class="md-primary"> Driver</md-radio-button>
-
-    </md-radio-group>
+    <md-radio-button value="rider" class="md-primary">Rider/CareGiver</md-radio-button>
+    <md-radio-button value="driver" class="md-primary"> Driver</md-radio-button>
+  </md-radio-group>
+  <!-- Message for showing errors -->
   <h3 class="alert alert-danger" role="alert" ng-if="rc.message != ''">{{rc.message}}</h3>
   <form >
+    <!-- Inputs -->
     <div>
       <md-input-container>
         <label>Username:</label>
@@ -22,6 +24,7 @@
         <input type="password" ng-model="rc.user.password" />
       </md-input-container>
     </div>
+    <!-- Buttons -->
     <div layout="row" layout-align="space-around center">
       <md-button class="md-raised md-primary" ng-click="rc.registerUser()">Register</md-button>
       <!-- <md-button class="md-raised md-warn" ng-click="">Logout</md-button> -->

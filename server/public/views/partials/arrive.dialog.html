@@ -1,5 +1,7 @@
+<!-- Dialog box displayed to rider when ride is accepted -->
 <md-dialog aria-label="driver arrival">
   <form ng-cloak>
+    <!-- Toolbar -->
     <md-toolbar>
       <div class="md-toolbar-tools">
         <span flex></span>
@@ -8,7 +10,7 @@
         </md-button>
       </div>
     </md-toolbar>
-
+    <!-- Content -->
     <md-dialog-content>
       <div class="md-dialog-content">
         <h2>Your driver, {{rc.rideObject.driver.first_name}} is on the way!</h2>
@@ -26,7 +28,7 @@
         </md-input-container>
       </div>
     </md-dialog-content>
-
+    <!-- Buttons -->
     <md-dialog-actions layout="row">
       <span flex></span>
       <md-button class="md-raised" ng-click="rc.cancel()">

@@ -30,17 +30,17 @@ myApp.controller('DefaultViewController', function($http, $mdDialog, $scope, Dat
 
   // Handles searching for fare dialog
   $scope.showProgress = function(ev) {
-     $mdDialog.show({
-       controller: 'DefaultViewController',
-       templateUrl: 'views/partials/progress-bar.html',
-       parent: angular.element(document.body),
-       targetEvent: ev,
-       clickOutsideToClose:false,
-       fullscreen: $scope.customFullscreen
-     });
-   };
-   // Closes dialog box
-   $scope.cancel = function() {
-     $mdDialog.cancel();
-   };
+    $mdDialog.show({
+      controller: 'DefaultViewController',
+      templateUrl: 'views/partials/progress-bar.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose:false,
+      fullscreen: $scope.customFullscreen
+    });
+  };
+  // Closes dialog box
+  $scope.cancel = function() {
+    $mdDialog.cancel();
+  };
 }); //end of controller

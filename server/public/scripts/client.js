@@ -9,15 +9,6 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
       templateUrl: '/views/templates/home.html',
       controller: 'HomeController as hc',
     })
-    .when('/user', {
-      templateUrl: '/views/templates/user.html',
-      controller: 'HomeController as hc',
-      resolve: {
-        getuser : function(UserService){
-          return UserService.getuser();
-        }
-      }
-    })
     .when('/aboutrider', {
       templateUrl: '/views/templates/aboutrider.html',
       resolve: {

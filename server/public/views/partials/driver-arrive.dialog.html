@@ -1,5 +1,7 @@
+<!-- Dialog shown to rider on driver arrival -->
 <md-dialog aria-label="driver arrival">
   <form ng-cloak>
+    <!-- Toolbar -->
     <md-toolbar>
       <div class="md-toolbar-tools">
         <span flex></span>
@@ -8,7 +10,7 @@
         </md-button>
       </div>
     </md-toolbar>
-
+    <!-- Content -->
     <md-dialog-content>
       <div class="md-dialog-content">
         <h2>{{rc.rideObject.driver.first_name}} is here!</h2>
@@ -17,15 +19,10 @@
           <img style="height:150px;" ng-src="{{rc.rideObject.driver.vehicle_photo_url}}"/>
         </div>
       </div>
-      <!-- <md-button class="md-primary" ng-click="">
-        <md-icon aria-label="Call driver">call</md-icon>
-      </md-button> -->
-
     </md-dialog-content>
-
+    <!-- Buttons -->
     <md-dialog-actions layout="row">
       <span flex></span>
-
       <md-button class="md-raised md-primary" ng-click="rc.cancel()" >
         Okay!
       </md-button>

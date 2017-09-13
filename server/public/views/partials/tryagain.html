@@ -1,5 +1,7 @@
+<!-- Dialog box shown to rider when there is no match -->
 <md-dialog aria-label="driver arrival">
   <form ng-cloak>
+    <!-- Toolbar -->
     <md-toolbar>
       <div class="md-toolbar-tools">
         <span flex></span>
@@ -8,10 +10,9 @@
         </md-button>
       </div>
     </md-toolbar>
-
+    <!-- Content -->
     <md-dialog-content>
       <div class="md-dialog-content">
-        <!-- <h2>No Drivers Available! Please try your request again!</h2> -->
         <h2>There are no Mobility 4 All drivers available at the moment. Please try your request again momentarily.</h2>
         <div layout="row">
         <img style="height:150px;" ng-src="{{rc.rideObject.driver.driver_photo_url}}"/>
@@ -19,10 +20,9 @@
       </div>
       </div>
     </md-dialog-content>
-
+    <!-- Button -->
     <md-dialog-actions layout="row">
       <span flex></span>
-
       <md-button ng-click="rc.cancel()" >
         Okay
       </md-button>

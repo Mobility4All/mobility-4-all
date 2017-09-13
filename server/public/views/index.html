@@ -1,46 +1,54 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Mobility 4 All</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="vendors/angular-material/angular-material.min.css" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="styles/style.css">
-        <script src="https://static.filestackapi.com/v3/filestack.js"></script>
-        <script type="text/javascript" src="vendors/angular/angular.min.js"></script>
-        <script type="text/javascript" src="vendors/angular-route/angular-route.min.js"></script>
-        <script type="text/javascript" src="vendors/angular-material/angular-aria.min.js"></script>
-        <script type="text/javascript" src="vendors/angular-material/angular-animate.min.js"></script>
-        <script type="text/javascript" src="vendors/angular-material/angular-messages.min.js"></script>
-        <script type="text/javascript" src="vendors/angular-material/angular-material.min.js"></script>
-        <script src="vendors/angular-material-icons.min.js" charset="utf-8"></script>
-        <script src="vendors/ng-map.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlJVnWwWeZMGQSnm1oXN6__V3vCBUDipc&libraries=places"></script>
-        <script type="text/javascript" src="scripts/client.js"></script>
-        <script type="text/javascript" src="scripts/controllers/home.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/rider-login.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/rider-profile-setup.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/driver-profile-setup.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/ride-purpose.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/driver-login.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/default-view.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/driver-notification.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/rider-notification.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/address-controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/direction-controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/on-demand.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/navbar.controller.js"></script>
-        <script type="text/javascript" src="scripts/services/user.service.js"></script>
-        <script type="text/javascript" src="scripts/services/data.service.js"></script>
-        <script type="text/javascript" src="scripts/services/navigation.service.js"></script>
-    </head>
+  <head>
+    <title>Mobility 4 All</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS -->
+    <link href="vendors/angular-material/angular-material.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+    <!-- AngularJS and Material-->
+    <script type="text/javascript" src="vendors/angular/angular.min.js"></script>
+    <script type="text/javascript" src="vendors/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="vendors/angular-material/angular-aria.min.js"></script>
+    <script type="text/javascript" src="vendors/angular-material/angular-animate.min.js"></script>
+    <script type="text/javascript" src="vendors/angular-material/angular-messages.min.js"></script>
+    <script type="text/javascript" src="vendors/angular-material/angular-material.min.js"></script>
+    <script src="vendors/angular-material-icons.min.js" charset="utf-8"></script>
+    <!-- NgMap -->
+    <script src="vendors/ng-map.min.js"></script>
+    <!-- Filestack -->
+    <script src="https://static.filestackapi.com/v3/filestack.js"></script>
+    <!-- Google API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlJVnWwWeZMGQSnm1oXN6__V3vCBUDipc&libraries=places"></script>
+    <!-- Scripts, Controllers, Services -->
+    <script type="text/javascript" src="scripts/client.js"></script>
+    <script type="text/javascript" src="scripts/controllers/home.controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/rider-login.controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/rider-profile-setup.controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/driver-profile-setup.controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/ride-purpose.controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/driver-login.controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/default-view.controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/driver-notification.controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/rider-notification.controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/address-controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/direction-controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/on-demand.controller.js"></script>
+    <script type="text/javascript" src="scripts/controllers/navbar.controller.js"></script>
+    <script type="text/javascript" src="scripts/services/user.service.js"></script>
+    <script type="text/javascript" src="scripts/services/data.service.js"></script>
+    <script type="text/javascript" src="scripts/services/navigation.service.js"></script>
+  </head>
 
-<body ng-app="myApp">
-  <main ng-view>
+  <body ng-app="myApp">
+    <!-- Angular view -->
+    <main ng-view>
 
-  </main>
-  <script src="/socket.io/socket.io.js"></script>
-</body>
+    </main>
+    <!-- Socket.IO -->
+    <script src="/socket.io/socket.io.js"></script>
+  </body>
 </html>

@@ -1,10 +1,13 @@
+// Controller for driver login view
 myApp.controller('DriverLoginController', function($http, $location, UserService) {
   console.log('DriverLoginController created');
   var vm = this;
+  // Creates user object
   vm.user = {
     username: '',
     password: ''
   };
+  // Model for error messages
   vm.message = '';
 
   // Handles driver's login
