@@ -47,6 +47,7 @@ var calculateETA = function (rider, driver, callback) {
 * @apiParam {Integer} id Rider's db id.
 *
 *@apiSuccess {String} StatusCode Return status code to client.
+* @apiUse defaultError
 */
 // match rider to driver based on (1) driver being live, (2) specific needs, (3) 5 drivers closest to rider
 router.get('/match', function(req, res, next) {
@@ -127,6 +128,7 @@ function matchWithDriver(drivers, rider, previousDriver) {
 * @apiParam {Integer} id Rider's db id.
 *
 *@apiSuccess {String} StatusCode Return status code to client.
+* @apiUse defaultError
 */
 // Updates 'accept' value of trip
 router.put('/accept', function(req, res, next) {
@@ -203,6 +205,7 @@ router.put('/pickup', function(req, res, next) {
 * @apiParam {Integer} id Rider's db id.
 *
 *@apiSuccess {String} StatusCode Return status code to client.
+** @apiUse defaultError
 */
 // Updates 'complete' value of trip
 router.put('/complete', function(req, res, next) {
@@ -240,6 +243,7 @@ router.put('/complete', function(req, res, next) {
 * @apiParam {Integer} rider_id Rider's db id.
 *
 *@apiSuccess {String} StatusCode Return status code to client.
+* @apiUse defaultError
 */
 // Deletes user's incomplete trips
 router.delete('/delete-incomplete', function(req, res, next) {
