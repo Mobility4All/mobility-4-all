@@ -1,9 +1,10 @@
-myApp.controller('RiderProfileController', function($http, $mdDialog, $location, $window, $animate, $anchorScroll, $timeout) {
+myApp.controller('RiderProfileController', function($http, $mdDialog, $location, $anchorScroll, $timeout) {
     console.log('RiderProfileController created');
     var rc = this;
 
     rc.selectedTab = 0;
 
+    //controls the angular material three step sign up form
     rc.switchTab = function(direction) {
       if(direction === 'back') {
         if(rc.selectedTab > 0) {
@@ -11,9 +12,6 @@ myApp.controller('RiderProfileController', function($http, $mdDialog, $location,
           $timeout(function(){
             $anchorScroll();
           }, 50);
-
-          console.log('current tab', rc.selectedTab);
-          // $window.scrollTo(0, 0);
         }
       }
       if(direction === 'next') {
@@ -22,9 +20,6 @@ myApp.controller('RiderProfileController', function($http, $mdDialog, $location,
           $timeout(function(){
             $anchorScroll();
           }, 50);
-          //$anchorScroll();
-          console.log('current tab', rc.selectedTab);
-          // $window.scrollTo(0, 0);
         }
       }
     }
@@ -40,6 +35,7 @@ myApp.controller('RiderProfileController', function($http, $mdDialog, $location,
             'WY').split(' ').map(function (state) { return { abbrev: state }; }
     );
 
+    //show success dialog box when a user completes their profile
     rc.showAlert = function(ev) {
       $mdDialog.show(
         $mdDialog.alert()
@@ -54,15 +50,13 @@ myApp.controller('RiderProfileController', function($http, $mdDialog, $location,
     };
 
 
-    // Updates rider profile after setup
+    // Updates rider profile in DB when they submit profile form
     rc.updateUser = function() {
       console.log(rc.user);
       $http.put('/rider/update', rc.user).then(function(response) {
-        console.log('updated rider', response);
         rc.showAlert();
         $location.path('/on-demand')
       }).catch(function(response) {
-        console.log('update rider error', response);
       })
     }
 

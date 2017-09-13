@@ -4,17 +4,12 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
     rc.ride = {};
     rc.message = '';
 
+    // This controller includes function for Google Maps JavaScript API with the Places Library
+    //to provide Autocomplete
     geolocate();
 
     var placeSearch, autocomplete, autocomplete2, destA, destB, latA, lngA, latB, lngB;
-    // var componentForm = {
-    //   street_number: 'short_name',
-    //   route: 'long_name',
-    //   locality: 'long_name',
-    //   administrative_area_level_1: 'short_name',
-    //   country: 'long_name',
-    //   postal_code: 'short_name'
-    // };
+
 
     // Create the autocomplete object, restricting the search to geographical
     // location types.
@@ -81,23 +76,21 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
       }
     }
 
+
+    //post the rider's start and end destination from the autocomplete
+    //removes previous trip data from DB
+    //makes a get request to get all matching drivers.
     rc.putDestAB = function() {
       DataService.connectRider();
-      console.log("destA lat/lan are:", rc.ride.latA, rc.ride.lngA);
-      console.log("destB lat/lng are:", rc.ride.latB, rc.ride.lngB);
-      // Delete rider's incomplete trips prior to requesting new
       $http.delete('/trip/delete-incomplete').then(function(response) {
-        console.log('deleted previous trips.');
         $http.post('/rider/destAB', rc.ride).then(function(response) {
-          console.log('destAB put to db', response);
-          // Requests rid, matching with drivers
+          // Requests ride, matching with drivers
           $http.get('/trip/match').then(function(res) {
             console.log('response from match', res.data.drivers);
           })
           $location.path('/trip-view');
         }).catch(function(response) {
           console.log('destAB put error', response);
-          // IMPROVE THIS ALERT VALIDATION
           alert("Oh no! There was an error getting your ride");
         });
       }).catch(function(err) {
@@ -107,20 +100,15 @@ myApp.controller('RidePurposeController', function(DataService, $location, $http
 
 
     // Assigns the purpose of the ride
-
     rc.updatePurpose = function(purpose) {
       rc.ride.purpose = purpose;
-      console.log('ride purpose', rc.ride.purpose);
     };
 
 
     // Confirm and assigns the purpose property of the ride object in data service
-
     rc.confirmPurpose = function() {
-      console.log('confirming purpose');
       if (rc.ride.purpose) {
         DataService.rideObject.purpose = rc.ride.purpose;
-        console.log('data ride:', DataService.rideObject.purpose);
         $location.path('/input-ride');
       } else {
         rc.message = 'Please select a purpose';

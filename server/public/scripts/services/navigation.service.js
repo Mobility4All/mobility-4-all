@@ -1,82 +1,94 @@
-myApp.factory('NavigationService', function($http, $rootScope, $location, $mdSidenav, UserService, DataService, $interval, $mdDialog, $mdBottomSheet, $mdToast){
+myApp.factory('NavigationService', function($http, $rootScope, UserService, DataService, $interval){
   console.log('NavigationService Loaded');
 
   // Ride object that is sent with ride request
+  //this includes the rider's requested start and end points
   var rideObject = {
     rider: UserService.userObject
   };
-  //google maps start and end destinations
-  var startAndEnd = {
+
+
+
+  //GOOGLE MAPS start and end destinations for google map navigations
+  var tripStartAndEnd = {
     start: '',
     end: ''
   }
-  //the set panel directions
-  //clear and reset the text directions after each new directions request
-  //message and coords for Geolocation
-  var message = '';
+
+
+  //Object to store driver coordination, used in Geolocation functions
   var coords = {
     lat: '',
     lng: ''
   };
 
-
-  var reverseGeoInput = '44.9780310,-93.2635010';
+//the coordinates and object used in reverse Geolocation function
+//takes latitute and longitude and returns a human readable address
+  var reverseGeoInput = '';
   var toAddress = {
     address: ' '
   };
-  // create new GeoCoder to reverser geolocation
+
+
+  // create new GeoCoder to reverse geolocation
   var geocoder = new google.maps.Geocoder;
   var infowindow = new google.maps.InfoWindow;
 
  //declaring global refresh variable for interval
   var refreshLocation;
 
+
+//this function is called when the driver selects to accept a ride.
+//After 1 second, calls initMap() to provide a visual map and written turn by turn direcions
+//the map function will take in the drivers current location (coords.lat and coords.lng),
+//and the rider's requested pickup coordinates
+//Buttonshow is toggled to display to the driver that they are online and have accepted a ride
+//geocodeLatLng is called to reverse geolocate and return a human readable address, displayed to the driver
+//(button on driver-ride-notifcation.html calls this function)
   function acceptRide() {
     DataService.acceptRide();
-    // dc.buttonVisible = true;
-    stopInterval();
+    stopUpdateLocationInterval();
     DataService.buttonShow = !DataService.buttonShow;
-    console.log('who\'s the rider?', DataService.rideObject);
-    startAndEnd.start = coords.lat + " " + coords.lng;
-    startAndEnd.end = DataService.rideObject.rider.coord.latA + " " +  DataService.rideObject.rider.coord.lngA;
-    console.log('start and end end point', startAndEnd.end);
-    console.log('start and end start point', startAndEnd.start);
+    var riderPickupLat = DataService.rideObject.rider.coord.latA;
+    var riderPickupLng = DataService.rideObject.rider.coord.lngA;
+    tripStartAndEnd.start = coords.lat + " " + coords.lng;
+    tripStartAndEnd.end = riderPickupLat + " " + riderPickupLng;
     setTimeout(initMap, 1000);
-    reverseGeoInput = DataService.rideObject.rider.coord.latA + "," +  DataService.rideObject.rider.coord.lngA;
-    console.log(reverseGeoInput);
-    geocodeLatLng(geocoder, infowindow);
-    //  initMap();
+    reverseGeoInput = riderPickupLat + "," + riderPickupLng;
+    reverseGeocodeLatLng(geocoder, infowindow);
   };
 
 
 
-  // These functions take in user input for start and end destinations, and returns
-  //a google map with polyline route and with text driving directions
-  //on click, old req is cleared, new request is called with initMap() to get and show new directions
+
+  //Calls initMap with new start and destination coords, to create map
+  // with polyline route and with text driving directions
+  //panelEl.empty() removes old written direction in order to replace them with the updated route
+  //geocodeLatLng is called again to provide the human readable address for the route destination
+  //this function is called the driver-notification-controller.js
   function startDestNavigation() {
+    var riderPickupLat = DataService.rideObject.rider.coord.latA;
+    var riderPickupLng = DataService.rideObject.rider.coord.lngA;
+    var riderDestLat = DataService.rideObject.rider.coord.latB;
+    var riderDestLng = DataService.rideObject.rider.coord.lngB;
     var panelEl = angular.element(document.getElementById('right-panel'));
-    console.log('BEFORE', panelEl.html());
     panelEl.empty();
-    console.log('AFTER', panelEl.html());
     toAddress.address = " ";
-    reverseGeoInput = DataService.rideObject.rider.coord.latB + "," +  DataService.rideObject.rider.coord.lngB;
-    console.log(reverseGeoInput);
-    geocodeLatLng(geocoder, infowindow);
-    startAndEnd.start = DataService.rideObject.rider.coord.latA + " " +  DataService.rideObject.rider.coord.lngA;
-    startAndEnd.end = DataService.rideObject.rider.coord.latB + " " +  DataService.rideObject.rider.coord.lngB;
-    // geocodeLatLng(geocoder, infowindow);  //REMOVED map param (this does reverse geocode)
-    console.log('start', startAndEnd.start);
-    console.log('end', startAndEnd.end);
+    reverseGeoInput = riderDestLat + "," +  riderDestLng;
+    reverseGeocodeLatLng(geocoder, infowindow);
+    tripStartAndEnd.start = riderPickupLat + " " +  riderPickupLng;
+    tripStartAndEnd.end = riderDestLat + " " +  riderDestLng;
     setTimeout(initMap, 1000);
   };
 
-  //this google maps function gets directions and displays on a map and with text
+  //this google maps function gets directions and displays on an div element with id = map
+  // populates a sidenav (div with an id of "right-panel") with text directions
   function initMap() {
     var directionsService = new google.maps.DirectionsService;
     var directionsDisplay = new google.maps.DirectionsRenderer;
     var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 7,  // this resets after directions are received. Might update if we want to change initial view.
-      center: {lat: 41.85, lng: -87.65} //Might update if we want to change initial view.
+      zoom: 7,
+      center: {lat: 41.85, lng: -87.65}
     });
     directionsDisplay.setMap(map);
     directionsDisplay.setPanel(document.getElementById('right-panel'));
@@ -86,8 +98,8 @@ myApp.factory('NavigationService', function($http, $rootScope, $location, $mdSid
 
     function calculateAndDisplayRoute(directionsService, directionsDisplay) {
       directionsService.route({
-        origin: startAndEnd.start, //have changed from original
-        destination: startAndEnd.end, //have changed from origi
+        origin: tripStartAndEnd.start,
+        destination: tripStartAndEnd.end,
         travelMode: 'DRIVING'
       }, function(response, status) {
         if (status === 'OK') {
@@ -102,29 +114,24 @@ myApp.factory('NavigationService', function($http, $rootScope, $location, $mdSid
 
 
 
-//interval to update driver location on interval when driver is live
-  var callInterval = function() {
-    console.log('call interval for geolocation');
+// when driver is online, use HTML5 geolocation to update their location every 60 seconds
+//geolocate finds the coordinates of the user, and then makes a request to update the DB with most recent location
+  var updateLocationInterval = function() {
     geoLocate();
-    //Show current seconds value 5 times after every 1000 ms
-    refreshLocation = $interval(geoLocate, 10000);
+    refreshLocation = $interval(geoLocate, 60000);
   };
 
-
-  var stopInterval = function() {
-      console.log('cancel interval attempted');
+//when driver accepts a ride, stop updating location
+  var stopUpdateLocationInterval = function() {
      $interval.cancel(refreshLocation);
   }
 
-  //HTML 5 geolocation code begins here
+  //HTML 5 geolocation captures the current location coordinates of user
   // geoLocate called on click. getLocation checks for browser compatability (user must approve to enable),
   //then getLocation calls showPosition(), which gets coords. Then showPosition() calls updateDriverLocation()
   //to make a put request to database with the driver location.
   function geoLocate() {
-    console.log('update location function called');
-
     getLocation();
-
     function getLocation () {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
@@ -133,22 +140,16 @@ myApp.factory('NavigationService', function($http, $rootScope, $location, $mdSid
       }
     } //end of getLocation fn
 
-
     function showPosition(position) {
-      message = "Latitude:  " + position.coords.latitude + "  Longitude: " + position.coords.longitude + "";
-      // $scope.$apply();
-      console.log('position coords', position.coords);
       coords.lat = position.coords.latitude;
       coords.lng = position.coords.longitude;
-      console.log('dc.coords', coords);
-      // startAndEnd.start = coords.lat + " " + coords.lng;
-      //updateDriver makes put request
       updateDriverLocation();
     } // end show position function
   }; //end geolocat
   //end of html5 geo
 
   // makes req to update driver location in DB
+  //called above, in geoLocate function
   function updateDriverLocation() {
     $http.put('/driver/geolocation', coords).then(function(response) {
       console.log('update location -- success', response);
@@ -157,24 +158,16 @@ myApp.factory('NavigationService', function($http, $rootScope, $location, $mdSid
 
 
 
-  //REVERSE GEOCODE CODE
-  //i removed the maps param from the function below
-  function geocodeLatLng(geocoder, infowindow) {
-
-    // takes in variable called reverseGeoInput
+  //REVERSE GEOCODE function takes in coordinates and returns a human readable address
+  function reverseGeocodeLatLng(geocoder, infowindow) {
     var latlngStr = reverseGeoInput.split(',', 2);
     var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
     geocoder.geocode({'location': latlng}, function(results, status) {
       if (status === 'OK') {
         if (results[0]) {
-          // infowindow.setContent(results[0].formatted_address);
-          // infowindow.open(map, marker);
-          console.log('hopefully this is the right address', results[0].formatted_address);
           $rootScope.$apply(function(){
             toAddress.address = results[0].formatted_address;
           });
-
-          //$rootScope.$apply();
         } else {
           console.log('No results found');
         }
@@ -186,14 +179,14 @@ myApp.factory('NavigationService', function($http, $rootScope, $location, $mdSid
 
 
 
-  //EVERYTHING BELOW THIS LINE SHOULD BE RETURNED
+
     return {
       rideObject: rideObject,
       startDestNavigation: startDestNavigation,
-      callInterval: callInterval,
+      updateLocationInterval: updateLocationInterval,
       geoLocate: geoLocate,
       acceptRide: acceptRide,
-      geocodeLatLng: geocodeLatLng,
+      reverseGeocodeLatLng: reverseGeocodeLatLng,
       toAddress: toAddress
     };
 

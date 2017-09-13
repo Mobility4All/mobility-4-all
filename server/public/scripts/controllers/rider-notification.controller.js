@@ -1,5 +1,5 @@
 
-myApp.controller('RiderNotificationController', function(DataService, $timeout, $mdBottomSheet, $mdToast, $mdDialog, $scope) {
+myApp.controller('RiderNotificationController', function($mdBottomSheet, $mdDialog, DataService) {
 
     console.log('RiderNotificationController created');
     var rc = this;
@@ -7,6 +7,7 @@ myApp.controller('RiderNotificationController', function(DataService, $timeout, 
     var eta = "10";
     rc.rideObject = DataService.rideObject;
 
+//this controller handles all dialog boxes the rider sees
     rc.hide = function() {
       $mdDialog.hide();
     };
