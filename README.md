@@ -1,4 +1,4 @@
-# Mobility-4-All
+## Mobility-4-All
 
 Mobility 4 All (MO) is a mobile web application ride service built to meet the needs of people with disabilities and other special needs. A rider can share accessibility needs with their driver and drivers are trained to provide a high touch service that creates comfort, trust, and a true door-to-door service. It is intended to serve those that are normally served by Metro Mobility services while using an on demand Uber or Lyft-like model, tailored to the individual user. This new service will also link to other transport options to assist MO users with their various transport needs around the Twin Cities.
 
@@ -52,19 +52,28 @@ Dependencies used to create Mobility-4-All:
 
 ## Steps to get the development environment running.
 
--- Create database first with below command
+-- Create database first with below command (this version used Postico as a database manager)
 
+```SQL
 CREATE DATABASE "mobility_4_all";
+```
 
--- Install PostGIS to make db friendlier for geolocation
+-- Install PostGIS to make db friendlier for geolocation (if Homebrew is install)
+
+```git
 brew install postgis
+```
+
 --(for reference PostGIS download http://postgis.net/install/)
 --then run this in Postico--
 
+```SQL
 CREATE EXTENSION postgis;
+```
 
 -- Navigate into database and use the below data to create tables
 
+```SQL
 CREATE TABLE "drivers" (
   "id" serial PRIMARY KEY,
   "driver_socket" VARCHAR(30),
@@ -137,6 +146,7 @@ CREATE TABLE "trips" (
   "complete" BOOLEAN default false,
   "fare_amt" VARCHAR(10)
 );
+```
 
 ## Scope Documentation
 
@@ -147,33 +157,28 @@ https://docs.google.com/a/blueraven.digital/document/d/1AbO3lkl4REHFTjR3A7ODtleK
 High level list of items completed.
 
 -[x] Create two separate views: Rider/Caregiver and Driver
+-[x] Create a register Rider/Caregiver path that includes checkboxes to match rider disabilities with drivers that can accommodate those needs.
+-[x] Create a register Driver path includes same checkboxes to match with Riders that they are able to accommodate for. Includes a picture of the driver and driver's vehicle.
 
--[x] Create a register Rider/Caregiver path that includes checkboxes to match rider disabilities with drivers that
-can accommodate those needs.
-
--[x] Create a register Driver path includes same checkboxes to match with Riders that they are able to accommodate for.
-Includes a picture of the driver and driver's vehicle.
-
-### Rider View: ###
-
+### Rider View:
 -[x] Create On demand or Scheduled pickup (Scheduled pickups are a stretch goal)
 -[x] Create a view for Rider purpose of trip.
 -[x] Create a view to input starting and ending location and ability to call for a ride.
--[x] Create dialog boxes to alert rider when a driver has matched with them, the driver has arrived, and the
-driver has dropped them off.
--[x] Create a twillio alert to text the Caregiver that the rider has been picked up and has been dropped off
-at their location.
-### Driver View: ###
+-[x] Create dialog boxes to alert rider when a driver has matched with them, the driver has arrived, and the driver has dropped them off.
+-[x] Create a Twilio alert to text the Caregiver that the rider has been picked up and has been dropped off at their location.
+
+### Driver View:
 -[x] Create a default landing page for Driver.
--[x] Create a matching query when a driver comes online searching for fares and only matches with riders that
-they can accommodate.
--[x] Add show/hide buttons that the driver will push when they accept a ride, arrive for rider, pickup rider, and
-drop off rider.
--[x] Add feature for navigation for driver to get directions from their current location to the location of the
-rider.  After pickup add feature to navigate driver from pickup to rider's final destination.
+-[x] Create a matching query when a driver comes online searching for fares and only matches with riders that they can accommodate.
+-[x] Add show/hide buttons that the driver will push when they accept a ride, arrive for rider, pickup rider, and drop off rider.
+-[x] Add feature for navigation for driver to get directions from their current location to the location of the rider.  After pickup add feature to navigate driver from pickup to rider's final destination.
 
+## Finishing up:
+-[x] Wrote API docs
+-[x] code comments throughout
+-[x] finish Readme
 
-## Next Steps
+## Next Steps:
 -[] Adding a brokerage feature
 -[] Adding an admin register feature to approve drivers before allowing them to use the app.
 -[] Scheduled ride request
