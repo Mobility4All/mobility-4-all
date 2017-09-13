@@ -1,7 +1,7 @@
 var session = require('express-session');
 
 module.exports = session({
-   secret: 'secret',
+   secret: process.env.SECRET_VARIABLE || 'debug',
    key: 'user',
    resave: 'true',
    saveUninitialized: false,

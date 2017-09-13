@@ -4,7 +4,7 @@ var path = require('path');
 var pool = require('../modules/pool.js');
 
 /**
- * @apiDefine defaultError Test title
+ * @apiDefine defaultError Error
  * @apiError UserNotFound The <code>id</code> of the User was not found.
  * @apiError (Error 5xx) ServerError The server encountered an unexpected condition which prevented it from fulfilling the request.
  * @apiErrorExample {json} Error-Response:
