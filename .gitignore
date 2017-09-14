@@ -4,5 +4,5 @@ node_modules/
 *.log
 *.logs
 
-key.config.js
 twiliokeys.config.js
+apikey.config.js
