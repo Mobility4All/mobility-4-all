@@ -9,14 +9,16 @@ myApp.controller('DefaultViewController', function($http, $mdDialog, $scope, Dat
   dc.specialNeeds = DataService.specialNeeds;
   // Models whether the driver is online or not
   dc.currentlyOffline = true;
-  // Toggle function to show driver online and golive
+  //toggle function to show driver online and golive
+  //driver status is updated in the database
+  //when driver goes live, driver location is tracked on an interval and sent to DB
   dc.toggleOnline = function() {
     // If currently offline, updates status to live in database, connects driver to socket
     // and update driver location on interval
     if(dc.currentlyOffline) {
       $http.put('/driver/live/');
       DataService.connectDriver();
-      NavigationService.callInterval();
+      NavigationService.updateLocationInterval();
     }
     // If driver currently online, updates status to offline in database and disconnects from socket
     if(!dc.currentlyOffline) {

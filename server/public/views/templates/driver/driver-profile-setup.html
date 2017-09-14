@@ -1,89 +1,84 @@
 <div ng-include="'views/partials/sidenavdriver.html'"></div>
 <md-content layout-padding>
-<h1>Driver Registration Information</h1>
-<form>
-  <h2>Personal Info</h2>
-  <h4>Name</h4>
-  <div layout="row">
-    <md-input-container>
-      <label>First Name</label>
-      <input type="text" ng-model="dc.user.first_name"/>
-    </md-input-container>
-    <md-input-container>
-      <label>Last Name</label>
-      <input type="text" ng-model="dc.user.last_name"/>
-    </md-input-container>
-  </div>
-  <p>{{dc.photoMessage}}</p>
-  <md-button class="md-raised md-primary" ng-click="dc.pickProfilePic()">Choose Profile Photo</md-button>
-
-  <h4>Contact Info</h4>
-  <div>
-    <md-input-container class="md-block">
-      <label>Street Address</label>
-      <input type="text" ng-model="dc.user.street"/>
-    </md-input-container>
-    <md-input-container>
-      <label>City</label>
-      <input type="text" ng-model="dc.user.city"/>
-    </md-input-container>
-    <md-input-container>
-      <label>State</label>
-      <md-select ng-model="dc.user.state">
-        <md-option><em>None</em></md-option>
-        <md-option ng-repeat="state in dc.states" ng-value="state.abbrev">
-          {{state.abbrev}}
-        </md-option>
-      </md-select>
-    </md-input-container>
-  </div>
-  <div>
-    <md-input-container>
-      <label>Cell Phone #</label>
-      <input type="tel" ng-model="dc.user.phone"/>
-    </md-input-container>
-  </div>
-  <div>
-    <md-input-container>
-      <label>Email</label>
-      <input type="email" ng-model="dc.user.email"/>
-    </md-input-container>
-  </div>
-
-  <h2>Vehicle Info</h2>
-  <div layout="row">
-    <md-input-container>
-      <label>Vehicle Make</label>
-      <input type="text" ng-model="dc.user.make"/>
-    </md-input-container>
-    <md-input-container>
-      <label>Vehicle Model</label>
-      <input type="text" ng-model="dc.user.model"/>
-    </md-input-container>
-  </div>
-  <md-input-container>
-    <label>License #</label>
-    <input type="text" ng-model="dc.user.license_num"/>
-  </md-input-container>
-  <p>{{dc.vehicleMessage}}</p>
-  <md-button class="md-raised md-primary" ng-click="dc.pickVehiclePic()">Choose Vehicle Photo</md-button>
-
-  <h4>Accessibility Needs your vehicle can accommodate</h4>
-  <div>
-    <h5>Wheelchair</h5>
+  <h1>Driver Registration Information</h1>
+  <form>
+    <h2>Personal Info</h2>
+    <h4>Name</h4>
     <div layout="row">
-      <md-checkbox ng-model="dc.user.elec_wheelchair">Electric</md-checkbox>
-      <md-checkbox ng-model="dc.user.col_wheelchair">Collapsible</md-checkbox>
+      <md-input-container>
+        <label>First Name</label>
+        <input type="text" ng-model="dc.user.first_name"/>
+      </md-input-container>
+      <md-input-container>
+        <label>Last Name</label>
+        <input type="text" ng-model="dc.user.last_name"/>
+      </md-input-container>
     </div>
-    <h5>Other</h5>
-    <md-checkbox ng-model="dc.user.service_animal">Service Animal</md-checkbox>
-    <md-checkbox ng-model="dc.user.oxygen">Oxygen Tank or other Special Equipment</md-checkbox>
-  </div>
-
-  <h4>CPR/First Aid Certification?</h4>
-  <md-checkbox ng-model="dc.user.cpr">Yes</md-checkbox>
-  <br />
-  <md-button class="md-raised md-primary" ng-click="dc.updateDriver()">Complete Registration</md-button>
-
-</form>
+    <p>{{dc.photoMessage}}</p>
+    <md-button class="md-raised md-primary" ng-click="dc.pickProfilePic()">Choose Profile Photo</md-button>
+    <h4>Contact Info</h4>
+    <div>
+      <md-input-container class="md-block">
+        <label>Street Address</label>
+        <input type="text" ng-model="dc.user.street"/>
+      </md-input-container>
+      <md-input-container>
+        <label>City</label>
+        <input type="text" ng-model="dc.user.city"/>
+      </md-input-container>
+      <md-input-container>
+        <label>State</label>
+        <md-select ng-model="dc.user.state">
+          <md-option><em>None</em></md-option>
+          <md-option ng-repeat="state in dc.states" ng-value="state.abbrev">
+            {{state.abbrev}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+    </div>
+    <div>
+      <md-input-container>
+        <label>Cell Phone #</label>
+        <input type="tel" ng-model="dc.user.phone"/>
+      </md-input-container>
+    </div>
+    <div>
+      <md-input-container>
+        <label>Email</label>
+        <input type="email" ng-model="dc.user.email"/>
+      </md-input-container>
+    </div>
+    <h2>Vehicle Info</h2>
+    <div layout="row">
+      <md-input-container>
+        <label>Vehicle Make</label>
+        <input type="text" ng-model="dc.user.make"/>
+      </md-input-container>
+      <md-input-container>
+        <label>Vehicle Model</label>
+        <input type="text" ng-model="dc.user.model"/>
+      </md-input-container>
+    </div>
+    <md-input-container>
+      <label>License #</label>
+      <input type="text" ng-model="dc.user.license_num"/>
+    </md-input-container>
+    <p>{{dc.vehicleMessage}}</p>
+    <md-button class="md-raised md-primary" ng-click="dc.pickVehiclePic()">Choose Vehicle Photo</md-button>
+    <h4>Accessibility Needs your vehicle can accommodate</h4>
+    <div>
+      <h5>Wheelchair</h5>
+      <div layout="row">
+        <md-checkbox ng-model="dc.user.elec_wheelchair">Electric</md-checkbox>
+        <md-checkbox ng-model="dc.user.col_wheelchair">Collapsible</md-checkbox>
+      </div>
+      <h5>Other</h5>
+      <md-checkbox ng-model="dc.user.service_animal">Service Animal</md-checkbox>
+      <md-checkbox ng-model="dc.user.oxygen">Oxygen Tank or other Special Equipment</md-checkbox>
+    </div>
+    <h4>CPR/First Aid Certification?</h4>
+    <md-checkbox ng-model="dc.user.cpr">Yes</md-checkbox>
+    <br />
+    <md-button class="md-raised md-primary" ng-click="dc.updateDriver()">Complete Registration</md-button>
+  </form>
 </md-content>

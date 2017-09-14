@@ -1,8 +1,10 @@
-myApp.controller('NavBarController', function($scope, $http, $location, UserService, $mdSidenav) {
+myApp.controller('NavBarController', function($location, UserService, $mdSidenav) {
   console.log('NavBarController created');
   var nb = this;
   nb.userService = UserService;
 
+
+  //these paths correspond to user views on sidenavdriver.html and sidenavrider.html
   nb.navToDefault = function () {
     $location.path('/default-view');
   };
