@@ -1,5 +1,7 @@
+<!-- Dialog shows rider information to driver on arrival -->
 <md-dialog aria-label="driver arrival">
   <form ng-cloak>
+    <!-- Toolbar -->
     <md-toolbar>
       <div class="md-toolbar-tools">
         <span flex></span>
@@ -8,7 +10,7 @@
         </md-button>
       </div>
     </md-toolbar>
-
+    <!-- Content -->
     <md-dialog-content>
       <div class="md-dialog-content">
         <h2>Your rider: {{rideObject.rider.rider_first}}</h2>
@@ -23,7 +25,7 @@
         <p ng-if="rideObject.note">{{rideObject.note}}</p>
       </div>
     </md-dialog-content>
-
+    <!-- Button -->
     <md-dialog-actions layout="row">
       <span flex></span>
       <md-button class="md-raised" ng-click="cancel()">

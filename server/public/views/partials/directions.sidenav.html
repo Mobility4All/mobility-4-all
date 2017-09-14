@@ -1,8 +1,11 @@
+<!-- Partial for driver's Turn by Turn Directions button and sidenav-->
 <div ng-controller="DirectionController as dc">
    <div layout="column">
+     <!-- Button -->
      <div flex layout="row" layout-align="center center">
-       <md-button  class="md-raised" ng-click="dc.toggleRight()" ng-disabled="false" >Turn by Turn Directions</md-button>
+       <md-button  class="md-raised" ng-click="dc.toggleRight()" ng-disabled="false">Turn by Turn Directions</md-button>
       </div>
+      <!-- Sidenav -->
      <div layout="column" ng-cloak>
        <section layout="row" flex>
          <md-sidenav style="height:700px;" class="md-sidenav-right md-whiteframe-z2" md-component-id="right" md-disable-backdrop md-whiteframe="4">

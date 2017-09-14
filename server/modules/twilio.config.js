@@ -1,38 +1,21 @@
-// var dotenv = require('dotenv');
-// var twilioKeys = require('./twiliokeys.config');
+var twilioKeys = require('./twiliokeys.config');
 var cfg = {};
 
-// if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
-//   dotenv.config({path: '.env'});
-// } else {
-//   dotenv.config({path: '.env.example', silent: true});
-// }
+// Twilio Keys
+cfg.accountSid = process.env.TWILIO_ACCOUNT_SID || twilioKeys.TWILIO_ACCOUNT_SID;
+cfg.authToken = process.env.TWILIO_AUTH_TOKEN || twilioKeys.TWILIO_AUTH_TOKEN;
+cfg.sendingNumber = process.env.TWILIO_NUMBER || twilioKeys.TWILIO_NUMBER;
 
-
-// A random string that will help generate secure one-time passwords and
-// HTTP sessions
-// cfg.secret = process.env.APP_SECRET || 'keyboard cat';
-
-// Your Twilio account SID and auth token, both found at:
-// https://www.twilio.com/user/account
-//
-// A good practice is to store these string values as system environment
-// variables, and load them from there as we are doing below. Alternately,
-// you could hard code these values here as strings.
-
-cfg.accountSid = process.env.TWILIO_ACCOUNT_SID || require('./twiliokeys.config').TWILIO_ACCOUNT_SID;
-cfg.authToken = process.env.TWILIO_AUTH_TOKEN || require('./twiliokeys.config').TWILIO_AUTH_TOKEN;
-cfg.sendingNumber = process.env.TWILIO_NUMBER || require('./twiliokeys.config').TWILIO_NUMBER;
-
+// Assigns keys to an array and checks to see that each is true
 var requiredConfig = [cfg.accountSid, cfg.authToken, cfg.sendingNumber];
 var isConfigured = requiredConfig.every(function(configValue) {
   return configValue || false;
 });
 
+// If all key values are not true, sends an error message
 if (!isConfigured) {
   var errorMessage =
     'TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and TWILIO_NUMBER must be set.';
-
   throw new Error(errorMessage);
 }
 

@@ -6,7 +6,7 @@ myApp.factory('UserService', function($http, $location, $mdSidenav){
   function buildToggler(componentId) {
     return function() {
       $mdSidenav(componentId).toggle();
-    
+
     };
 
   }
@@ -14,18 +14,16 @@ myApp.factory('UserService', function($http, $location, $mdSidenav){
 
   return {
     userObject : userObject,
-    // socket: socket,
 
+    // Handles verifying user is valid
     getuser : function(){
       console.log('UserService -- getuser');
       $http.get('/user').then(function(response) {
           if(response.data.userName) {
-              // user has a curret session on the server
+              // user has a current session on the server
               for(key in response.data) {
                 userObject[key] = response.data[key]
               }
-              // userObject.userName = response.data.userName;
-              // userObject.complete = response.data.complete;
               console.log('UserService -- getuser -- User Data: ', userObject);
           } else {
               console.log('UserService -- getuser -- failure');
@@ -37,9 +35,10 @@ myApp.factory('UserService', function($http, $location, $mdSidenav){
         $location.path("/home");
       });
     },
+    // Handles sidenave toggles
     toggleLeft : buildToggler('left'),
     toggleRight : buildToggler('right'),
-
+    //Handles user logout
     logout : function() {
       console.log('UserService -- logout');
       $http.get('/user/logout').then(function(response) {
