@@ -4,7 +4,7 @@ Mobility 4 All (MO) is a mobile web application ride service built to meet the n
 
 ## Built With
 
-SEAN Stack Postgresql, Express, Angular 1, Node.js
+SEAN Stack Postgresql, Express, AngularJS, Node.js
 
 Angular Materials
 Google Maps JavaScript API
@@ -161,6 +161,7 @@ High level list of items completed.
 -[x] Create a register Driver path includes same checkboxes to match with Riders that they are able to accommodate for. Includes a picture of the driver and driver's vehicle.
 
 ### Rider View:
+
 -[x] Create On demand or Scheduled pickup (Scheduled pickups are a stretch goal)
 -[x] Create a view for Rider purpose of trip.
 -[x] Create a view to input starting and ending location and ability to call for a ride.
@@ -168,17 +169,71 @@ High level list of items completed.
 -[x] Create a Twilio alert to text the Caregiver that the rider has been picked up and has been dropped off at their location.
 
 ### Driver View:
+
 -[x] Create a default landing page for Driver.
 -[x] Create a matching query when a driver comes online searching for fares and only matches with riders that they can accommodate.
 -[x] Add show/hide buttons that the driver will push when they accept a ride, arrive for rider, pickup rider, and drop off rider.
 -[x] Add feature for navigation for driver to get directions from their current location to the location of the rider.  After pickup add feature to navigate driver from pickup to rider's final destination.
 
 ## Finishing up:
+
 -[x] Wrote API docs
 -[x] code comments throughout
 -[x] finish Readme
 
+## Images
+
+![alt text](/server/public/image/home.png)
+--home page
+
+![alt text](/server/public/image/rider_signup.png)
+--rider and driver register
+
+![alt text](/server/public/image/rider_profile.png)
+--rider profile
+
+![alt text](/server/public/image/driver_profile.png)
+--driver profile
+
+![alt text](/server/public/image/driver_default_view.png)
+--driver default
+
+![alt text](/server/public/image/driver_go_live.png)
+--driver go live
+
+![alt text](/server/public/image/ride_now.png)
+--rider ride now
+
+![alt text](/server/public/image/rider_trip_purpose.png)
+--rider trip purpose
+
+![alt text](/server/public/image/rider_start-end_location.png)
+--rider start/end destination
+
+![alt text](/server/public/image/driver_ride_request.png)
+--driver ride accept
+
+![alt text](/server/public/image/ride_on_the_way.png)
+--ride on the way
+
+![alt text](/server/public/image/driver_arrival.png)
+--driver arrival for pick up
+
+![alt text](/server/public/image/rider_ride_is_here.png)
+--rider ride is here
+
+![alt text](/server/public/image/driver_directions.png)
+--driver directions
+
+![alt text](/server/public/image/driver_dropoff.png)
+--driver drop off
+
+![alt text](/server/public/image/rider_payment.png)
+--rider payment
+
+
 ## Next Steps:
+
 -[] Adding a brokerage feature
 -[] Adding an admin register feature to approve drivers before allowing them to use the app.
 -[] Scheduled ride request
