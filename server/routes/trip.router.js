@@ -269,8 +269,8 @@ router.delete('/delete-incomplete', function(req, res, next) {
 
 
 
-var distanceMatrixKey = process.env.DISTANCE_MATRIX_KEY || require('../modules/key.config.js').distanceMatrixKey;
-var directionsWebServiceKey = process.env.DIR_WEB_SERVICE_KEY || require('../modules/key.config.js').directionsWebServiceKey;
+var distanceMatrixKey = process.env.DISTANCE_MATRIX_KEY || require('../modules/apikey.config.js').distanceMatrixKey;
+var directionsWebServiceKey = process.env.DIR_WEB_SERVICE_KEY || require('../modules/apikey.config.js').directionsWebServiceKey;
 
 var googleMapsClient = require('@google/maps').createClient({
   key: distanceMatrixKey,
