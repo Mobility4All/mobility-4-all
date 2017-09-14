@@ -1,28 +1,24 @@
 <header>
   <h1 class="lead">Driver Login</h1>
 </header>
-
 <div class="container" layout-padding>
-    <h3 class="lead alert alert-danger" role="alert" ng-if="dc.message != ''">{{dc.message}}</h3>
-    <form >
-      <div>
-        <md-input-container>
-          <label for="username">Username:</label>
-          <input type="text" ng-model="dc.user.username" autofocus/>
-        </md-input-container>
-
-      </div>
-      <div>
-        <md-input-container>
-          <label for="password">Password:</label>
-          <input type="password" ng-model="dc.user.password" />
-        </md-input-container>
-      </div>
-      <div layout="row" layout-align="space-around center">
-        <md-button class="md-raised md-primary" ng-click="dc.login()">Log In</md-button>
-
-          <a href="#home">Cancel</a>
-      </div>
-    </form>
-
+  <h3 class="lead alert alert-danger" role="alert" ng-if="dc.message != ''">{{dc.message}}</h3>
+  <form >
+    <div>
+      <md-input-container>
+        <label for="username">Username:</label>
+        <input type="text" ng-model="dc.user.username" autofocus/>
+      </md-input-container>
+    </div>
+    <div>
+      <md-input-container>
+        <label for="password">Password:</label>
+        <input type="password" ng-model="dc.user.password" />
+      </md-input-container>
+    </div>
+    <div layout="row" layout-align="space-around center">
+      <md-button class="md-raised md-primary" ng-click="dc.login()">Log In</md-button>
+      <a href="#home">Cancel</a>
+    </div>
+  </form>
 </div>

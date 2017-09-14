@@ -32,7 +32,23 @@ var calculateETA = function (rider, driver, callback) {
   });
 };
 
-
+/**
+* @api{get} /trip/match Match rider to driver base on driver being live.
+* @apiName Match Rider
+* @apiGroup Trip
+* @apiVersion 1.0.0
+*
+*
+* @apiParam {string} start_location::geometry starting location to base matching logic on
+* @apiParam {Boolean} elec_wheelchair used for matching query if checked on registration page
+* @apiParam {Boolean} col_wheelchair used for matching query if checked on registration page
+* @apiParam {Boolean} service_animal used for matching query if checked on registration page
+* @apiParam {Boolean} oxygen used for matching query if checked on registration page
+* @apiParam {Integer} id Rider's db id.
+*
+*@apiSuccess {String} StatusCode Return status code to client.
+* @apiUse defaultError
+*/
 // match rider to driver based on (1) driver being live, (2) specific needs, (3) 5 drivers closest to rider
 router.get('/match', function(req, res, next) {
   // console.log('matching ride', req.user);
@@ -73,6 +89,7 @@ router.get('/match', function(req, res, next) {
 }
 ); // end of match route
 
+
 // Rider (req.user) and drivers (Array) that match criteria by distance
 function matchWithDriver(drivers, rider, previousDriver) {
   // console.log("In match with driver", drivers, rider, previousDriver);
@@ -89,7 +106,7 @@ function matchWithDriver(drivers, rider, previousDriver) {
         rider.eta = eta;
         io.to(driver.driver_socket).emit('find-driver', rider);
         // This interval is set to 7secs for testing purposes, in production UPDATE INTERVAL
-        setTimeout(matchWithDriver, 7000, drivers, rider, driver);
+        setTimeout(matchWithDriver, 60000, drivers, rider, driver);
       });
     } else {
       io.to(rider.socket_id).emit('try-again', rider);
@@ -100,7 +117,19 @@ function matchWithDriver(drivers, rider, previousDriver) {
 }
 
 
-
+/**
+* @api{put} /trip/accept Driver "Accepts" rider via socket request
+* @apiName Accept Rider
+* @apiGroup Trip
+* @apiVersion 1.0.0
+*
+*
+* @apiParam {boolean} accept Edits trip info that connects driver and rider when they hit accept.
+* @apiParam {Integer} id Rider's db id.
+*
+*@apiSuccess {String} StatusCode Return status code to client.
+* @apiUse defaultError
+*/
 // Updates 'accept' value of trip
 router.put('/accept', function(req, res, next) {
   var rider = req.body.rider;
@@ -127,6 +156,18 @@ router.put('/accept', function(req, res, next) {
   }
 });
 
+/**
+* @api{put} /trip/pickup Driver "Picks Up" rider via socket request
+* @apiName Pickup Rider
+* @apiGroup Trip
+* @apiVersion 1.0.0
+*
+*
+* @apiParam {boolean} pickup Edits trip info that turns pickup to true.
+* @apiParam {Integer} id Rider's db id.
+*
+*@apiSuccess {String} StatusCode Return status code to client.
+*/
 // Updates 'pickup' value of trip
 router.put('/pickup', function(req, res, next) {
   var rider = req.body;
@@ -153,6 +194,19 @@ router.put('/pickup', function(req, res, next) {
   }
 });
 
+/**
+* @api{put} /trip/complete Driver "completes" rider trip via socket request
+* @apiName Complete Rider
+* @apiGroup Trip
+* @apiVersion 1.0.0
+*
+*
+* @apiParam {boolean} complete Edits trip info that completes the trip
+* @apiParam {Integer} id Rider's db id.
+*
+*@apiSuccess {String} StatusCode Return status code to client.
+** @apiUse defaultError
+*/
 // Updates 'complete' value of trip
 router.put('/complete', function(req, res, next) {
   var rider = req.body;
@@ -178,7 +232,19 @@ router.put('/complete', function(req, res, next) {
     });
   }
 });
-
+/**
+* @api{put} /trip/delete-incomplete if rider navigates to a different page or leaves the app it will delete that trip from db
+* @apiName Delete incomplete trips
+* @apiGroup Trip
+* @apiVersion 1.0.0
+*
+*
+* @apiParam {boolean} complete trip info if rider has been dropped off will be true
+* @apiParam {Integer} rider_id Rider's db id.
+*
+*@apiSuccess {String} StatusCode Return status code to client.
+* @apiUse defaultError
+*/
 // Deletes user's incomplete trips
 router.delete('/delete-incomplete', function(req, res, next) {
   console.log('deleting incomplete trips');
@@ -205,8 +271,6 @@ router.delete('/delete-incomplete', function(req, res, next) {
 });
 
 
-
-//Cat is Sandboxing Google Maps Distance Matrix here//
 var distanceMatrixKey = process.env.DISTANCE_MATRIX_KEY || require('../modules/apikey.config.js').distanceMatrixKey;
 var directionsWebServiceKey = process.env.DIR_WEB_SERVICE_KEY || require('../modules/apikey.config.js').directionsWebServiceKey;
 

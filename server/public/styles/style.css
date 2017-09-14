@@ -33,6 +33,7 @@ h3{
 
 h4{
   font-size: 30px;
+  margin: 15px 0;
 }
 
 h5{
@@ -209,6 +210,8 @@ li a:hover {
 
 .addressPartial {
   height: 75px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 md-sidenav {
@@ -232,7 +235,7 @@ md-sidenav {
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
 #map {
-  height: 300px;
+  height: 345px;
 
 }
 /* Optional: Makes the sample page fill the window. */
@@ -334,4 +337,8 @@ md-progress-circular {
 .md-button.menu-button {
   width: 50px;
   height: 50px;
+}
+
+.need-list {
+  margin: 5px 0;
 }

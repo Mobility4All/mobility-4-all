@@ -79,9 +79,12 @@ io.on('connection', function(socket){
   socket.on('driver-arrive', function(data) {
     console.log('driver arrive socket listening', data);
     io.to(data.rider.socket_id).emit('rider-pickup', data);
+  });
+  socket.on('caregiver-pickup', function(data) {
+    console.log('rider picked up socket', data);
     if (data.rider.cg_cell && data.rider.cg_notifications){
       notifyCaregiverPickup(data.rider.cg_cell, data.rider.rider_first);
-      }
+    }
   });
   // Listening for ride to completeRide
   socket.on('complete-ride', function(data) {
@@ -113,7 +116,7 @@ function notifyCaregiverPickup(to, rider) {
   //console.log(to, rider, config.sendingNumber + " care giver notified");
   return client.api.messages
     .create({
-      body: rider + " has been picked up by Mobility 4 All.",
+      body: 'This is a courtesy message from Mobility 4 all to let you know that ' + rider + " has been picked up.",
       to: to,
       from: config.sendingNumber,
     }).then(function(data) {
@@ -128,7 +131,7 @@ function notifyCaregiverDropoff(to, rider) {
   //console.log(to, rider, config.sendingNumber + " care giver notified");
   return client.api.messages
     .create({
-      body: rider + " has arrived at their destination.",
+      body: 'This is a courtesy message from Mobility 4 all to let you know that ' + rider + " has arrived at their destination.",
       to: to,
       from: config.sendingNumber,
     }).then(function(data) {

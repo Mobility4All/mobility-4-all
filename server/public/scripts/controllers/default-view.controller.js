@@ -1,19 +1,21 @@
-myApp.controller('DefaultViewController', function(UserService, DataService, NavigationService, $http, $timeout, $mdBottomSheet,$mdSidenav,$mdDialog, $mdToast, DataService, $scope, $interval) {
+myApp.controller('DefaultViewController', function($http, $mdDialog, $scope, UserService, DataService, NavigationService) {
 
   console.log('DefaultViewController created');
   var dc = this;
   dc.riderInfo = DataService.rideObject.rider;
   dc.dataService = DataService;
   dc.navigationService = NavigationService;
-
+  dc.specialNeeds = DataService.specialNeeds;
 
   dc.currentlyOffline = true;
   //toggle function to show driver online and golive
+  //driver status is updated in the database
+  //when driver goes live, driver location is tracked on an interval and sent to DB
   dc.toggleOnline = function() {
     if(dc.currentlyOffline) {
       $http.put('/driver/live/');
       DataService.connectDriver();
-      NavigationService.callInterval();
+      NavigationService.updateLocationInterval();
     }
     if(!dc.currentlyOffline) {
       $http.put('/driver/unlive/');
@@ -23,6 +25,7 @@ myApp.controller('DefaultViewController', function(UserService, DataService, Nav
     console.log(dc.currentlyOffline);
   };
 
+//ShowProgress will show the driver how much time they have left to accept a ride req
   $scope.showProgress = function(ev) {
      $mdDialog.show({
        controller: 'DefaultViewController',
@@ -36,22 +39,6 @@ myApp.controller('DefaultViewController', function(UserService, DataService, Nav
    $scope.cancel = function() {
      $mdDialog.cancel();
    };
-  // function buildToggler(componentId) {
-  //   return function() {
-  //     $mdSidenav(componentId).toggle();
-  //   };
-  // }
-  // dc.toggleLeft = buildToggler('left');
-  // dc.toggleRight = buildToggler('right');
-
-
-
-
-  // //what is this connected to??
-  // dc.toggleShow = function() {
-  //   NavigationService.buttonShow = !NavigationService.buttonShow;
-  // }
-
 
 
 }); //end of controller

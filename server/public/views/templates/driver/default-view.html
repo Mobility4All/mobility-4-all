@@ -1,44 +1,31 @@
+<!-- partial with option to logout, or view "contact us" page -->
 <div ng-include="'views/partials/sidenavdriver.html'"></div>
+<!-- these buttons show or hide, giving driver option to go online or offline -->
 <div ng-hide="dc.dataService.buttonShow" layout="row" layout-align="center center">
   <md-button style="width:50%; height:60px; margin:10px" ng-show="dc.currentlyOffline" ng-click="dc.toggleOnline(); showProgress();" class="secondary md-raised">Go Live</md-button>
   <md-button style="width:50%; height:60px; margin:10px" ng-hide="dc.currentlyOffline" ng-click="dc.toggleOnline()" class="md-raised md-primary">Online</md-button>
 </div>
 <div ng-hide="dc.dataService.buttonShow">
   <div ng-hide="dc.currentlyOffline" layout="row" layout-sm="column" layout-align="space-around">
-
   </div>
 </div>
+<!-- This partial displays the address the driver will navigate to -->
 <div ng-show="dc.dataService.buttonShow" ng-include="'views/partials/address.html'"></div>
-<!-- <button ng-click="dc.navigationService.geoLocate(); dc.navigationService.callInterval()">Current Coordinates: {{dc.navigationService.message}}</button> -->
-<!-- <md-button ng-click="dc.acceptRide()" class="md-raised md-primary">Accept Ride</md-button> -->
 
-
-
-<div ng-if="dc.dataService.buttonShow" id="map"></div>
-
-
-
-<!-- ^^ end google maps directions ^^ -->
-
-
-<!-- THIS IS THE DEFAULT VIEW MAP -->
+<!-- THIS IS THE Landing page MAP, before driver goes online -->
 <div ng-if="!dc.dataService.buttonShow">
   <ng-map style="height:550px;" zoom="14" center="[0,0]">
     <shape id="circle" name="circle" centered="true"
-      stroke-color='SkyBlue' stroke-opacity="0.8" stroke-weight="2"
-      center="current-position" radius="200" editable="false" ></shape>
+    stroke-color='SkyBlue' stroke-opacity="0.8" stroke-weight="2"
+    center="current-position" radius="200" editable="false" ></shape>
   </ng-map>
 </div>
 
+<!-- Google Map to show directions, only after diver taps "accept ride" -->
+<div ng-if="dc.dataService.buttonShow" id="map"></div>
+
+<!-- partial view that contains written turn by turn directions -->
 <div ng-if="dc.dataService.buttonShow" ng-include="'views/partials/directions.sidenav.html'"></div>
 
-
-<div  ng-if="alert">
-  <br/>
-  <b layout="row" layout-align="center center" class="md-padding">
-    {{alert}}
-  </b>
-</div>
-
-
+<!-- This partial houses driver notications -->
 <div ng-show="dc.dataService.buttonShow" ng-include="'views/partials/driver-notifications.html'"></div>

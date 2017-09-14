@@ -2,11 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 
-/**
- * @api {get} /user Request User information
- * @apiName GetUser
- * @apiGroup User
- */
+
 
 // Handles Ajax request for user information if user is authenticated
 router.get('/', function(req, res) {

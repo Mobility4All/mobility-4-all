@@ -1,25 +1,26 @@
 
-myApp.controller('RiderNotificationController', function(DataService, $timeout, $mdBottomSheet, $mdToast, $mdDialog, $scope) {
+myApp.controller('RiderNotificationController', function($mdBottomSheet, $mdDialog, DataService) {
 
-    console.log('RiderNotificationController created');
-    var rc = this;
-    rc.driver = "james";
-    var eta = "10";
-    rc.rideObject = DataService.rideObject;
+  console.log('RiderNotificationController created');
+  var rc = this;
+  rc.driver = "james";
+  var eta = "10";
+  rc.rideObject = DataService.rideObject;
 
-    rc.hide = function() {
-      $mdDialog.hide();
-    };
+  //this controller handles all dialog boxes the rider sees
+  rc.hide = function() {
+    $mdDialog.hide();
+  };
 
-    rc.cancel = function() {
-      $mdDialog.cancel();
-    };
+  rc.cancel = function() {
+    $mdDialog.cancel();
+  };
 
-    rc.answer = function(answer) {
-      $mdDialog.hide(answer);
-    };
+  rc.answer = function(answer) {
+    $mdDialog.hide(answer);
+  };
 
-    rc.hideFare = function() {
-      $mdBottomSheet.hide();
-    }
+  rc.hideFare = function() {
+    $mdBottomSheet.hide();
+  }
 });

@@ -87,7 +87,7 @@ myApp.config(function($routeProvider, $locationProvider, $mdThemingProvider) {
     })
     .when('/on-demand', {
       templateUrl: '/views/templates/rider/on-demand.html',
-      controller: 'OnDemandController as oc',
+      // controller: 'OnDemandController as oc',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();

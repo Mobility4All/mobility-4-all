@@ -3,7 +3,7 @@
     <md-toolbar>
       <div class="md-toolbar-tools">
         <span flex></span>
-        <md-button class="md-icon-button" ng-click="dc.cancel()">
+        <md-button class="md-icon-button" ng-click="cancel()">
           <md-icon aria-label="Close dialog">close</md-icon>
         </md-button>
       </div>
@@ -11,23 +11,22 @@
 
     <md-dialog-content>
       <div class="md-dialog-content">
-        <h2>Your rider: {{dc.dataService.rideObject.rider.rider_first}}</h2>
+        <h2>Your rider: {{rideObject.rider.rider_first}}</h2>
         <h4>Rider Needs:</h4>
-        <p ng-repeat="need in dc.dataService.specialNeeds">{{need}}</p>
+        <p ng-repeat="need in specialNeeds">{{need}}</p>
         <h4>Additional Info:</h4>
-        <p>{{dc.dataService.rideObject.rider.rider_addtl_info}}</p>
-        <div ng-if="dc.dataService.rideObject.rider.rider_photo_url" layout="row">
-          <img style="height:150px;" ng-src="{{dc.dataService.rideObject.rider.rider_photo_url}}"/>
+        <p>{{rideObject.rider.rider_addtl_info}}</p>
+        <div ng-if="rideObject.rider.rider_photo_url" layout="row">
+          <img style="height:150px;" ng-src="{{rideObject.rider.rider_photo_url}}"/>
         </div>
-        <h4>Note from Rider:</h4>
-        <p>{{dc.dataService.rideObject.note}}</p>
+        <h4 ng-if="rideObject.note">Note from Rider:</h4>
+        <p ng-if="rideObject.note">{{rideObject.note}}</p>
       </div>
-
     </md-dialog-content>
 
     <md-dialog-actions layout="row">
       <span flex></span>
-      <md-button ng-click="dc.cancel()">
+      <md-button class="md-raised" ng-click="cancel()">
        close
       </md-button>
     </md-dialog-actions>
