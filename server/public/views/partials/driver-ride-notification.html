@@ -9,7 +9,7 @@
     <p class="need-list" ng-repeat="need in specialNeeds">{{need}}</p>
     <!-- <img ng-src="dc.rideObject.rider.rider_photo_url"> -->
     <p>
-      <b>ETA: {{rideObject.rider.eta[0].duration.text}}</b>
+      <b>Estimated driving time to address: {{rideObject.rider.eta[0].duration.text}}</b>
     </p>
     <div ng-controller="DefaultViewController as dc" layout="column" layout-align="center center">
       <md-button ng-click="dc.navigationService.acceptRide()" class="md-raised md-primary">Accept Ride</md-button>

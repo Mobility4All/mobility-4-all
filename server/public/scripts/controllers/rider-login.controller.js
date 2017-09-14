@@ -1,77 +1,58 @@
 myApp.controller('RiderLoginController', function($http, $location, UserService, NgMap) {
-    console.log('RiderLoginController created');
-    var vm = this;
-    vm.user = {
-      username: '',
-      password: '',
-      selection:'rider'
-    };
+  console.log('RiderLoginController created');
+  var vm = this;
+  vm.user = {
+    username: '',
+    password: '',
+    selection:'rider'
+  };
 
-    vm.userService = UserService;
+  vm.userService = UserService;
 
-    vm.message = '';
+  vm.message = '';
 
-    vm.login = function() {
-      console.log('LoginController -- login');
-      if(vm.user.username === '' || vm.user.password === '') {
-        vm.message = "Please enter your username and password";
-      } else {
-        console.log('LoginController -- login -- sending to server...', vm.user);
-        $http.post('/', vm.user).then(function(response) {
-          if(response.data.userName) {
-            console.log('LoginController -- login -- success: ', response.data);
-            if(!response.data.complete) {
-              $location.path('/rider-profile-setup');
-            } else {
-              // location works with SPA (ng-route)
-              $location.path('/on-demand'); // http://localhost:5000/#/user
-
-            }
+  //allows user to sign in
+  vm.login = function() {
+    if(vm.user.username === '' || vm.user.password === '') {
+      vm.message = "Please enter your username and password";
+    } else {
+      $http.post('/', vm.user).then(function(response) {
+        if(response.data.userName) {
+          if(!response.data.complete) {
+            $location.path('/rider-profile-setup');
           } else {
-            console.log('LoginController -- login -- failure: ', response);
-            vm.message = "Wrong username or password";
+            $location.path('/on-demand'); // http://localhost:5000/#/user
+
           }
-        }).catch(function(response){
-          console.log('LoginController -- registerUser -- failure: ', response);
+        } else {
           vm.message = "Wrong username or password";
-        });
-      }
-    };
+        }
+      }).catch(function(response){
+        vm.message = "Wrong username or password";
+      });
+    }
+  };
 
-    vm.registerUser = function() {
-      console.log('LoginController -- registerUser');
-
-      if(vm.user.username === '' || vm.user.password === '') {
-        vm.message = "Choose a username and password";
-      } else {
-        if (vm.user.selection == 'rider') {
-        console.log('LoginController -- registerRider -- sending to server...', vm.user);
+  //handles rider sign up
+  vm.registerUser = function() {
+    if(vm.user.username === '' || vm.user.password === '') {
+      vm.message = "Choose a username and password";
+    } else {
+      if (vm.user.selection == 'rider') {
         $http.post('/register/rider', vm.user).then(function(response) {
-          console.log('LoginController -- registerRider -- success');
           $location.path('/rider-login');
         }).catch(function(response) {
-          console.log('LoginController -- registerRider -- error');
           vm.message = "Please try again.";
         });
       } if (vm.user.selection == 'driver') {
-      console.log('LoginController -- registerDriver -- sending to server...', vm.user);
-      $http.post('/register/driver', vm.user).then(function(response) {
-        console.log('LoginController -- registerDriver -- success');
-        $location.path('/driver-login');
-      }).catch(function(response) {
-        console.log('LoginController -- registerDriver -- error');
-        vm.message = "Please try again.";
-      });
-    }
+        $http.post('/register/driver', vm.user).then(function(response) {
+          $location.path('/driver-login');
+        }).catch(function(response) {
+          vm.message = "Please try again.";
+        });
       }
+    }
+  };
 
-    };
 
-    // Testing out ng-map
-
-    NgMap.getMap().then(function(map) {
-      console.log(map.getCenter());
-      console.log('markers', map.markers);
-      console.log('shapes', map.shapes);
-  });
 });
