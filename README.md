@@ -183,52 +183,52 @@ High level list of items completed.
 
 ## Images
 
-![alt text](/server/public/image/home.png)
+![alt text](/server/public/images/home.png)
 --home page
 
-![alt text](/server/public/image/rider_signup.png)
+![alt text](/server/public/images/rider_signup.png)
 --rider and driver register
 
-![alt text](/server/public/image/rider_profile.png)
+![alt text](/server/public/images/rider_profile.png)
 --rider profile
 
-![alt text](/server/public/image/driver_profile.png)
+![alt text](/server/public/images/driver_profile.png)
 --driver profile
 
-![alt text](/server/public/image/driver_default_view.png)
+![alt text](/server/public/images/driver_default_view.png)
 --driver default
 
-![alt text](/server/public/image/driver_go_live.png)
+![alt text](/server/public/images/driver_go_live.png)
 --driver go live
 
-![alt text](/server/public/image/ride_now.png)
+![alt text](/server/public/images/ride_now.png)
 --rider ride now
 
-![alt text](/server/public/image/rider_trip_purpose.png)
+![alt text](/server/public/images/rider_trip_purpose.png)
 --rider trip purpose
 
-![alt text](/server/public/image/rider_start-end_location.png)
+![alt text](/server/public/images/rider_start-end_location.png)
 --rider start/end destination
 
-![alt text](/server/public/image/driver_ride_request.png)
+![alt text](/server/public/images/driver_ride_request.png)
 --driver ride accept
 
-![alt text](/server/public/image/ride_on_the_way.png)
+![alt text](/server/public/images/ride_on_the_way.png)
 --ride on the way
 
-![alt text](/server/public/image/driver_arrival.png)
+![alt text](/server/public/images/driver_arrival.png)
 --driver arrival for pick up
 
-![alt text](/server/public/image/rider_ride_is_here.png)
+![alt text](/server/public/images/rider_ride_is_here.png)
 --rider ride is here
 
-![alt text](/server/public/image/driver_directions.png)
+![alt text](/server/public/images/driver_directions.png)
 --driver directions
 
-![alt text](/server/public/image/driver_dropoff.png)
+![alt text](/server/public/images/driver_dropoff.png)
 --driver drop off
 
-![alt text](/server/public/image/rider_payment.png)
+![alt text](/server/public/images/rider_payment.png)
 --rider payment
 
 
