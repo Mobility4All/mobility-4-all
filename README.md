@@ -28,7 +28,17 @@ These instructions will get you a copy of the project up and running on your loc
 
 Dependencies used to create Mobility-4-All:
 
--- see package json
+- @google/maps
+- angular
+- angular-route
+- Bootstrap
+- Express
+- Angular Material
+- ng-map
+- passport 
+- pg
+- socket.io
+- twilio
 
 ## Steps to get the development environment running.
 
