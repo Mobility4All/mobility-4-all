@@ -27,28 +27,17 @@ These instructions will get you a copy of the project up and running on your loc
 
 Dependencies used to create Mobility-4-All:
 
---"@google/maps": "^0.4.3",
---"angular": "^1.6.4",
---"angular-animate": "^1.6.6",
---"angular-aria": "^1.6.6",
---"angular-material": "^1.1.4",
---"angular-material-icons": "^0.7.1",
---"angular-messages": "^1.6.6",
---"angular-route": "^1.6.4",
---"bcrypt": "^1.0.2",
---"body-parser": "^1.13.3",
---"bootstrap": "^3.3.5",
---"express": "^4.13.1",
---"express-session": "^1.13.0",
---"jquery": "^2.1.4",
---"material-design-icons": "^3.0.1",
---"ngmap": "^1.18.4",
---"passport": "^0.2.2",
---"passport-local": "^1.0.0",
---"path": "^0.11.14",
---"pg": "^7.1.0",
---"socket.io": "^2.0.3",
---"twilio": "^3.6.4"
+- @google/maps
+- angular
+- angular-route
+- Bootstrap
+- Express
+- Angular Material
+- ng-map
+- passport 
+- pg
+- socket.io
+- twilio
 
 ## Steps to get the development environment running.
 
