@@ -4,20 +4,21 @@ Mobility 4 All (MO) is a mobile web application ride service built to meet the n
 
 ## Built With
 
-SEAN Stack Postgresql, Express, AngularJS, Node.js
-
-Angular Materials
-Google Maps JavaScript API
-HTML5 Geolocation API
-Google Maps Distance Matrix API
-Google Places JavaScript API
-Twilio
-Filestack
-PostGIS
-apiDoc
-Socket.IO
-ng-map
-Heroku
+- Postgresql
+- Express
+- AngularJS
+- Node.js
+- Angular Materials
+- Google Maps JavaScript API
+- HTML5 Geolocation API
+- Google Maps Distance Matrix API
+- Google Places JavaScript API
+- Twilio
+- Filestack
+- PostGIS
+- apiDoc
+- Socket.IO
+- ng-map
 
 ## Getting Started
 
@@ -157,16 +158,18 @@ High level list of items completed.
 ## Finishing up:
 
 - [x] Wrote API docs
-- [x] code comments throughout 
+- [x] code comments throughout
 - [x] finish Readme
 
 ## Images
 
-![alt text](/server/public/images/home.png) ![alt text](/server/public/images/rider_profile.png) ![alt text](/server/public/images/driver_profile.png)
+![alt text](/server/public/images/home.png) ![alt text](/server/public/images/rider_profile.png)
 
-![alt text](/server/public/images/driver_default_view.png) ![alt text](/server/public/images/rider_start-end_location.png) ![alt text](/server/public/images/driver_ride_request.png)
+![alt text](/server/public/images/driver_profile.png) ![alt text](/server/public/images/driver_default_view.png)
 
-![alt text](/server/public/images/ride_on_the_way.png) ![alt text](/server/public/images/driver_arrival.png) ![alt text](/server/public/images/driver_directions.png)
+![alt text](/server/public/images/rider_start-end_location.png) ![alt text](/server/public/images/driver_ride_request.png)
+
+![alt text](/server/public/images/ride_on_the_way.png) ![alt text](/server/public/images/driver_directions.png)
 
 
 ## Next Steps:
